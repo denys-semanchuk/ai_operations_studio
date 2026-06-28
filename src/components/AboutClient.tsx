@@ -328,7 +328,7 @@ const styleAbout = (
   <style jsx global>{`
     .about-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
     .about-title {
       font-size: 2.75rem;
@@ -346,8 +346,8 @@ const styleAbout = (
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1.8fr;
-      gap: 3rem;
-      margin-bottom: 5rem;
+      gap: 2.5rem;
+      margin-bottom: 3.5rem;
       align-items: start;
     }
     .founder-card {
@@ -355,7 +355,7 @@ const styleAbout = (
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 2.5rem 2rem;
     }
     .founder-avatar-wrapper {
       width: 110px;
@@ -415,7 +415,7 @@ const styleAbout = (
     
     /* Genesis panel */
     .genesis-card {
-      padding: 3rem;
+      padding: 2.5rem;
     }
     .panel-title {
       font-size: 1.4rem;
@@ -438,7 +438,7 @@ const styleAbout = (
 
     /* Skills section */
     .skills-section {
-      padding: 3rem 0;
+      padding: 2rem 0;
     }
     .skills-section-title {
       font-size: 2.25rem;
@@ -448,7 +448,7 @@ const styleAbout = (
     .skills-section-subtitle {
       font-size: 1.05rem;
       color: var(--text-muted);
-      margin-bottom: 3.5rem;
+      margin-bottom: 2.5rem;
     }
     .text-center {
       text-align: center;
@@ -695,6 +695,65 @@ const styleAbout = (
       .modal-body-layout {
         grid-template-columns: 1fr;
         gap: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .about-title {
+        font-size: 1.9rem;
+      }
+      .about-subtitle {
+        font-size: 1rem;
+      }
+      .founder-card {
+        padding: 2rem 1.5rem !important;
+      }
+      .founder-avatar-wrapper {
+        width: 90px;
+        height: 90px;
+      }
+      .founder-avatar-fallback {
+        font-size: 1.6rem;
+      }
+      .founder-name {
+        font-size: 1.25rem;
+      }
+      .genesis-card {
+        padding: 1.75rem !important;
+      }
+      .skills-section-title {
+        font-size: 1.75rem;
+      }
+      .skills-section-subtitle {
+        font-size: 0.95rem;
+      }
+      .skill-tab {
+        padding: 1rem 1.25rem;
+      }
+      .tab-name {
+        font-size: 1rem;
+      }
+      .case-card {
+        padding: 2rem 1.5rem !important;
+      }
+      .case-title {
+        font-size: 1.35rem;
+      }
+      .modal-overlay {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .modal-content {
+        border-radius: 20px 20px 0 0;
+        padding: 1.75rem;
+        max-height: 90vh;
+      }
+      .modal-title {
+        font-size: 1.35rem;
+      }
+      .code-block {
+        font-size: 0.75rem;
+        padding: 1rem;
       }
     }
   `}</style>

@@ -784,5 +784,56 @@ const styleDemo = (
         grid-template-columns: 1fr;
       }
     }
+
+    @media (max-width: 600px) {
+      .demo-title {
+        font-size: 1.9rem;
+      }
+      .demo-subtitle {
+        font-size: 1rem;
+      }
+      .profile-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .profile-tab {
+        text-align: center;
+        padding: 0.65rem 1rem;
+      }
+      .simulator-panel,
+      .crm-panel {
+        min-height: auto;
+      }
+      .demo-cta-finished {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .demo-cta-finished .btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+      .crm-row {
+        font-size: 0.8rem;
+        padding: 0.5rem 0.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .demo-title {
+        font-size: 1.65rem;
+      }
+      .simulator-panel {
+        padding: 1.25rem;
+      }
+      .crm-panel {
+        padding: 1.25rem;
+      }
+      .chat-bubble {
+        max-width: 90%;
+        font-size: 0.82rem;
+      }
+    }
   `}</style>
 );

@@ -111,18 +111,33 @@ export default function HomeClient() {
         </motion.h1>
         
         <motion.p variants={itemVariants} className="hero-subtitle">
-          Conception, intégration et optimisation de systèmes d'Intelligence Artificielle.
-          Capter, qualifiez et synchronisez vos leads immobiliers instantanément dans votre CRM.
+          Captez, qualifiez et synchronisez vos leads immobiliers instantanément dans votre CRM.
+          Fini les prospects perdus — votre agence répond en moins de 5 minutes, 24h/24.
         </motion.p>
-        
+
         <motion.div variants={itemVariants} className="hero-actions">
-          <Link href="/offres" className="btn btn-primary shine-hover">
-            <span>Découvrir nos offres</span>
+          <Link href="/contact" className="btn btn-primary shine-hover">
+            <span>Réserver l'audit gratuit</span>
             <ArrowRight size={18} />
           </Link>
-          <Link href="/roi" className="btn btn-secondary">
-            <span>Estimer votre ROI</span>
+          <Link href="/demo" className="btn btn-secondary">
+            <Bot size={16} />
+            <span>Voir la démo live</span>
           </Link>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="hero-trust">
+          {[
+            "Sans engagement",
+            "Réponse sous 24h",
+            "Formation incluse",
+            "ROI dès le 1er mois",
+          ].map((t) => (
+            <span key={t} className="trust-pill">
+              <CheckCircle size={12} className="trust-check" />
+              {t}
+            </span>
+          ))}
         </motion.div>
       </motion.section>
 
@@ -164,6 +179,50 @@ export default function HomeClient() {
               <p className="stat-desc">{card.desc}</p>
             </TiltCard>
           ))}
+        </div>
+      </motion.section>
+
+      {/* How it Works Section */}
+      <motion.section
+        className="how-section"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
+        <span className="section-label text-gradient text-center block">Simple & Transparent</span>
+        <h2 className="how-title font-primary text-center">Comment ça marche ?</h2>
+        <div className="how-steps">
+          <div className="how-step glass-card">
+            <div className="how-step-num">01</div>
+            <div className="how-step-icon-wrap">
+              <Clock size={28} className="text-gradient" />
+            </div>
+            <h3 className="how-step-title">Audit Gratuit · 30 min</h3>
+            <p className="how-step-desc">On analyse vos flux actuels ensemble et on identifie les automatisations les plus rentables. Sans engagement, sans jargon.</p>
+          </div>
+          <div className="how-connector">
+            <ArrowRight size={20} className="how-arrow" />
+          </div>
+          <div className="how-step glass-card">
+            <div className="how-step-num">02</div>
+            <div className="how-step-icon-wrap">
+              <Zap size={28} className="text-gradient" />
+            </div>
+            <h3 className="how-step-title">Intégration · 2 à 4 sem.</h3>
+            <p className="how-step-desc">Configuration sur-mesure de n8n, Claude AI et votre CRM (Airtable/Notion). Zéro interruption de votre activité.</p>
+          </div>
+          <div className="how-connector">
+            <ArrowRight size={20} className="how-arrow" />
+          </div>
+          <div className="how-step glass-card">
+            <div className="how-step-num">03</div>
+            <div className="how-step-icon-wrap">
+              <TrendingUp size={28} className="text-gradient" />
+            </div>
+            <h3 className="how-step-title">ROI · dès le 1er mois</h3>
+            <p className="how-step-desc">Formation de votre équipe incluse. Support 14 jours post-lancement. Résultats mesurables dès la première semaine.</p>
+          </div>
         </div>
       </motion.section>
 
@@ -215,6 +274,41 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* Objections Section */}
+      <motion.section
+        className="obj-section"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6 }}
+      >
+        <span className="section-label text-gradient text-center block">Vos questions, nos réponses</span>
+        <h2 className="obj-title font-primary text-center">Ce qui vous retient d'agir</h2>
+        <div className="obj-grid">
+          <TiltCard className="obj-card">
+            <div className="obj-icon-wrap">
+              <Shield size={24} className="text-gradient" />
+            </div>
+            <p className="obj-objection">"Je ne suis pas assez technique pour ça."</p>
+            <p className="obj-answer">Nous gérons tout de A à Z — installation, configuration, formation. Vous n'avez besoin d'aucune compétence technique. Si vous utilisez WhatsApp, vous pouvez utiliser nos outils.</p>
+          </TiltCard>
+          <TiltCard className="obj-card">
+            <div className="obj-icon-wrap">
+              <Zap size={24} className="text-gradient" />
+            </div>
+            <p className="obj-objection">"Mon agence est trop petite pour ça."</p>
+            <p className="obj-answer">Nos solutions s'adaptent dès 1 agent. C'est justement les petites structures qui gagnent le plus : chaque heure économisée représente un impact direct sur votre chiffre d'affaires.</p>
+          </TiltCard>
+          <TiltCard className="obj-card">
+            <div className="obj-icon-wrap">
+              <CheckCircle size={24} className="text-gradient" />
+            </div>
+            <p className="obj-objection">"J'ai déjà essayé un outil, ça n'a pas marché."</p>
+            <p className="obj-answer">Nos systèmes sont construits sur-mesure, pas des SaaS génériques. On part de votre flux réel, pas d'un template. Résultat : une adoption immédiate par votre équipe.</p>
+          </TiltCard>
+        </div>
+      </motion.section>
+
       {/* CTA Banner Section */}
       <motion.section
         className="cta-banner-section"
@@ -225,13 +319,15 @@ export default function HomeClient() {
       >
         <div className="cta-banner glass-card shine-hover">
           <div className="cta-banner-content">
-            <span className="section-label text-gradient">Offre de lancement</span>
+            <div className="cta-slots-row">
+              <span className="cta-slot-dot" />
+              <span className="cta-slots-text">3 créneaux disponibles cette semaine</span>
+            </div>
             <h2 className="cta-banner-title font-primary">
               Audit opérationnel gratuit de 30 minutes
             </h2>
             <p className="cta-banner-desc">
-              Découvrez en 30 minutes comment l&apos;IA peut transformer vos opérations quotidiennes. 
-              Sans engagement, sans jargon technique — juste des résultats concrets.
+              En 30 minutes, on identifie combien d&apos;heures par semaine vous perdez sur des tâches automatisables — et on vous montre exactement comment les récupérer.
             </p>
             <div className="cta-banner-actions">
               <Link href="/contact" className="btn btn-primary shine-hover">
@@ -332,7 +428,7 @@ const styleHome = (
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 5rem 0 4rem 0;
+      padding: 3.5rem 0 2.5rem 0;
       max-width: 950px;
       margin: 0 auto;
     }
@@ -347,7 +443,7 @@ const styleHome = (
       color: var(--secondary);
       font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 2.25rem;
+      margin-bottom: 1.75rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
@@ -357,7 +453,7 @@ const styleHome = (
     .hero-title {
       font-size: 4rem;
       line-height: 1.15;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.25rem;
       color: white;
       letter-spacing: -0.03em;
     }
@@ -365,19 +461,40 @@ const styleHome = (
       font-size: 1.25rem;
       line-height: 1.65;
       color: var(--text-muted);
-      margin-bottom: 3.25rem;
+      margin-bottom: 2.5rem;
       max-width: 760px;
     }
     .hero-actions {
       display: flex;
       gap: 1.5rem;
-      margin-bottom: 5.5rem;
+      margin-bottom: 3.5rem;
     }
     
+    /* Trust pills */
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: -1.5rem;
+    }
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .trust-check {
+      color: #10b981;
+      flex-shrink: 0;
+    }
+
     /* Partners Marquee */
     .partners-marquee-section {
       width: 100%;
-      margin-bottom: 7.5rem;
+      margin-bottom: 5rem;
       text-align: center;
     }
     .marquee-title {
@@ -415,7 +532,7 @@ const styleHome = (
     
     /* Stats */
     .stats-section {
-      padding: 5.5rem 0;
+      padding: 3.5rem 0;
     }
     .stats-grid {
       display: grid;
@@ -455,9 +572,81 @@ const styleHome = (
       line-height: 1.5;
     }
     
+    /* How it works */
+    .how-section {
+      padding: 4rem 0;
+    }
+    .how-title {
+      font-size: 2.25rem;
+      color: white;
+      margin-top: 0.5rem;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+    .how-steps {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+    .how-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.5rem 2rem !important;
+      position: relative;
+    }
+    .how-step-num {
+      position: absolute;
+      top: -12px;
+      left: 1.5rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--secondary);
+      background: var(--background);
+      padding: 0.15rem 0.55rem;
+      letter-spacing: 0.1em;
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      border-radius: 4px;
+    }
+    .how-step-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    .how-step-title {
+      font-size: 1.1rem;
+      color: white;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+    .how-step-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .how-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      flex-shrink: 0;
+    }
+    .how-arrow {
+      color: var(--secondary);
+      opacity: 0.4;
+    }
+
     /* Testimonials section */
     .testimonials-section {
-      padding: 6.5rem 0;
+      padding: 4.5rem 0;
     }
     .testimonials-title {
       font-size: 2.25rem;
@@ -557,7 +746,7 @@ const styleHome = (
     }
     
     .pain-solution-section {
-      padding: 6.5rem 0;
+      padding: 4.5rem 0;
     }
     .ps-header {
       text-align: center;
@@ -702,9 +891,82 @@ const styleHome = (
       color: var(--secondary);
       letter-spacing: 0.05em;
     }
+    /* Objections */
+    .obj-section {
+      padding: 4.5rem 0;
+    }
+    .obj-title {
+      font-size: 2.25rem;
+      color: white;
+      margin-top: 0.5rem;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+    .obj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .obj-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem !important;
+    }
+    .obj-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .obj-objection {
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .obj-answer {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
     /* CTA Banner */
+    /* Slots urgency */
+    .cta-slots-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.25rem;
+    }
+    .cta-slot-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: slot-pulse 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes slot-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .cta-slots-text {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #10b981;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
     .cta-banner-section {
-      padding: 2rem 0 6.5rem 0;
+      padding: 1.5rem 0 4.5rem 0;
     }
     .cta-banner {
       display: flex;
@@ -766,6 +1028,19 @@ const styleHome = (
       .stats-grid {
         grid-template-columns: 1fr;
       }
+      .how-steps {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .how-connector {
+        display: none;
+      }
+      .obj-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-trust {
+        gap: 0.5rem;
+      }
       .ps-grid {
         grid-template-columns: 1fr;
       }
@@ -784,6 +1059,96 @@ const styleHome = (
       }
       .nav-btn {
         display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 2rem 0 1.5rem;
+      }
+      .hero-badge {
+        font-size: 0.72rem;
+        padding: 0.45rem 0.9rem;
+        margin-bottom: 1.25rem;
+      }
+      .hero-title {
+        font-size: 2.1rem;
+        margin-bottom: 1rem;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+        margin-bottom: 2.5rem;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .hero-trust {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .trust-pill {
+        font-size: 0.78rem;
+      }
+      .how-title,
+      .testimonials-title,
+      .ps-main-title,
+      .obj-title {
+        font-size: 1.75rem;
+      }
+      .stat-value {
+        font-size: 1.85rem;
+      }
+      .cta-banner {
+        flex-direction: column !important;
+        padding: 2rem 1.5rem !important;
+        align-items: flex-start !important;
+        gap: 1.5rem !important;
+      }
+      .cta-banner-content {
+        max-width: 100%;
+      }
+      .cta-banner-title {
+        font-size: 1.5rem;
+      }
+      .cta-banner-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      .cta-banner-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .cta-banner-badge {
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
+        padding: 0.9rem 1.25rem;
+      }
+      .ps-card {
+        padding: 1.75rem !important;
+      }
+      .how-step {
+        padding: 2rem 1.5rem !important;
+      }
+      .obj-card {
+        padding: 1.5rem !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .hero-title {
+        font-size: 1.85rem;
+      }
+      .hero-subtitle {
+        font-size: 0.92rem;
       }
     }
   `}</style>

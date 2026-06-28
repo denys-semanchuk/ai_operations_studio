@@ -10,28 +10,23 @@ interface Message {
   sender: "bot" | "user";
 }
 
-const botResponses: Record<string, string> = {
-  "default": "Je suis l'assistant virtuel d'AI Operations Studio. Comment puis-je vous aider ? Vous pouvez me poser des questions sur nos offres, nos tarifs ou notre processus d'intégration.",
-  "prix": "Nos forfaits démarrent à 490€/mois pour l'IA FAQ & Auto-Replies. Le Combo Web + IA Agent est à 990€, et le forfait Qualification & CRM Sync à 1 490€/mois. Tous incluent un audit gratuit de 30 minutes !",
-  "tarif": "Nos forfaits démarrent à 490€/mois pour l'IA FAQ & Auto-Replies. Le Combo Web + IA Agent est à 990€, et le forfait Qualification & CRM Sync à 1 490€/mois. Tous incluent un audit gratuit de 30 minutes !",
-  "audit": "L'audit opérationnel gratuit dure 30 minutes. Nous analysons vos flux de travail actuels (traitement des leads, réponses clients, CRM) et identifions les points d'automatisation IA les plus rentables pour votre agence.",
-  "n8n": "n8n est notre outil d'orchestration principal. Il connecte votre site web, vos chatbots IA (Claude/GPT), votre CRM (Airtable/Notion) et vos canaux de communication (email, WhatsApp) en workflows automatisés.",
-  "combien": "Le temps d'intégration est de 2 à 4 semaines selon la complexité. Nous offrons un accompagnement complet avec formation de votre équipe. Le ROI est visible dès le premier mois avec 10 à 20h économisées par semaine.",
-  "contact": "Vous pouvez nous contacter directement via la page Contact, ou planifier un audit gratuit. Denys Semanchuk, le fondateur, vous répond personnellement sous 24h. Email : denys@aioperations.studio",
-  "bonjour": "Bonjour ! 👋 Bienvenue chez AI Operations Studio. Je suis votre assistant IA virtuel. Comment puis-je vous aider aujourd'hui ? N'hésitez pas à me poser vos questions sur nos services d'automatisation.",
-  "salut": "Salut ! 👋 Bienvenue chez AI Operations Studio. Comment puis-je vous aider aujourd'hui ?",
-  "immobilier": "Nous sommes spécialisés dans l'automatisation pour les agences immobilières. Nos agents IA qualifient automatiquement vos leads (budget, surface, localisation), prennent des rendez-vous et injectent les données dans votre CRM.",
-  "roi": "En moyenne, nos clients économisent 10 à 20 heures par semaine et augmentent leur taux de conversion de 25 à 40%. Utilisez notre Simulateur ROI sur la page dédiée pour calculer votre gain personnalisé !",
-};
+const WELCOME_MESSAGE =
+  "Bonjour ! Je suis l'assistant IA d'AI Operations Studio. Comment puis-je vous aider ? Posez-moi vos questions sur nos offres, tarifs ou notre processus d'intégration.";
 
-function findBotResponse(input: string): string {
-  const lower = input.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  for (const [key, value] of Object.entries(botResponses)) {
-    if (key !== "default" && lower.includes(key)) {
-      return value;
-    }
+async function fetchBotReply(
+  history: { role: "user" | "assistant"; content: string }[]
+): Promise<string> {
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history }),
+    });
+    const data = await res.json();
+    return data.reply ?? "Désolé, une erreur s'est produite.";
+  } catch {
+    return "Problème de connexion. Contactez-nous à denys@aioperations.studio !";
   }
-  return "Merci pour votre question ! Pour une réponse détaillée et personnalisée, je vous invite à planifier un audit gratuit de 30 minutes avec Denys. Vous pouvez le faire directement depuis notre page Contact.";
 }
 
 export default function ChatWidget() {
@@ -52,39 +47,39 @@ export default function ChatWidget() {
     setIsOpen(true);
     if (!hasOpened) {
       setHasOpened(true);
-      // Send welcome message
       setTimeout(() => {
-        setMessages([{
-          id: 1,
-          text: botResponses["default"],
-          sender: "bot",
-        }]);
+        setMessages([{ id: 1, text: WELCOME_MESSAGE, sender: "bot" }]);
       }, 500);
     }
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    const userMsg: Message = {
-      id: Date.now(),
-      text: input.trim(),
-      sender: "user",
-    };
-    setMessages((prev) => [...prev, userMsg]);
+  const sendMessage = async (text: string) => {
+    const userMsg: Message = { id: Date.now(), text, sender: "user" };
+    setMessages((prev) => {
+      const next = [...prev, userMsg];
+      callApi(next);
+      return next;
+    });
     setInput("");
     setIsTyping(true);
+  };
 
-    // Simulate AI thinking delay
-    const delay = 800 + Math.random() * 1200;
-    setTimeout(() => {
-      const botMsg: Message = {
-        id: Date.now() + 1,
-        text: findBotResponse(userMsg.text),
-        sender: "bot",
-      };
-      setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false);
-    }, delay);
+  const callApi = async (currentMessages: Message[]) => {
+    const history = currentMessages.map((m) => ({
+      role: m.sender === "user" ? ("user" as const) : ("assistant" as const),
+      content: m.text,
+    }));
+    const reply = await fetchBotReply(history);
+    setMessages((prev) => [
+      ...prev,
+      { id: Date.now(), text: reply, sender: "bot" },
+    ]);
+    setIsTyping(false);
+  };
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+    sendMessage(input.trim());
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -139,7 +134,11 @@ export default function ChatWidget() {
                   </div>
                 </div>
               </div>
-              <button className="chat-close" onClick={() => setIsOpen(false)} aria-label="Fermer le chat">
+              <button
+                className="chat-close"
+                onClick={() => setIsOpen(false)}
+                aria-label="Fermer le chat"
+              >
                 <X size={18} />
               </button>
             </div>
@@ -154,14 +153,20 @@ export default function ChatWidget() {
                   className={`chat-msg ${msg.sender}`}
                 >
                   <div className="chat-msg-avatar">
-                    {msg.sender === "bot" ? <Bot size={14} /> : <User size={14} />}
+                    {msg.sender === "bot" ? (
+                      <Bot size={14} />
+                    ) : (
+                      <User size={14} />
+                    )}
                   </div>
                   <div className="chat-msg-bubble">{msg.text}</div>
                 </motion.div>
               ))}
               {isTyping && (
                 <div className="chat-msg bot">
-                  <div className="chat-msg-avatar"><Bot size={14} /></div>
+                  <div className="chat-msg-avatar">
+                    <Bot size={14} />
+                  </div>
                   <div className="chat-msg-bubble chat-typing">
                     <span className="typing-dot" />
                     <span className="typing-dot" />
@@ -174,23 +179,16 @@ export default function ChatWidget() {
             {/* Quick Suggestions */}
             {messages.length <= 1 && (
               <div className="chat-suggestions">
-                {["Quels sont vos tarifs ?", "Comment fonctionne l'audit ?", "Quel ROI espérer ?"].map((s) => (
+                {[
+                  "Quels sont vos tarifs ?",
+                  "Comment fonctionne l'audit ?",
+                  "Quel ROI espérer ?",
+                ].map((s) => (
                   <button
                     key={s}
+                    type="button"
                     className="chat-suggestion-btn"
-                    onClick={() => {
-                      setInput(s);
-                      setTimeout(() => {
-                        const userMsg: Message = { id: Date.now(), text: s, sender: "user" };
-                        setMessages((prev) => [...prev, userMsg]);
-                        setIsTyping(true);
-                        setTimeout(() => {
-                          setMessages((prev) => [...prev, { id: Date.now() + 1, text: findBotResponse(s), sender: "bot" }]);
-                          setIsTyping(false);
-                        }, 1000);
-                      }, 100);
-                      setInput("");
-                    }}
+                    onClick={() => sendMessage(s)}
                   >
                     {s}
                   </button>
@@ -207,8 +205,14 @@ export default function ChatWidget() {
                 onKeyDown={handleKeyDown}
                 placeholder="Posez votre question..."
                 className="chat-input"
+                disabled={isTyping}
               />
-              <button className="chat-send-btn" onClick={handleSend} disabled={!input.trim()} aria-label="Envoyer">
+              <button
+                className="chat-send-btn"
+                onClick={handleSend}
+                disabled={!input.trim() || isTyping}
+                aria-label="Envoyer"
+              >
                 <Send size={16} />
               </button>
             </div>
@@ -444,6 +448,10 @@ export default function ChatWidget() {
         }
         .chat-input:focus {
           border-color: rgba(14, 165, 233, 0.4);
+        }
+        .chat-input:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
         .chat-input::placeholder {
           color: var(--text-dim);

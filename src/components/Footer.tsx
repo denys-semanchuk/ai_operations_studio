@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Cpu, Mail, Phone, MapPin, Linkedin, ArrowUpRight } from "lucide-react";
+import { Cpu, Mail, MapPin, Linkedin } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,10 +18,10 @@ export default function Footer() {
             Conception, intégration et optimisation de systèmes d'Intelligence Artificielle sur-mesure pour les agences immobilières.
           </p>
           <div className="social-links">
-            <a 
-              href="https://linkedin.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.linkedin.com/in/denys-semanchuk/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="social-link"
               aria-label="LinkedIn"
             >
@@ -62,11 +62,7 @@ export default function Footer() {
               </li>
               <li>
                 <Mail size={16} className="contact-icon text-gradient" />
-                <a href="mailto:denys.semanchuk@example.com">denys.semanchuk@example.com</a>
-              </li>
-              <li>
-                <Phone size={16} className="contact-icon text-gradient" />
-                <span>+33 6 00 00 00 00</span>
+                <a href="mailto:denys@aioperations.studio">denys@aioperations.studio</a>
               </li>
             </ul>
           </div>

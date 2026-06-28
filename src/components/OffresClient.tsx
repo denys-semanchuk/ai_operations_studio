@@ -225,7 +225,7 @@ const styleOffers = (
   <style jsx global>{`
     .offres-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
     .offres-title {
       font-size: 2.75rem;
@@ -243,8 +243,8 @@ const styleOffers = (
     .offers-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2.5rem;
-      margin-bottom: 5rem;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
     }
     .offer-card {
       display: flex;
@@ -335,8 +335,8 @@ const styleOffers = (
     .retainer-card {
       background: linear-gradient(135deg, rgba(15, 20, 45, 0.7) 0%, rgba(5, 8, 22, 0.7) 100%);
       border: 1px solid rgba(99, 102, 241, 0.2);
-      padding: 3rem;
-      margin-bottom: 5rem;
+      padding: 2.5rem;
+      margin-bottom: 3.5rem;
     }
     .retainer-badge {
       display: inline-block;
@@ -396,7 +396,7 @@ const styleOffers = (
     
     /* FAQ Accordion */
     .faq-section {
-      padding: 3rem 0;
+      padding: 2rem 0;
       max-width: 800px;
       margin: 0 auto;
     }
@@ -404,7 +404,7 @@ const styleOffers = (
       font-size: 2.25rem;
       color: white;
       margin-top: 0.5rem;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
     }
     .faq-accordion-container {
       display: flex;
@@ -474,6 +474,47 @@ const styleOffers = (
         border-top: 1px solid rgba(255, 255, 255, 0.08);
         padding-top: 2rem;
         width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .offres-title {
+        font-size: 1.9rem;
+      }
+      .offres-subtitle {
+        font-size: 1rem;
+      }
+      .offer-title {
+        font-size: 1.25rem;
+      }
+      .offer-price-val {
+        font-size: 1.3rem;
+      }
+      .retainer-card {
+        padding: 1.75rem !important;
+      }
+      .retainer-title {
+        font-size: 1.35rem;
+      }
+      .retainer-price {
+        font-size: 1.6rem;
+      }
+      .retainer-btn {
+        width: 100%;
+      }
+      .faq-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .faq-question-text {
+        font-size: 0.95rem;
+      }
+      .faq-question-btn {
+        padding: 1rem;
+        gap: 0.75rem;
+      }
+      .faq-answer-content {
+        padding: 0 1rem 1rem 2.5rem;
       }
     }
   `}</style>

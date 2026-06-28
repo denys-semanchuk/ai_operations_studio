@@ -282,7 +282,7 @@ const styleRoi = (
   <style jsx global>{`
     .roi-header {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem;
     }
     .roi-title {
       font-size: 2.75rem;
@@ -311,10 +311,10 @@ const styleRoi = (
     .panel-subtitle {
       font-size: 0.9rem;
       color: var(--text-muted);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     .slider-group {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
     .slider-header {
       display: flex;
@@ -604,6 +604,52 @@ const styleRoi = (
       }
       .gauge-card {
         padding: 3rem;
+      }
+      .breakdown-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .roi-title {
+        font-size: 1.9rem;
+      }
+      .roi-subtitle {
+        font-size: 1rem;
+      }
+      .panel-title {
+        font-size: 1.2rem;
+      }
+      .slider-group label {
+        font-size: 0.85rem;
+      }
+      .result-value {
+        font-size: 1.1rem;
+      }
+      .annual-total-value {
+        font-size: 2.25rem;
+      }
+      .comparison-title {
+        font-size: 0.82rem;
+      }
+      .breakdown-card {
+        padding: 1rem 1.25rem !important;
+      }
+      .sliders-panel,
+      .results-panel {
+        padding: 1.5rem !important;
+      }
+      .gauge-card {
+        padding: 2rem;
+      }
+      .bar-text {
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .results-layout {
+        grid-template-columns: 1fr;
       }
       .breakdown-grid {
         grid-template-columns: 1fr;

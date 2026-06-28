@@ -7,6 +7,8 @@ import TiltCard from "@/components/TiltCard";
 
 export default function ContactClient() {
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formError, setFormError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [quickLeadSubmitted, setQuickLeadSubmitted] = useState(false);
 
   // Form bound states
@@ -23,16 +25,25 @@ export default function ContactClient() {
   const [bookedTime, setBookedTime] = useState("");
   const [sidebarTab, setSidebarTab] = useState<"calendar" | "crm">("calendar");
 
-  const bookingDates = [
-    { label: "29 Juin", name: "Lundi 29 Juin", status: "disponible" },
-    { label: "30 Juin", name: "Mardi 30 Juin", status: "occupé" },
-    { label: "1 Juil", name: "Mercredi 1er Juillet", status: "disponible" },
-    { label: "2 Juil", name: "Jeudi 2 Juillet", status: "disponible" },
-    { label: "3 Juil", name: "Vendredi 3 Juillet", status: "occupé" },
-    { label: "6 Juil", name: "Lundi 6 Juillet", status: "disponible" },
-    { label: "7 Juil", name: "Mardi 7 Juillet", status: "disponible" },
-    { label: "8 Juil", name: "Mercredi 8 Juillet", status: "disponible" },
-  ];
+  const bookingDates = (() => {
+    const DAY_NAMES = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+    const MONTH_SHORT = ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"];
+    const result = [];
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    while (result.length < 8) {
+      const dow = d.getDay();
+      if (dow !== 0 && dow !== 6) {
+        result.push({
+          label: `${d.getDate()} ${MONTH_SHORT[d.getMonth()]}`,
+          name: `${DAY_NAMES[dow]} ${d.getDate()} ${MONTH_SHORT[d.getMonth()]}`,
+          status: "disponible",
+        });
+      }
+      d.setDate(d.getDate() + 1);
+    }
+    return result;
+  })();
 
   const timeSlots = [
     { time: "10:00", status: "disponible" },
@@ -49,15 +60,43 @@ export default function ContactClient() {
     setMessageText(`Bonjour Denys, je souhaite réserver un créneau d'audit gratuit pour mon agence le ${dayName} à ${timeVal}. Nous cherchons à automatiser nos processus.`);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setMessageText("");
-      setBookedDay("");
-      setBookedTime("");
-    }, 5000);
+    setIsSubmitting(true);
+    setFormError(false);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("ct-name"),
+          phone: data.get("ct-phone"),
+          email: data.get("ct-email"),
+          service: selectedService,
+          message: messageText,
+          bookedDay,
+          bookedTime,
+        }),
+      });
+      if (res.ok) {
+        setFormSubmitted(true);
+        form.reset();
+        setTimeout(() => {
+          setFormSubmitted(false);
+          setMessageText("");
+          setBookedDay("");
+          setBookedTime("");
+        }, 6000);
+      } else {
+        setFormError(true);
+      }
+    } catch {
+      setFormError(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleQuickLeadSubmit = (e: React.FormEvent) => {
@@ -121,14 +160,14 @@ export default function ContactClient() {
                     <label htmlFor="ct-name">Nom / Agence <span className="ct-required">*</span></label>
                     <div className="ct-input-wrap">
                       <Building2 size={16} className="ct-input-icon" />
-                      <input id="ct-name" type="text" required placeholder="Ex: Agence Immobilière de Bezons" className="ct-input" />
+                      <input id="ct-name" name="ct-name" type="text" required placeholder="Ex: Agence Immobilière de Bezons" className="ct-input" />
                     </div>
                   </div>
                   <div className="ct-form-group">
                     <label htmlFor="ct-phone">Téléphone</label>
                     <div className="ct-input-wrap">
                       <Phone size={16} className="ct-input-icon" />
-                      <input id="ct-phone" type="tel" placeholder="+33 6 12 34 56 78" className="ct-input" />
+                      <input id="ct-phone" name="ct-phone" type="tel" placeholder="+33 6 12 34 56 78" className="ct-input" />
                     </div>
                   </div>
                 </div>
@@ -137,7 +176,7 @@ export default function ContactClient() {
                   <label htmlFor="ct-email">Adresse E-mail <span className="ct-required">*</span></label>
                   <div className="ct-input-wrap">
                     <Mail size={16} className="ct-input-icon" />
-                    <input id="ct-email" type="email" required placeholder="contact@votre-agence.com" className="ct-input" />
+                    <input id="ct-email" name="ct-email" type="email" required placeholder="contact@votre-agence.com" className="ct-input" />
                   </div>
                 </div>
 
@@ -171,9 +210,12 @@ export default function ContactClient() {
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn btn-primary ct-submit shine-hover">
+                {formError && (
+                  <p className="ct-form-error">Erreur d'envoi. Écrivez directement à <a href="mailto:denys@aioperations.studio">denys@aioperations.studio</a></p>
+                )}
+                <button type="submit" className="btn btn-primary ct-submit shine-hover" disabled={isSubmitting}>
                   <Send size={16} />
-                  <span>Envoyer ma demande d&apos;audit</span>
+                  <span>{isSubmitting ? "Envoi en cours..." : "Envoyer ma demande d'audit"}</span>
                 </button>
               </form>
             )}
@@ -354,7 +396,7 @@ const styleContact = (
     /* ──────────────────── HEADER ──────────────────── */
     .contact-header {
       text-align: center;
-      margin-bottom: 4.5rem;
+      margin-bottom: 3rem;
     }
     .contact-title {
       font-size: 2.75rem;
@@ -375,7 +417,7 @@ const styleContact = (
     .contact-layout {
       display: grid;
       grid-template-columns: 1.3fr 1fr;
-      gap: 3rem;
+      gap: 2.5rem;
       align-items: start;
     }
 
@@ -541,6 +583,22 @@ const styleContact = (
       font-size: 0.95rem;
       justify-content: center;
       gap: 0.6rem;
+    }
+    .ct-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .ct-form-error {
+      font-size: 0.85rem;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+    }
+    .ct-form-error a {
+      color: #ef4444;
+      text-decoration: underline;
     }
 
     /* ──────────────────── SUCCESS ──────────────────── */
@@ -806,6 +864,12 @@ const styleContact = (
       }
     }
     @media (max-width: 600px) {
+      .contact-title {
+        font-size: 1.9rem;
+      }
+      .contact-subtitle {
+        font-size: 1rem;
+      }
       .ct-form-row {
         grid-template-columns: 1fr;
       }
@@ -813,7 +877,27 @@ const styleContact = (
         grid-template-columns: repeat(4, 1fr);
       }
       .ct-form-panel {
-        padding: 1.75rem !important;
+        padding: 1.5rem !important;
+      }
+      .ct-panel-title {
+        font-size: 1.15rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .ct-days-row {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.25rem;
+      }
+      .ct-day-btn {
+        font-size: 0.7rem;
+        padding: 0.45rem 0.1rem;
+      }
+      .ct-times-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .ct-console-body {
+        padding: 1.25rem;
       }
     }
   `}</style>

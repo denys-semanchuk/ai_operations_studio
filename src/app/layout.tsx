@@ -9,6 +9,7 @@ import ChatWidget from "@/components/ChatWidget";
 import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
 import CookieBanner from "@/components/CookieBanner";
+import StickyConversionBar from "@/components/StickyConversionBar";
 
 // Next.js optimized font loading — eliminates render-blocking @import
 const outfit = Outfit({
@@ -47,11 +48,13 @@ export const metadata: Metadata = {
     siteName: "AI Operations Studio",
     title: "AI Operations Studio | Intégration IA pour l'Immobilier",
     description: "Automatisez vos opérations immobilières grâce aux agents IA autonomes. Gagnez 10 à 20h par semaine.",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "AI Operations Studio",
     description: "Automatisez vos opérations immobilières grâce aux agents IA autonomes.",
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -92,7 +95,7 @@ export default function RootLayout({
         
         {/* Shared Layout Structure */}
         <Header />
-        <main style={{ minHeight: "calc(100vh - 200px)", position: "relative", zIndex: 1 }}>
+        <main className="main-content">
           {children}
         </main>
         <Footer />
@@ -100,6 +103,7 @@ export default function RootLayout({
         {/* Interactive overlays */}
         <ScrollProgress />
         <ChatWidget />
+        <StickyConversionBar />
         <BackToTop />
         <CookieBanner />
       </body>
