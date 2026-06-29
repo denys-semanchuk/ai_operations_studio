@@ -15,6 +15,7 @@ export default function Header() {
     { name: "Offres", href: "/offres" },
     { name: "Simulateur ROI", href: "/roi" },
     { name: "Démo Live", href: "/demo" },
+    { name: "Blog", href: "/blog" },
     { name: "À propos", href: "/a-propos" },
   ];
 
@@ -57,7 +58,7 @@ export default function Header() {
         </div>
 
         {/* Mobile menu toggle */}
-        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+        <button type="button" className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>

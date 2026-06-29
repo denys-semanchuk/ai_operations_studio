@@ -77,7 +77,7 @@ export default function Footer() {
           <div className="legal-links">
             <span>Micro-entreprise — Franchise en base de TVA</span>
             <span className="separator">•</span>
-            <span>Porteur de projet: Denys Semanchuk</span>
+            <Link href="/mentions-legales" className="legal-link">Mentions légales</Link>
           </div>
         </div>
       </div>
@@ -201,6 +201,13 @@ export default function Footer() {
           flex-shrink: 0;
         }
         .footer-contact-list a:hover {
+          color: var(--secondary);
+        }
+        .legal-link {
+          color: var(--text-dim);
+          transition: color 0.2s;
+        }
+        .legal-link:hover {
           color: var(--secondary);
         }
         .footer-bottom {

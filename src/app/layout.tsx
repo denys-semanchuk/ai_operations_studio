@@ -10,6 +10,9 @@ import ScrollProgress from "@/components/ScrollProgress";
 import BackToTop from "@/components/BackToTop";
 import CookieBanner from "@/components/CookieBanner";
 import StickyConversionBar from "@/components/StickyConversionBar";
+import ExitIntent from "@/components/ExitIntent";
+import PageTransition from "@/components/PageTransition";
+import RouteProgress from "@/components/RouteProgress";
 
 // Next.js optimized font loading — eliminates render-blocking @import
 const outfit = Outfit({
@@ -72,6 +75,67 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLdLocalBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "AI Operations Studio",
+  description:
+    "Conception, intégration et optimisation de systèmes d'Intelligence Artificielle pour les agences immobilières en Île-de-France.",
+  url: "https://aioperations.studio",
+  email: "denys@aioperations.studio",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Bezons",
+    postalCode: "95870",
+    addressRegion: "Val-d'Oise",
+    addressCountry: "FR",
+  },
+  founder: { "@type": "Person", name: "Denys Semanchuk" },
+  sameAs: ["https://www.linkedin.com/in/denys-semanchuk/"],
+  priceRange: "€€",
+  openingHours: "Mo-Fr 09:00-18:00",
+  areaServed: { "@type": "State", name: "Île-de-France" },
+};
+
+const jsonLdFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Faut-il des compétences techniques pour utiliser vos solutions ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Non. Nous gérons l'installation, la configuration et la formation complète. Si vous utilisez WhatsApp, vous pouvez utiliser nos outils.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Combien de temps faut-il pour mettre en place une automatisation ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "L'intégration prend généralement 2 à 4 semaines. Nous assurons une transition sans interruption de votre activité.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quel est le retour sur investissement ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Nos clients gagnent en moyenne 10 à 20 heures par semaine et constatent une augmentation de 25 à 40% de leur taux de conversion dès le premier mois.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "L'audit initial est-il vraiment gratuit ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui, l'audit opérationnel de 30 minutes est 100% gratuit et sans engagement. Nous analysons vos flux actuels et identifions les automatisations les plus rentables.",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -82,6 +146,20 @@ export default function RootLayout({
       <head>
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
+        />
+        {/* Microsoft Clarity — heatmaps & session recordings */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xenny85rcx");`,
+          }}
+        />
       </head>
       <body>
         {/* Background visual components */}
@@ -90,13 +168,16 @@ export default function RootLayout({
         <div className="glow-orb glow-orb-primary" aria-hidden="true" />
         <div className="glow-orb glow-orb-secondary" aria-hidden="true" />
         
+        <RouteProgress />
         <ThreeBackground />
         <CursorGlow />
-        
+
         {/* Shared Layout Structure */}
         <Header />
         <main className="main-content">
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
         <Footer />
 
@@ -106,6 +187,7 @@ export default function RootLayout({
         <StickyConversionBar />
         <BackToTop />
         <CookieBanner />
+        <ExitIntent />
       </body>
     </html>
   );

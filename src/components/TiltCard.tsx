@@ -12,79 +12,78 @@ export default function TiltCard({ children, className = "" }: TiltCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
-  const [glowStyle, setGlowStyle] = useState<React.CSSProperties>({
-    opacity: 0,
-    background: "radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 80%)",
-  });
+  const [scale, setScale] = useState(1);
+  const [glowVars, setGlowVars] = useState<React.CSSProperties>({
+    "--tc-gx": "50%",
+    "--tc-gy": "50%",
+    "--tc-opacity": "0",
+  } as React.CSSProperties);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    
-    // Relative coordinates
+
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    // Calculate rotation (max 10 degrees tilt)
-    const centerX = mouseX - width / 2;
-    const centerY = mouseY - height / 2;
-    const rX = -(centerY / (height / 2)) * 8;
-    const rY = (centerX / (width / 2)) * 8;
+    const rX = -((mouseY - rect.height / 2) / (rect.height / 2)) * 9;
+    const rY = ((mouseX - rect.width / 2) / (rect.width / 2)) * 9;
 
     setRotateX(rX);
     setRotateY(rY);
-
-    // Glowing border shine position
-    setGlowStyle({
-      opacity: 1,
-      background: `radial-gradient(circle 120px at ${mouseX}px ${mouseY}px, rgba(14, 165, 233, 0.12) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 100%)`,
-    });
+    setGlowVars({
+      "--tc-gx": `${Math.round((mouseX / rect.width) * 100)}%`,
+      "--tc-gy": `${Math.round((mouseY / rect.height) * 100)}%`,
+      "--tc-opacity": "1",
+    } as React.CSSProperties);
   };
+
+  const handleMouseEnter = () => setScale(1.018);
 
   const handleMouseLeave = () => {
     setRotateX(0);
     setRotateY(0);
-    setGlowStyle({
-      opacity: 0,
-      background: "radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 80%)",
-    });
+    setScale(1);
+    setGlowVars((prev) => ({ ...prev, "--tc-opacity": "0" } as React.CSSProperties));
   };
 
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      animate={{ rotateX, rotateY }}
-      transition={{ type: "spring", stiffness: 350, damping: 25 }}
-      style={{ 
-        transformStyle: "preserve-3d",
-        position: "relative",
-      }}
+      animate={{ rotateX, rotateY, scale }}
+      transition={{ type: "spring", stiffness: 180, damping: 18, mass: 0.8 }}
+      style={{ transformStyle: "preserve-3d", position: "relative", willChange: "transform", ...glowVars }}
       className={`glass-card ${className}`}
     >
-      {/* Glow highlight background */}
-      <div 
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          transition: "opacity 0.2s ease",
-          zIndex: 1,
-          ...glowStyle,
-        }}
-      />
-      
-      {/* Content wrapper preserving 3D spacing */}
-      <div style={{ transform: "translateZ(25px)", zIndex: 2, position: "relative" }}>
-        {children}
-      </div>
+      <div className="tc-spotlight" />
+      <div className="tc-content">{children}</div>
+
+      <style jsx global>{`
+        .tc-spotlight {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          pointer-events: none;
+          opacity: var(--tc-opacity, 0);
+          background: radial-gradient(
+            circle 220px at var(--tc-gx, 50%) var(--tc-gy, 50%),
+            rgba(14, 165, 233, 0.16) 0%,
+            rgba(99, 102, 241, 0.07) 50%,
+            transparent 100%
+          );
+          transition: opacity 0.3s ease;
+          z-index: 1;
+        }
+        .tc-content {
+          transform: translateZ(20px);
+          z-index: 2;
+          position: relative;
+        }
+      `}</style>
     </motion.div>
   );
 }

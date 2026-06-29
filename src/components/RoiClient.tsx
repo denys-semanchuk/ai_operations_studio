@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Clock, TrendingUp, Euro, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
@@ -35,16 +36,26 @@ export default function RoiCalculator() {
   return (
     <div className="page-wrapper container">
       {/* Intro */}
-      <div className="roi-header">
+      <motion.div
+        className="roi-header"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      >
         <span className="section-label text-gradient">Simulateur d'Impact</span>
         <h1 className="roi-title font-primary">Calculez le ROI de l'IA pour votre agence</h1>
         <p className="roi-subtitle">
           Découvrez combien d'heures et d'argent vous pouvez économiser en automatisant vos tâches opérationnelles et commerciales.
         </p>
-      </div>
+      </motion.div>
 
       {/* Main Container */}
-      <div className="roi-container">
+      <motion.div
+        className="roi-container"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+      >
         {/* Left Column: Sliders */}
         <TiltCard className="sliders-panel">
           <h3 className="panel-title">Vos paramètres actuels</h3>
@@ -271,7 +282,7 @@ export default function RoiCalculator() {
             <span>Présenter ce plan à mon agence</span>
           </Link>
         </TiltCard>
-      </div>
+      </motion.div>
 
       {styleRoi}
     </div>

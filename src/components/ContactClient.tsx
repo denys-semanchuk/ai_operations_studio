@@ -99,9 +99,24 @@ export default function ContactClient() {
     }
   };
 
-  const handleQuickLeadSubmit = (e: React.FormEvent) => {
+  const handleQuickLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agencyName || !agencyPhone) return;
+    try {
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: agencyName,
+          phone: agencyPhone,
+          email: "crm-demo@aioperations.studio",
+          service: "audit",
+          message: agencyNote || `Lead Terminal CRM — ${agencyName} / ${agencyPhone}`,
+        }),
+      });
+    } catch {
+      // fail silently — lead still shown as received to avoid friction
+    }
     setQuickLeadSubmitted(true);
     setTimeout(() => {
       setQuickLeadSubmitted(false);

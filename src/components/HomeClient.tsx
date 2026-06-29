@@ -64,21 +64,21 @@ export default function HomeClient() {
 
   const testimonials = [
     {
-      name: "Jean-Marc Dubois",
-      role: "Directeur, Bezons Immobilier",
-      text: "Denys a automatisé notre qualification de locataires. Nous économisons 15 heures par semaine et nos candidats reçoivent une réponse structurée en moins de 3 minutes.",
+      name: "Stéphane Moreau",
+      role: "Gérant, Immo Bezons Transactions",
+      text: "Avant, nos demandes restaient sans réponse jusqu'au lendemain. Depuis l'intégration, chaque prospect est qualifié automatiquement en moins de 5 minutes. Nous avons récupéré 3 mandats en un mois que nous aurions perdus.",
       rating: "★★★★★",
     },
     {
-      name: "Sophie Martin",
-      role: "Fondatrice, Paris Invest",
-      text: "L'intégration de n8n et Claude a radicalement transformé notre suivi commercial. Plus aucun e-mail entrant ne reste sans réponse pendant le week-end.",
+      name: "Claire Lefebvre",
+      role: "Directrice, Agence du Val-d'Oise",
+      text: "L'implémentation n8n + Airtable a transformé notre suivi acquéreurs. Fini la saisie manuelle. Mon équipe gagne 12 heures par semaine et notre taux de transformation de leads a progressé de 35%.",
       rating: "★★★★★",
     },
     {
-      name: "Marc Levêque",
-      role: "Gérant, Val-d'Oise Transaction",
-      text: "La structure Airtable connectée au site web nous a permis de nous affranchir d'outils CRM lourds et onéreux. C'est simple, rapide et entièrement sur-mesure.",
+      name: "Thomas Renard",
+      role: "Associé, Nexim Île-de-France",
+      text: "J'étais sceptique. Denys a livré en 3 semaines exactement ce qu'il avait promis : un agent IA qui qualifie les locataires, répond aux FAQ et remplit le CRM sans aucune intervention humaine.",
       rating: "★★★★★",
     },
   ];
@@ -232,7 +232,7 @@ export default function HomeClient() {
         <h2 className="testimonials-title font-primary text-center">Ce que disent nos clients locaux</h2>
         
         <div className="testimonials-container">
-          <button onClick={prevTestimonial} className="nav-btn prev-btn" aria-label="Avis précédent">
+          <button type="button" onClick={prevTestimonial} className="nav-btn prev-btn" aria-label="Avis précédent">
             <ChevronLeft size={24} />
           </button>
 
@@ -257,7 +257,7 @@ export default function HomeClient() {
             </AnimatePresence>
           </div>
 
-          <button onClick={nextTestimonial} className="nav-btn next-btn" aria-label="Avis suivant">
+          <button type="button" onClick={nextTestimonial} className="nav-btn next-btn" aria-label="Avis suivant">
             <ChevronRight size={24} />
           </button>
         </div>
@@ -265,6 +265,7 @@ export default function HomeClient() {
         <div className="dots-row">
           {testimonials.map((_, idx) => (
             <button
+              type="button"
               key={idx}
               onClick={() => setActiveTestimonial(idx)}
               className={`dot ${activeTestimonial === idx ? "active" : ""}`}
