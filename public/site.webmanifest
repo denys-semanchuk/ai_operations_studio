@@ -1,0 +1,13 @@
+{
+  "name": "AI Operations Studio",
+  "short_name": "AI Ops Studio",
+  "description": "Conception, intégration et optimisation de systèmes d'Intelligence Artificielle pour les agences immobilières.",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#03050c",
+  "background_color": "#03050c",
+  "display": "standalone",
+  "start_url": "/"
+}

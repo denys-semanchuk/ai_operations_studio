@@ -132,6 +132,19 @@ button, input, textarea, select {
   background-clip: text;
 }
 
+.text-gradient-animate {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 25%, var(--accent) 50%, var(--secondary) 75%, var(--primary) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShimmer 6s linear infinite;
+}
+
+@keyframes gradientShimmer {
+  to { background-position: 200% center; }
+}
+
 /* Background Grids & Dots */
 .bg-grid {
   position: fixed;

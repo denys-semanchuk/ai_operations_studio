@@ -5,6 +5,9 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Bot, Shield, Zap, TrendingUp, CheckCircle, Clock, ChevronLeft, ChevronRight, MessageSquare, Quote } from "lucide-react";
 import TiltCard from "@/components/TiltCard";
+import CountUp from "@/components/CountUp";
+import Magnetic from "@/components/Magnetic";
+import ParallaxItem from "@/components/ParallaxItem";
 
 export default function HomeClient() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -107,7 +110,7 @@ export default function HomeClient() {
         
         <motion.h1 variants={itemVariants} className="hero-title font-primary">
           Nous automatisons vos <br />
-          <span className="text-gradient">opérations immobilières</span> grâce à l'IA
+          <span className="text-gradient-animate">opérations immobilières</span> grâce à l'IA
         </motion.h1>
         
         <motion.p variants={itemVariants} className="hero-subtitle">
@@ -116,14 +119,18 @@ export default function HomeClient() {
         </motion.p>
 
         <motion.div variants={itemVariants} className="hero-actions">
-          <Link href="/contact" className="btn btn-primary shine-hover">
-            <span>Réserver l'audit gratuit</span>
-            <ArrowRight size={18} />
-          </Link>
-          <Link href="/demo" className="btn btn-secondary">
-            <Bot size={16} />
-            <span>Voir la démo live</span>
-          </Link>
+          <Magnetic>
+            <Link href="/contact" className="btn btn-primary shine-hover">
+              <span>Réserver l'audit gratuit</span>
+              <ArrowRight size={18} />
+            </Link>
+          </Magnetic>
+          <Magnetic>
+            <Link href="/demo" className="btn btn-secondary">
+              <Bot size={16} />
+              <span>Voir la démo live</span>
+            </Link>
+          </Magnetic>
         </motion.div>
 
         <motion.div variants={itemVariants} className="hero-trust">
@@ -173,8 +180,12 @@ export default function HomeClient() {
         <div className="stats-grid">
           {statCards.map((card, idx) => (
             <TiltCard key={idx} className="stat-card shine-hover">
-              <div className="stat-icon-container">{card.icon}</div>
-              <h3 className="stat-value">{card.value}</h3>
+              <ParallaxItem offset={14 + idx * 6} className="stat-icon-container">
+                {card.icon}
+              </ParallaxItem>
+              <h3 className="stat-value">
+                <CountUp value={card.value} />
+              </h3>
               <h4 className="stat-label">{card.label}</h4>
               <p className="stat-desc">{card.desc}</p>
             </TiltCard>
@@ -195,9 +206,9 @@ export default function HomeClient() {
         <div className="how-steps">
           <div className="how-step glass-card">
             <div className="how-step-num">01</div>
-            <div className="how-step-icon-wrap">
+            <ParallaxItem offset={18} className="how-step-icon-wrap">
               <Clock size={28} className="text-gradient" />
-            </div>
+            </ParallaxItem>
             <h3 className="how-step-title">Audit Gratuit · 30 min</h3>
             <p className="how-step-desc">On analyse vos flux actuels ensemble et on identifie les automatisations les plus rentables. Sans engagement, sans jargon.</p>
           </div>
@@ -206,9 +217,9 @@ export default function HomeClient() {
           </div>
           <div className="how-step glass-card">
             <div className="how-step-num">02</div>
-            <div className="how-step-icon-wrap">
+            <ParallaxItem offset={28} className="how-step-icon-wrap">
               <Zap size={28} className="text-gradient" />
-            </div>
+            </ParallaxItem>
             <h3 className="how-step-title">Intégration · 2 à 4 sem.</h3>
             <p className="how-step-desc">Configuration sur-mesure de n8n, Claude AI et votre CRM (Airtable/Notion). Zéro interruption de votre activité.</p>
           </div>
@@ -217,9 +228,9 @@ export default function HomeClient() {
           </div>
           <div className="how-step glass-card">
             <div className="how-step-num">03</div>
-            <div className="how-step-icon-wrap">
+            <ParallaxItem offset={18} className="how-step-icon-wrap">
               <TrendingUp size={28} className="text-gradient" />
-            </div>
+            </ParallaxItem>
             <h3 className="how-step-title">ROI · dès le 1er mois</h3>
             <p className="how-step-desc">Formation de votre équipe incluse. Support 14 jours post-lancement. Résultats mesurables dès la première semaine.</p>
           </div>
@@ -331,14 +342,18 @@ export default function HomeClient() {
               En 30 minutes, on identifie combien d&apos;heures par semaine vous perdez sur des tâches automatisables — et on vous montre exactement comment les récupérer.
             </p>
             <div className="cta-banner-actions">
-              <Link href="/contact" className="btn btn-primary shine-hover">
-                <span>Réserver mon créneau</span>
-                <ArrowRight size={18} />
-              </Link>
-              <Link href="/demo" className="btn btn-secondary">
-                <Bot size={18} />
-                <span>Voir la démo live</span>
-              </Link>
+              <Magnetic>
+                <Link href="/contact" className="btn btn-primary shine-hover">
+                  <span>Réserver mon créneau</span>
+                  <ArrowRight size={18} />
+                </Link>
+              </Magnetic>
+              <Magnetic>
+                <Link href="/demo" className="btn btn-secondary">
+                  <Bot size={18} />
+                  <span>Voir la démo live</span>
+                </Link>
+              </Magnetic>
             </div>
           </div>
           <div className="cta-banner-badge">

@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Operations Studio
 
-## Getting Started
+Site vitrine — conception, intégration et optimisation de systèmes d'Intelligence Artificielle pour les agences immobilières (n8n, Claude AI, Airtable/Notion).
 
-First, run the development server:
+## Stack
+
+- [Next.js](https://nextjs.org) (App Router, Turbopack)
+- React 19 + TypeScript
+- Framer Motion, Three.js (canvas particles), Lucide icons
+- Groq SDK (chat widget) et Resend (formulaire de contact)
+
+## Démarrage
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Variables d'environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Créer un fichier `.env.local` à la racine avec :
 
-## Learn More
+```bash
+GROQ_API_KEY=
+RESEND_API_KEY=
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` — serveur de développement
+- `npm run build` — build de production
+- `npm run start` — lance le build de production
+- `npm run lint` — ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Identité visuelle
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Les assets de marque (logo, favicons, variantes) se trouvent dans [public/brand](public/brand).
