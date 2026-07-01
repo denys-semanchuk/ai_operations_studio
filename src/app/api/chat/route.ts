@@ -1,24 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
+import { getClientIp, isRateLimited } from "@/lib/rateLimit";
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// Simple in-memory rate limiter: 15 requests per IP per hour
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 15;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return false;
-  }
-  if (entry.count >= RATE_LIMIT) return true;
-  entry.count++;
-  return false;
-}
 
 const SYSTEM_PROMPT = `Tu es l'assistant IA d'AI Operations Studio, une entreprise spécialisée dans l'automatisation des opérations immobilières via l'IA.
 
@@ -41,8 +28,8 @@ Règles :
 - Pour toute question complexe ou spécifique, invite à réserver un audit gratuit de 30 min via la page Contact`;
 
 export async function POST(req: NextRequest) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  if (isRateLimited(ip)) {
+  const ip = getClientIp(req);
+  if (isRateLimited(`chat:${ip}`, RATE_LIMIT, RATE_WINDOW_MS)) {
     return NextResponse.json(
       { reply: "Trop de messages envoyés. Réessayez dans une heure ou contactez-nous à denys@aioperations.studio." },
       { status: 429 }

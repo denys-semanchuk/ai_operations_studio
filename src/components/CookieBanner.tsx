@@ -19,11 +19,13 @@ export default function CookieBanner() {
 
   const handleAccept = () => {
     localStorage.setItem("cookie-consent", "accepted");
+    window.dispatchEvent(new CustomEvent("cookie-consent-changed", { detail: "accepted" }));
     setVisible(false);
   };
 
   const handleDecline = () => {
     localStorage.setItem("cookie-consent", "declined");
+    window.dispatchEvent(new CustomEvent("cookie-consent-changed", { detail: "declined" }));
     setVisible(false);
   };
 
@@ -45,18 +47,18 @@ export default function CookieBanner() {
               <div className="cookie-text">
                 <p className="cookie-title">Respect de votre vie privée</p>
                 <p className="cookie-desc">
-                  Nous utilisons des cookies essentiels pour le fonctionnement du site. Aucune donnée n&apos;est partagée avec des tiers.
+                  Nous utilisons des cookies essentiels au fonctionnement du site ainsi que des cookies analytiques (Microsoft Clarity) pour comprendre l&apos;usage du site. Ces derniers ne sont activés qu&apos;avec votre accord.
                 </p>
               </div>
             </div>
             <div className="cookie-actions">
-              <button className="cookie-btn cookie-decline" onClick={handleDecline}>
+              <button type="button" className="cookie-btn cookie-decline" onClick={handleDecline}>
                 Refuser
               </button>
-              <button className="cookie-btn cookie-accept" onClick={handleAccept}>
+              <button type="button" className="cookie-btn cookie-accept" onClick={handleAccept}>
                 Accepter
               </button>
-              <button className="cookie-close" onClick={handleDecline} aria-label="Fermer">
+              <button type="button" className="cookie-close" onClick={handleDecline} aria-label="Fermer">
                 <X size={16} />
               </button>
             </div>

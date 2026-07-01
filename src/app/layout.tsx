@@ -13,6 +13,8 @@ import StickyConversionBar from "@/components/StickyConversionBar";
 import ExitIntent from "@/components/ExitIntent";
 import PageTransition from "@/components/PageTransition";
 import RouteProgress from "@/components/RouteProgress";
+import Analytics from "@/components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 // Next.js optimized font loading — eliminates render-blocking @import
 const outfit = Outfit({
@@ -152,12 +154,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
         />
-        {/* Microsoft Clarity — heatmaps & session recordings */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","xenny85rcx");`,
-          }}
-        />
       </head>
       <body>
         {/* Background visual components */}
@@ -169,6 +165,7 @@ export default function RootLayout({
         <RouteProgress />
         <ThreeBackground />
         <CursorGlow />
+        <Analytics />
 
         {/* Shared Layout Structure */}
         <Header />
@@ -186,6 +183,7 @@ export default function RootLayout({
         <BackToTop />
         <CookieBanner />
         <ExitIntent />
+        <VercelAnalytics />
       </body>
     </html>
   );

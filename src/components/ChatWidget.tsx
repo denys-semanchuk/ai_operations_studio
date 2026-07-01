@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
 
@@ -36,6 +36,11 @@ export default function ChatWidget() {
   const [isTyping, setIsTyping] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const idCounter = useRef(0);
+  const nextId = useCallback(() => {
+    idCounter.current += 1;
+    return idCounter.current;
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -48,13 +53,13 @@ export default function ChatWidget() {
     if (!hasOpened) {
       setHasOpened(true);
       setTimeout(() => {
-        setMessages([{ id: 1, text: WELCOME_MESSAGE, sender: "bot" }]);
+        setMessages([{ id: nextId(), text: WELCOME_MESSAGE, sender: "bot" }]);
       }, 500);
     }
   };
 
   const sendMessage = async (text: string) => {
-    const userMsg: Message = { id: Date.now(), text, sender: "user" };
+    const userMsg: Message = { id: nextId(), text, sender: "user" };
     setMessages((prev) => {
       const next = [...prev, userMsg];
       callApi(next);
@@ -72,7 +77,7 @@ export default function ChatWidget() {
     const reply = await fetchBotReply(history);
     setMessages((prev) => [
       ...prev,
-      { id: Date.now(), text: reply, sender: "bot" },
+      { id: nextId(), text: reply, sender: "bot" },
     ]);
     setIsTyping(false);
   };

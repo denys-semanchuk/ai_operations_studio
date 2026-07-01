@@ -6,7 +6,7 @@ Site vitrine — conception, intégration et optimisation de systèmes d'Intelli
 
 - [Next.js](https://nextjs.org) (App Router, Turbopack)
 - React 19 + TypeScript
-- Framer Motion, Three.js (canvas particles), Lucide icons
+- Framer Motion, Canvas 2D (particles), Lucide icons
 - Groq SDK (chat widget) et Resend (formulaire de contact)
 
 ## Démarrage
@@ -20,12 +20,24 @@ Ouvrir [http://localhost:3000](http://localhost:3000).
 
 ## Variables d'environnement
 
-Créer un fichier `.env.local` à la racine avec :
+Copier `.env.example` vers `.env.local` et renseigner les clés :
 
 ```bash
 GROQ_API_KEY=
 RESEND_API_KEY=
 ```
+
+## Déploiement (Vercel)
+
+Le projet est un Next.js standard, déployable sans configuration (`vercel.json`) supplémentaire.
+
+- **Local** : `vercel link` puis `vercel env pull` pour récupérer `.env.local` depuis le projet Vercel.
+- **Preview** : chaque push sur une branche non-production (ou chaque PR) déclenche un déploiement Preview avec une URL dédiée.
+- **Production** : un push/merge sur `main` déploie en production (domaine `aioperations.studio`).
+
+Les variables `GROQ_API_KEY` et `RESEND_API_KEY` doivent être renseignées séparément dans le dashboard Vercel (Project Settings → Environment Variables) pour les environnements **Preview** et **Production** — elles ne sont pas partagées automatiquement depuis `.env.local`.
+
+> Note : le rate-limiting des routes `/api/chat` et `/api/contact` ([src/lib/rateLimit.ts](src/lib/rateLimit.ts)) est en mémoire (`Map`). Sur Vercel, chaque invocation serverless peut atterrir sur une instance différente, donc la limite n'est pas garantie de façon stricte entre régions/instances — elle réduit l'abus basique mais ne remplace pas une solution partagée (ex. Vercel KV/Upstash) si un trafic plus élevé est attendu.
 
 ## Scripts
 
