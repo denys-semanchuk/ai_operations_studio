@@ -88,6 +88,19 @@ button, input, textarea, select {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* iOS Safari has a known compositing glitch where stacked/overlapping
+   backdrop-filter blur layers (e.g. the fixed blurred header over another
+   blurred card right below it) intermittently render solid black instead
+   of blurring. Drop the blur on touch devices and use a near-opaque
+   background instead — cheaper to render and immune to the bug. */
+@media (pointer: coarse) {
+  .glass {
+    background: rgba(8, 12, 28, 0.92);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
 .glass-card {
   position: relative;
   background: rgba(8, 12, 28, 0.9);
