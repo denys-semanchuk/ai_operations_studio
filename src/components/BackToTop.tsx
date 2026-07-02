@@ -60,6 +60,14 @@ export default function BackToTop() {
           background: rgba(14, 165, 233, 0.1);
           border-color: rgba(14, 165, 233, 0.3);
         }
+        @media (max-width: 600px) {
+          .back-to-top {
+            bottom: max(1rem, env(safe-area-inset-bottom));
+            left: 1rem;
+            width: 40px;
+            height: 40px;
+          }
+        }
       `}</style>
     </>
   );

@@ -4,49 +4,7 @@ import { motion } from "framer-motion";
 import { Clock, ArrowRight, Tag } from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
-
-const articles = [
-  {
-    slug: "automatiser-qualification-leads-immobilier",
-    title: "5 étapes pour automatiser la qualification de vos leads immobiliers avec n8n",
-    excerpt:
-      "Un prospect non rappelé dans les 15 premières minutes a 80% de chances de choisir une autre agence. Voici comment configurer un workflow n8n qui qualifie, répond et injecte en CRM sans intervention humaine.",
-    tag: "Tutoriel",
-    readTime: "8 min",
-    date: "12 juin 2025",
-    comingSoon: false,
-  },
-  {
-    slug: "roi-automatisation-agence-immobiliere",
-    title: "ROI réel de l'automatisation IA pour une agence de 3 agents : chiffres concrets",
-    excerpt:
-      "Analyse détaillée de l'impact financier après 3 mois d'automatisation : heures récupérées, coût par lead, taux de conversion avant/après. Des données que vos concurrents n'ont pas encore.",
-    tag: "Étude de cas",
-    readTime: "6 min",
-    date: "28 mai 2025",
-    comingSoon: false,
-  },
-  {
-    slug: "connecter-airtable-whatsapp-n8n",
-    title: "Connecter WhatsApp Business à votre CRM Airtable en 45 minutes via n8n",
-    excerpt:
-      "Guide pas-à-pas pour créer un pont entre les messages WhatsApp de vos prospects et votre base Airtable. Aucune compétence en code requise.",
-    tag: "Tutoriel",
-    readTime: "10 min",
-    date: "14 mai 2025",
-    comingSoon: false,
-  },
-  {
-    slug: "choisir-crm-agence-immobiliere-2025",
-    title: "Airtable vs Notion vs HubSpot : quel CRM choisir pour votre agence en 2025 ?",
-    excerpt:
-      "Comparatif complet des trois solutions les plus utilisées par les petites agences immobilières françaises. Critères : coût, automatisation, facilité d'adoption.",
-    tag: "Comparatif",
-    readTime: "7 min",
-    date: "À venir",
-    comingSoon: true,
-  },
-];
+import { blogPosts as articles } from "@/lib/blog-posts";
 
 const tagColors: Record<string, string> = {
   Tutoriel: "rgba(14, 165, 233, 0.1)",
@@ -275,19 +233,55 @@ export default function BlogClient() {
         }
 
         @media (max-width: 768px) {
+          .blog-header {
+            margin-bottom: 2.5rem;
+          }
           .blog-grid {
             grid-template-columns: 1fr;
+            gap: 1.5rem;
           }
           .blog-title {
             font-size: 2rem;
           }
+          .blog-subtitle {
+            font-size: 1rem;
+          }
+          .blog-cta {
+            padding: 2rem;
+            gap: 1.25rem;
+          }
+          .blog-cta-text {
+            font-size: 1rem;
+          }
+        }
+        @media (max-width: 600px) {
+          .blog-card-meta {
+            flex-wrap: wrap;
+            gap: 0.5rem;
+          }
+          .blog-card-footer {
+            flex-wrap: wrap;
+            gap: 0.75rem;
+          }
         }
         @media (max-width: 480px) {
+          .blog-header {
+            margin-bottom: 2rem;
+          }
           .blog-title {
             font-size: 1.65rem;
           }
+          .blog-subtitle {
+            font-size: 0.95rem;
+          }
           .blog-card {
             padding: 1.5rem !important;
+          }
+          .blog-card-title {
+            font-size: 1.1rem;
+          }
+          .blog-cta {
+            padding: 1.5rem;
           }
         }
       `}</style>

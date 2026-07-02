@@ -123,10 +123,13 @@ export default function ExitIntent() {
         }
         .exit-modal {
           position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          inset: 0;
+          margin: auto;
           width: min(560px, calc(100vw - 2rem));
+          height: fit-content;
+          max-height: calc(100dvh - 2rem);
+          overflow-y: auto;
+          box-sizing: border-box;
           background: rgba(8, 12, 28, 0.98);
           border: 1px solid rgba(14, 165, 233, 0.2);
           border-radius: 24px;
@@ -237,10 +240,19 @@ export default function ExitIntent() {
 
         @media (max-width: 480px) {
           .exit-modal {
-            padding: 2.5rem 1.5rem 2rem;
+            padding: 2.5rem 1.25rem 1.75rem;
           }
           .exit-title {
             font-size: 1.5rem;
+          }
+          .exit-stats {
+            gap: 0.75rem;
+          }
+          .exit-stat {
+            padding: 0.85rem 0.75rem;
+          }
+          .exit-stat-value {
+            font-size: 1.25rem;
           }
         }
       `}</style>

@@ -69,13 +69,19 @@ export default function CookieBanner() {
         .cookie-banner {
           position: fixed;
           bottom: 1.5rem;
-          left: 50%;
-          transform: translateX(-50%);
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
           width: calc(100% - 3rem);
           max-width: 720px;
+          max-height: calc(100dvh - 2rem);
+          overflow-y: auto;
+          box-sizing: border-box;
           background: rgba(8, 12, 28, 0.95);
           border: 1px solid rgba(255, 255, 255, 0.08);
           backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           border-radius: 16px;
           padding: 1.25rem 1.5rem;
           display: flex;
@@ -90,6 +96,7 @@ export default function CookieBanner() {
           align-items: flex-start;
           gap: 1rem;
           flex: 1;
+          min-width: 0;
         }
         .cookie-icon-wrap {
           width: 38px;
@@ -119,6 +126,7 @@ export default function CookieBanner() {
           align-items: center;
           gap: 0.6rem;
           flex-shrink: 0;
+          flex-wrap: wrap;
         }
         .cookie-btn {
           padding: 0.5rem 1rem;
@@ -129,6 +137,7 @@ export default function CookieBanner() {
           transition: all 0.2s;
           border: none;
           font-family: inherit;
+          white-space: nowrap;
         }
         .cookie-decline {
           background: rgba(255, 255, 255, 0.05);
@@ -154,18 +163,76 @@ export default function CookieBanner() {
           cursor: pointer;
           padding: 0.25rem;
           display: none;
+          flex-shrink: 0;
         }
+
+        /* Tablet: keep row layout but tighten spacing */
+        @media (max-width: 860px) {
+          .cookie-banner {
+            width: calc(100% - 2rem);
+            gap: 1rem;
+            padding: 1.1rem 1.25rem;
+          }
+        }
+
+        /* Phones: stack vertically, never allow horizontal/vertical overflow */
         @media (max-width: 600px) {
           .cookie-banner {
+            bottom: max(1rem, env(safe-area-inset-bottom));
+            width: calc(100% - 1.5rem);
+            max-width: none;
             flex-direction: column;
-            gap: 1rem;
-            padding: 1rem 1.25rem;
+            align-items: stretch;
+            gap: 0.9rem;
+            padding: 1rem 1.1rem;
+            border-radius: 14px;
+          }
+          .cookie-content {
+            padding-right: 1.75rem;
+          }
+          .cookie-actions {
+            width: 100%;
+          }
+          .cookie-btn {
+            flex: 1;
+            text-align: center;
           }
           .cookie-close {
             display: block;
             position: absolute;
-            top: 0.75rem;
-            right: 0.75rem;
+            top: 0.65rem;
+            right: 0.65rem;
+          }
+        }
+
+        /* Very small / short screens (small phones, landscape) */
+        @media (max-width: 360px) {
+          .cookie-banner {
+            padding: 0.85rem 0.9rem;
+            border-radius: 12px;
+          }
+          .cookie-icon-wrap {
+            width: 32px;
+            height: 32px;
+          }
+          .cookie-title {
+            font-size: 0.82rem;
+          }
+          .cookie-desc {
+            font-size: 0.74rem;
+          }
+          .cookie-actions {
+            flex-direction: column;
+          }
+          .cookie-btn {
+            width: 100%;
+          }
+        }
+
+        @media (max-height: 480px) and (max-width: 900px) {
+          .cookie-banner {
+            max-height: calc(100dvh - 1rem);
+            bottom: 0.5rem;
           }
         }
       `}</style>

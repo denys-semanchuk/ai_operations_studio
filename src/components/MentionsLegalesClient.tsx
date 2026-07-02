@@ -1,5 +1,3 @@
-"use client";
-
 export default function MentionsLegalesClient() {
   return (
     <div className="page-wrapper container">
@@ -80,69 +78,6 @@ export default function MentionsLegalesClient() {
           </p>
         </section>
       </div>
-
-      <style jsx global>{`
-        .ml-wrapper {
-          max-width: 780px;
-          margin: 0 auto;
-        }
-        .ml-title {
-          font-size: 2.5rem;
-          color: white;
-          margin-bottom: 0.5rem;
-          letter-spacing: -0.02em;
-        }
-        .ml-updated {
-          font-size: 0.85rem;
-          color: var(--text-dim);
-          margin-bottom: 3.5rem;
-        }
-        .ml-section {
-          margin-bottom: 2.75rem;
-          padding-bottom: 2.75rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .ml-section:last-child {
-          border-bottom: none;
-        }
-        .ml-section h2 {
-          font-size: 1.15rem;
-          color: var(--secondary);
-          margin-bottom: 1rem;
-          font-weight: 700;
-        }
-        .ml-section p {
-          font-size: 0.95rem;
-          color: var(--text-muted);
-          line-height: 1.75;
-          margin-bottom: 0.85rem;
-        }
-        .ml-section p:last-child {
-          margin-bottom: 0;
-        }
-        .ml-section ul {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          margin-top: 0.75rem;
-        }
-        .ml-section li {
-          font-size: 0.95rem;
-          color: var(--text-muted);
-          padding-left: 1rem;
-          border-left: 2px solid rgba(14, 165, 233, 0.2);
-          line-height: 1.6;
-        }
-        .ml-section a {
-          color: var(--secondary);
-          text-decoration: underline;
-          text-decoration-color: rgba(14, 165, 233, 0.3);
-        }
-        .ml-section a:hover {
-          text-decoration-color: var(--secondary);
-        }
-      `}</style>
     </div>
   );
 }

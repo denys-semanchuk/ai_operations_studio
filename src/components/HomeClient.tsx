@@ -57,32 +57,29 @@ export default function HomeClient() {
   ];
 
   const partners = [
-    "Bezons Immo",
-    "Parisian Estates",
-    "Val-d'Oise Transaction",
-    "Orpi Bezons",
-    "Century 21 Bezons",
-    "Nexity Local",
+    "Agences indépendantes",
+    "Réseaux mandataires",
+    "Agences multi-sites",
+    "Chasseurs immobiliers",
+    "Gestion locative",
+    "Syndics de copropriété",
   ];
 
   const testimonials = [
     {
-      name: "Stéphane Moreau",
-      role: "Gérant, Immo Bezons Transactions",
-      text: "Avant, nos demandes restaient sans réponse jusqu'au lendemain. Depuis l'intégration, chaque prospect est qualifié automatiquement en moins de 5 minutes. Nous avons récupéré 3 mandats en un mois que nous aurions perdus.",
-      rating: "★★★★★",
+      name: "Configuration 100% sur-mesure",
+      role: "Aucun SaaS générique",
+      text: "Chaque automatisation est construite autour de votre CRM et de vos flux réels — pas d'un template. On part de votre façon de travailler actuelle, on ne vous demande pas de changer d'outils.",
     },
     {
-      name: "Claire Lefebvre",
-      role: "Directrice, Agence du Val-d'Oise",
-      text: "L'implémentation n8n + Airtable a transformé notre suivi acquéreurs. Fini la saisie manuelle. Mon équipe gagne 12 heures par semaine et notre taux de transformation de leads a progressé de 35%.",
-      rating: "★★★★★",
+      name: "Sans engagement, sans risque",
+      role: "Audit initial 100% gratuit",
+      text: "Aucun contrat long terme imposé. Vous restez propriétaire de vos données, de vos workflows et de vos comptes (n8n, Airtable, CRM). Vous pouvez tout reprendre en main à tout moment.",
     },
     {
-      name: "Thomas Renard",
-      role: "Associé, Nexim Île-de-France",
-      text: "J'étais sceptique. Denys a livré en 3 semaines exactement ce qu'il avait promis : un agent IA qui qualifie les locataires, répond aux FAQ et remplit le CRM sans aucune intervention humaine.",
-      rating: "★★★★★",
+      name: "Transparence sur les résultats",
+      role: "Mesuré avec vous, pas promis à l'avance",
+      text: "Pas de chiffre marketing non vérifié. Chaque automatisation est suivie avec vous semaine après semaine dès le lancement, pour que vous voyiez exactement ce qu'elle change dans votre activité.",
     },
   ];
 
@@ -150,7 +147,7 @@ export default function HomeClient() {
 
       {/* Partners Marquee */}
       <div className="partners-marquee-section">
-        <h4 className="marquee-title">ILS FONT CONFIANCE À NOS SOLUTIONS IA :</h4>
+        <p className="marquee-title">PROFILS D&apos;AGENCES ACCOMPAGNÉS :</p>
         <div className="marquee-container glass">
           <div className="marquee-track">
             {/* First cycle */}
@@ -183,10 +180,10 @@ export default function HomeClient() {
               <ParallaxItem offset={14 + idx * 6} className="stat-icon-container">
                 {card.icon}
               </ParallaxItem>
-              <h3 className="stat-value">
+              <div className="stat-value">
                 <CountUp value={card.value} />
-              </h3>
-              <h4 className="stat-label">{card.label}</h4>
+              </div>
+              <p className="stat-label">{card.label}</p>
               <p className="stat-desc">{card.desc}</p>
             </TiltCard>
           ))}
@@ -239,8 +236,8 @@ export default function HomeClient() {
 
       {/* Testimonials Carousel Section */}
       <section className="testimonials-section">
-        <span className="section-label text-gradient text-center block">Témoignages</span>
-        <h2 className="testimonials-title font-primary text-center">Ce que disent nos clients locaux</h2>
+        <span className="section-label text-gradient text-center block">Nos engagements</span>
+        <h2 className="testimonials-title font-primary text-center">Ce que vous pouvez attendre de nous</h2>
         
         <div className="testimonials-container">
           <button type="button" onClick={prevTestimonial} className="nav-btn prev-btn" aria-label="Avis précédent">
@@ -258,10 +255,9 @@ export default function HomeClient() {
                 className="glass-card testimonial-card"
               >
                 <Quote size={40} className="quote-icon" />
-                <p className="testimonial-text">"{testimonials[activeTestimonial].text}"</p>
-                <div className="testimonial-rating">{testimonials[activeTestimonial].rating}</div>
+                <p className="testimonial-text">{testimonials[activeTestimonial].text}</p>
                 <div className="testimonial-info">
-                  <h4 className="testimonial-name">{testimonials[activeTestimonial].name}</h4>
+                  <h3 className="testimonial-name">{testimonials[activeTestimonial].name}</h3>
                   <p className="testimonial-role">{testimonials[activeTestimonial].role}</p>
                 </div>
               </motion.div>
@@ -704,11 +700,6 @@ const styleHome = (
       line-height: 1.6;
       font-style: italic;
     }
-    .testimonial-rating {
-      color: #fbbf24;
-      font-size: 1.1rem;
-      letter-spacing: 0.1em;
-    }
     .testimonial-name {
       font-size: 1.05rem;
       color: white;
@@ -1076,6 +1067,11 @@ const styleHome = (
       .nav-btn {
         display: none;
       }
+      .cta-banner {
+        padding: 2.5rem 2rem !important;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
     }
 
     @media (max-width: 600px) {
@@ -1157,6 +1153,13 @@ const styleHome = (
       .obj-card {
         padding: 1.5rem !important;
       }
+      .testimonial-card {
+        padding: 2rem 1.5rem;
+      }
+      .quote-icon {
+        top: 1rem;
+        left: 1.25rem;
+      }
     }
 
     @media (max-width: 380px) {
@@ -1165,6 +1168,13 @@ const styleHome = (
       }
       .hero-subtitle {
         font-size: 0.92rem;
+      }
+      .hero-badge {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.75rem;
+        gap: 0.35rem;
+        letter-spacing: 0.02em;
+        max-width: 100%;
       }
     }
   `}</style>

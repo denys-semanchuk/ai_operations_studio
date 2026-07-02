@@ -126,6 +126,9 @@ export default function DemoSimulator() {
         <p className="demo-subtitle">
           Choisissez un profil type de prospect ci-dessous, puis lancez le simulateur pour voir le robot IA n8n interagir, extraire les critères et synchroniser votre CRM.
         </p>
+        <p className="demo-disclaimer">
+          Reconstitution illustrative d&apos;un scénario type — aucun appel réel à n8n ou Claude n&apos;est déclenché ici. Le fonctionnement réel est mis en place lors de l&apos;intégration avec votre CRM.
+        </p>
       </div>
 
       {/* Profile Selector */}
@@ -388,7 +391,15 @@ const styleDemo = (
       margin: 0 auto;
       line-height: 1.6;
     }
-    
+    .demo-disclaimer {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0.85rem auto 0;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
     /* Profile selector tabs */
     .profile-selector {
       display: flex;
@@ -777,11 +788,18 @@ const styleDemo = (
     }
 
     @media (max-width: 900px) {
+      .demo-title {
+        font-size: 2.25rem;
+      }
       .workflow-diagram {
         display: none;
       }
       .demo-layout {
         grid-template-columns: 1fr;
+      }
+      .profile-selector {
+        flex-wrap: wrap;
+        gap: 1rem;
       }
     }
 
@@ -804,6 +822,10 @@ const styleDemo = (
       .simulator-panel,
       .crm-panel {
         min-height: auto;
+      }
+      .panel-header {
+        flex-wrap: wrap;
+        row-gap: 0.4rem;
       }
       .demo-cta-finished {
         flex-direction: column;

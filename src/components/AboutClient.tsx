@@ -682,6 +682,9 @@ const styleAbout = (
     }
 
     @media (max-width: 900px) {
+      .about-title {
+        font-size: 2.25rem;
+      }
       .about-grid {
         grid-template-columns: 1fr;
       }
@@ -691,6 +694,12 @@ const styleAbout = (
       }
       .case-card {
         min-height: auto;
+      }
+      .modal-overlay {
+        padding: 1.25rem;
+      }
+      .modal-content {
+        padding: 2rem;
       }
       .modal-body-layout {
         grid-template-columns: 1fr;

@@ -274,7 +274,7 @@ export default function RoiCalculator() {
             <div className="annual-total-label">Total économies de temps cumulées / an :</div>
             <div className="annual-total-value">{annualSavings.toLocaleString()} €</div>
             <p className="summary-footnote">
-              *Calculé sur la base de {hoursSavedPerWeek} heures libérées par semaine (soit {percentageFreeTime}% du temps de travail global de vos agents sur la pige) et un gain de conversion de 4% sur {leads} leads mensuels.
+              *Estimation indicative, non contractuelle — basée sur {hoursSavedPerWeek} heures libérées par semaine (soit {percentageFreeTime}% du temps de travail global de vos agents sur la pige) et une hypothèse de gain de conversion de 4% sur {leads} leads mensuels. Les résultats réels dépendent de votre activité et sont mesurés avec vous lors de l&apos;audit.
             </p>
           </div>
 
@@ -354,6 +354,9 @@ const styleRoi = (
       -webkit-appearance: none;
       cursor: pointer;
     }
+    .custom-range:focus-visible {
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.35);
+    }
     .custom-range::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 18px;
@@ -366,6 +369,21 @@ const styleRoi = (
     }
     .custom-range::-webkit-slider-thumb:hover {
       transform: scale(1.2);
+    }
+    .custom-range:focus-visible::-webkit-slider-thumb {
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.45), 0 0 10px rgba(14, 165, 233, 0.5);
+    }
+    .custom-range::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border: none;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      box-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
+      cursor: pointer;
+    }
+    .custom-range:focus-visible::-moz-range-thumb {
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.45), 0 0 10px rgba(14, 165, 233, 0.5);
     }
     .range-labels {
       display: flex;
@@ -606,8 +624,15 @@ const styleRoi = (
     }
 
     @media (max-width: 900px) {
+      .roi-title {
+        font-size: 2.25rem;
+      }
+      .roi-subtitle {
+        font-size: 1.05rem;
+      }
       .roi-container {
         grid-template-columns: 1fr;
+        gap: 2rem;
       }
       .results-layout {
         grid-template-columns: 1fr;
@@ -622,6 +647,9 @@ const styleRoi = (
     }
 
     @media (max-width: 600px) {
+      .roi-header {
+        margin-bottom: 2rem;
+      }
       .roi-title {
         font-size: 1.9rem;
       }
@@ -631,8 +659,26 @@ const styleRoi = (
       .panel-title {
         font-size: 1.2rem;
       }
+      .slider-header {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
       .slider-group label {
         font-size: 0.85rem;
+      }
+      .slider-value {
+        font-size: 0.85rem;
+      }
+      .custom-range {
+        height: 8px;
+      }
+      .custom-range::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+      }
+      .result-card {
+        padding: 1rem;
+        gap: 0.85rem;
       }
       .result-value {
         font-size: 1.1rem;
@@ -642,6 +688,9 @@ const styleRoi = (
       }
       .comparison-title {
         font-size: 0.82rem;
+      }
+      .bar-row {
+        gap: 0.65rem;
       }
       .breakdown-card {
         padding: 1rem 1.25rem !important;
@@ -664,6 +713,19 @@ const styleRoi = (
       }
       .breakdown-grid {
         grid-template-columns: 1fr;
+      }
+      .gauge-card {
+        padding: 1.5rem;
+      }
+      .gauge-svg {
+        width: 96px;
+        height: 96px;
+      }
+      .annual-total-value {
+        font-size: 1.85rem;
+      }
+      .summary-footnote {
+        font-size: 0.7rem;
       }
     }
   `}</style>

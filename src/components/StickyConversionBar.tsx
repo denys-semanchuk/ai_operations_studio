@@ -57,6 +57,7 @@ export default function StickyConversionBar() {
           backdrop-filter: blur(16px);
           border-top: 1px solid rgba(14, 165, 233, 0.2);
           padding: 0.75rem 2rem;
+          padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
           box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.4), 0 -1px 0 rgba(14, 165, 233, 0.08);
           animation: scb-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -153,7 +154,14 @@ export default function StickyConversionBar() {
         }
         @media (max-width: 640px) {
           .scb-sub { display: none; }
-          .scb-wrap { padding: 0.65rem 1rem; }
+          .scb-wrap { padding: 0.65rem 1rem; padding-bottom: max(0.65rem, env(safe-area-inset-bottom)); }
+          .scb-inner { gap: 0.75rem; }
+        }
+        @media (max-width: 400px) {
+          .scb-zap { display: none; }
+          .scb-text strong { font-size: 0.82rem; }
+          .scb-cta span { display: none; }
+          .scb-cta { padding: 0.55rem 0.7rem; }
         }
       `}</style>
     </div>

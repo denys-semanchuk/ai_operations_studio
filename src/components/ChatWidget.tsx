@@ -209,10 +209,12 @@ export default function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Posez votre question..."
+                aria-label="Votre question"
                 className="chat-input"
                 disabled={isTyping}
               />
               <button
+                type="button"
                 className="chat-send-btn"
                 onClick={handleSend}
                 disabled={!input.trim() || isTyping}
@@ -483,12 +485,20 @@ export default function ChatWidget() {
           box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
         }
 
-        @media (max-width: 480px) {
-          .chat-window {
-            width: calc(100vw - 2rem);
-            height: calc(100vh - 6rem);
-            bottom: 1rem;
+        @media (max-width: 600px) {
+          .chat-fab {
+            bottom: max(1rem, env(safe-area-inset-bottom));
             right: 1rem;
+            width: 52px;
+            height: 52px;
+          }
+          .chat-window {
+            width: auto;
+            max-width: 420px;
+            height: min(560px, calc(100dvh - 6rem));
+            bottom: max(1rem, env(safe-area-inset-bottom));
+            right: 0.75rem;
+            left: 0.75rem;
           }
         }
       `}</style>

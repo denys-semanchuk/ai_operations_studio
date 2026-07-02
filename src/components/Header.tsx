@@ -58,7 +58,14 @@ export default function Header() {
         </div>
 
         {/* Mobile menu toggle */}
-        <button type="button" className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu">
+        <button
+          type="button"
+          className="mobile-toggle"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Ouvrir/fermer le menu"
+          aria-expanded={isOpen}
+          aria-controls="mobile-nav-menu"
+        >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -67,6 +74,9 @@ export default function Header() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id="mobile-nav-menu"
+            role="dialog"
+            aria-label="Menu de navigation"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -224,6 +234,29 @@ export default function Header() {
           }
           .mobile-menu {
             display: block;
+          }
+        }
+        @media (max-width: 480px) {
+          .header-container {
+            padding: 1rem;
+          }
+          .header-wrapper {
+            padding: 0.65rem 1rem;
+            border-radius: 16px;
+          }
+          .logo-text {
+            font-size: 1rem;
+          }
+          .mobile-menu {
+            top: 78px;
+            left: 1rem;
+            right: 1rem;
+            padding: 1.25rem;
+          }
+        }
+        @media (max-width: 360px) {
+          .logo-subtext {
+            display: none;
           }
         }
       `}</style>

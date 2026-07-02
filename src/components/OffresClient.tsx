@@ -461,8 +461,15 @@ const styleOffers = (
     }
 
     @media (max-width: 900px) {
+      .offres-title {
+        font-size: 2.25rem;
+      }
+      .offres-subtitle {
+        font-size: 1.05rem;
+      }
       .offers-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
       .retainer-content {
         grid-template-columns: 1fr;
@@ -478,17 +485,28 @@ const styleOffers = (
     }
 
     @media (max-width: 600px) {
+      .offres-header {
+        margin-bottom: 2rem;
+      }
       .offres-title {
         font-size: 1.9rem;
       }
       .offres-subtitle {
         font-size: 1rem;
       }
+      .offer-card-header {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
       .offer-title {
         font-size: 1.25rem;
       }
       .offer-price-val {
         font-size: 1.3rem;
+      }
+      .offer-pricing {
+        flex-wrap: wrap;
+        gap: 0.5rem;
       }
       .retainer-card {
         padding: 1.75rem !important;
@@ -515,6 +533,19 @@ const styleOffers = (
       }
       .faq-answer-content {
         padding: 0 1rem 1rem 2.5rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .offer-icon-wrapper {
+        width: 44px;
+        height: 44px;
+      }
+      .offer-price-val {
+        font-size: 1.15rem;
+      }
+      .faq-answer-content {
+        padding: 0 0.75rem 1rem 1.75rem;
       }
     }
   `}</style>

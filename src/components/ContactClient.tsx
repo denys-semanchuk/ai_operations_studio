@@ -351,6 +351,7 @@ export default function ContactClient() {
                             value={agencyName}
                             onChange={(e) => setAgencyName(e.target.value)}
                             placeholder="Nom de l'agence *"
+                            aria-label="Nom de l'agence"
                             className="ct-input"
                           />
                         </div>
@@ -362,6 +363,7 @@ export default function ContactClient() {
                             value={agencyPhone}
                             onChange={(e) => setAgencyPhone(e.target.value)}
                             placeholder="Téléphone *"
+                            aria-label="Téléphone"
                             className="ct-input"
                           />
                         </div>
@@ -370,6 +372,7 @@ export default function ContactClient() {
                           value={agencyNote}
                           onChange={(e) => setAgencyNote(e.target.value)}
                           placeholder="Note rapide (ex: souhaite le Combo Web+IA)"
+                          aria-label="Note rapide"
                           className="ct-textarea"
                         ></textarea>
                         <button type="submit" className="btn btn-secondary ct-quick-submit shine-hover">
@@ -870,6 +873,9 @@ const styleContact = (
 
     /* ──────────────────── RESPONSIVE ──────────────────── */
     @media (max-width: 990px) {
+      .contact-title {
+        font-size: 2.25rem;
+      }
       .contact-layout {
         grid-template-columns: 1fr;
         gap: 2.5rem;
@@ -913,6 +919,12 @@ const styleContact = (
       }
       .ct-console-body {
         padding: 1.25rem;
+      }
+      .ct-console-footer {
+        padding: 1rem 1.25rem;
+      }
+      .ct-footer-item {
+        font-size: 0.72rem;
       }
     }
   `}</style>
