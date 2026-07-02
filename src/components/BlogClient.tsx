@@ -95,9 +95,9 @@ export default function BlogClient() {
 
       <m.div
         className="blog-cta"
-        initial={{ opacity: 0, y: 20 }}
+        initial={hasMounted ? { opacity: 0, y: 20 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.5 }}
       >
         <p className="blog-cta-text">

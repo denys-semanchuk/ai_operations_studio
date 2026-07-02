@@ -156,10 +156,10 @@ export default function OffresClient() {
       </div>
 
       {/* Monthly Retainer / Maintenance Offer */}
-      <m.div 
-        initial={{ opacity: 0, y: 30 }}
+      <m.div
+        initial={hasMounted ? { opacity: 0, y: 30 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.1 }}
         className="glass-card retainer-card"
       >
         <div className="retainer-badge">Abonnement Récurrent</div>

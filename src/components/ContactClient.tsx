@@ -273,7 +273,7 @@ export default function ContactClient() {
                 {sidebarTab === "calendar" ? (
                   <m.div
                     key="cal"
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={hasMounted ? { opacity: 0, y: 8 } : false}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.2 }}
@@ -329,7 +329,7 @@ export default function ContactClient() {
                 ) : (
                   <m.div
                     key="crm"
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={hasMounted ? { opacity: 0, y: 8 } : false}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.2 }}

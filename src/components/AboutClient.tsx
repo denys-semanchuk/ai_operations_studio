@@ -4,8 +4,10 @@ import { useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { Cpu, Check, Layers, Play, Database, BookOpen, Code } from "lucide-react";
 import TiltCard from "@/components/TiltCard";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 export default function AboutClient() {
+  const hasMounted = useHasMounted();
   const [activeSkill, setActiveSkill] = useState("n8n"); // Default active is n8n
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -238,7 +240,7 @@ Leads (Table)
             <AnimatePresence mode="wait">
               <m.div
                 key={currentCase.id}
-                initial={{ opacity: 0, x: 20 }}
+                initial={hasMounted ? { opacity: 0, x: 20 } : false}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}

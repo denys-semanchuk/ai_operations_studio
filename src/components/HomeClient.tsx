@@ -169,10 +169,10 @@ export default function HomeClient() {
       </div>
 
       {/* Stats Cards Section */}
-      <m.section 
-        initial={{ opacity: 0, y: 50 }}
+      <m.section
+        initial={hasMounted ? { opacity: 0, y: 50 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6 }}
         className="stats-section"
       >
@@ -195,9 +195,9 @@ export default function HomeClient() {
       {/* How it Works Section */}
       <m.section
         className="how-section"
-        initial={{ opacity: 0, y: 40 }}
+        initial={hasMounted ? { opacity: 0, y: 40 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6 }}
       >
         <span className="section-label text-gradient text-center block">Simple & Transparent</span>
@@ -250,7 +250,7 @@ export default function HomeClient() {
             <AnimatePresence mode="wait">
               <m.div
                 key={activeTestimonial}
-                initial={{ opacity: 0, x: 40 }}
+                initial={hasMounted ? { opacity: 0, x: 40 } : false}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.3 }}
@@ -287,9 +287,9 @@ export default function HomeClient() {
       {/* Objections Section */}
       <m.section
         className="obj-section"
-        initial={{ opacity: 0, y: 40 }}
+        initial={hasMounted ? { opacity: 0, y: 40 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6 }}
       >
         <span className="section-label text-gradient text-center block">Vos questions, nos réponses</span>
@@ -322,9 +322,9 @@ export default function HomeClient() {
       {/* CTA Banner Section */}
       <m.section
         className="cta-banner-section"
-        initial={{ opacity: 0, y: 40 }}
+        initial={hasMounted ? { opacity: 0, y: 40 } : false}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.6 }}
       >
         <div className="cta-banner glass-card shine-hover">

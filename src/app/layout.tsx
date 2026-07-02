@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
 import DecorativeEffects from "@/components/DecorativeEffects";
-import DeferredWidgets from "@/components/DeferredWidgets";
 import ScrollProgress from "@/components/ScrollProgress";
 import PageTransition from "@/components/PageTransition";
 import RouteProgress from "@/components/RouteProgress";
@@ -160,7 +159,6 @@ export default function RootLayout({
         
         <MotionProvider>
           <RouteProgress />
-          <DecorativeEffects />
           <Analytics />
 
           {/* Shared Layout Structure */}
@@ -172,9 +170,11 @@ export default function RootLayout({
           </main>
           <Footer />
 
-          {/* Interactive overlays */}
+          {/* Decorative effects + delayed-trigger widgets (chat, cookie
+              banner, exit intent, sticky bar, back-to-top) — all deferred
+              off the critical path, see NonCriticalWidgets.tsx */}
           <ScrollProgress />
-          <DeferredWidgets />
+          <DecorativeEffects />
         </MotionProvider>
         <VercelAnalytics />
       </body>
