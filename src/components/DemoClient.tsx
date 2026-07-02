@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Bot, User, Database, Server, Play, CheckCircle2, ChevronRight, MessageSquare, ArrowRight, GitBranch, Cpu, Sparkles } from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
@@ -247,7 +247,7 @@ export default function DemoSimulator() {
             ) : (
               <div className="chat-messages-container">
                 {messages.map((msg, idx) => (
-                  <motion.div
+                  <m.div
                     key={idx}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -268,17 +268,17 @@ export default function DemoSimulator() {
                         </div>
                       )}
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
                 {(step === 1.5 || step === 2.5) && (
-                  <motion.div className="typing-indicator">
+                  <m.div className="typing-indicator">
                     <div className="small-visualizer">
                       <span className="audio-bar bar-1"></span>
                       <span className="audio-bar bar-2"></span>
                       <span className="audio-bar bar-3"></span>
                     </div>
                     <span>Analyse des critères financiers...</span>
-                  </motion.div>
+                  </m.div>
                 )}
               </div>
             )}
@@ -354,508 +354,20 @@ export default function DemoSimulator() {
             </div>
 
             {step === 4 && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="demo-cta-finished">
+              <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="demo-cta-finished">
                 <Link href="/contact" className="btn btn-primary btn-finished shine-hover">
                   <span>Mettre en place cette automatisation</span>
                 </Link>
                 <button onClick={() => setStep(0)} className="btn btn-secondary btn-restart">
                   Recommencer
                 </button>
-              </motion.div>
+              </m.div>
             )}
           </div>
         </TiltCard>
       </div>
-
-      {styleDemo}
     </div>
   );
 }
 
-const styleDemo = (
-  <style jsx global>{`
-    .demo-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .demo-title {
-      font-size: 2.75rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-    .demo-subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-    .demo-disclaimer {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      max-width: 560px;
-      margin: 0.85rem auto 0;
-      line-height: 1.5;
-      font-style: italic;
-    }
 
-    /* Profile selector tabs */
-    .profile-selector {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    .profile-tab {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text-muted);
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    .profile-tab:hover, .profile-tab.active {
-      color: white;
-      border-color: var(--secondary);
-      background: rgba(14, 165, 233, 0.05);
-      box-shadow: 0 0 15px rgba(14, 165, 233, 0.1);
-    }
-
-    /* workflow interactive diagram */
-    .workflow-diagram {
-      padding: 1.5rem 2rem;
-      border-radius: 16px;
-      margin-bottom: 3.5rem;
-    }
-    .diagram-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    .diagram-nodes {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .diagram-node {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      transition: all 0.4s ease;
-    }
-    .diagram-node.active {
-      color: white;
-      border-color: var(--secondary);
-      background: rgba(14, 165, 233, 0.08);
-      box-shadow: 0 0 10px rgba(14, 165, 233, 0.15);
-    }
-    .diagram-connector {
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      margin: 0 0.5rem;
-    }
-    .connector-svg {
-      overflow: visible;
-    }
-    .base-line {
-      stroke: rgba(255, 255, 255, 0.04);
-      stroke-width: 2;
-    }
-    .pulse-line {
-      stroke: var(--secondary);
-      stroke-width: 3;
-      stroke-dasharray: 8 20;
-      animation: dash 1.5s linear infinite;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 4px var(--secondary));
-    }
-    @keyframes dash {
-      to {
-        stroke-dashoffset: -28;
-      }
-    }
-
-    .demo-layout {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-    
-    /* Panels */
-    .simulator-panel, .crm-panel {
-      padding: 0;
-      overflow: hidden;
-      min-height: 520px;
-      display: flex;
-      flex-direction: column;
-    }
-    .panel-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.02);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: white;
-    }
-    .panel-header-icon {
-      color: var(--secondary);
-    }
-    .status-badge {
-      margin-left: auto;
-      font-size: 0.75rem;
-      color: #10b981;
-      background: rgba(16, 185, 129, 0.1);
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      border: 1px solid rgba(16, 185, 129, 0.2);
-    }
-    .sync-spinner {
-      margin-left: auto;
-      animation: spin 1s linear infinite;
-      font-size: 0.95rem;
-    }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    /* Active pulse */
-    .pulse {
-      animation: pulseAnimation 2s infinite;
-    }
-    @keyframes pulseAnimation {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
-    }
-    
-    /* Chat area */
-    .chat-area {
-      padding: 1.5rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .chat-idle {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.25rem;
-    }
-    .chat-idle p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-    }
-    .start-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .chat-messages-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      justify-content: flex-end;
-    }
-    .chat-bubble-wrapper {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-      max-width: 85%;
-    }
-    .chat-bubble-wrapper.user {
-      align-self: flex-end;
-      flex-direction: row-reverse;
-    }
-    .avatar-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-    .chat-bubble-wrapper.bot .avatar-icon {
-      background: rgba(14, 165, 233, 0.1);
-      border-color: rgba(14, 165, 233, 0.2);
-      color: var(--secondary);
-    }
-    .chat-bubble-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-    .chat-bubble {
-      padding: 0.85rem 1.15rem;
-      border-radius: 16px;
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-    .chat-bubble-wrapper.bot .chat-bubble {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: white;
-      border-top-left-radius: 4px;
-    }
-    .chat-bubble-wrapper.user .chat-bubble {
-      background: var(--gradient-primary);
-      color: white;
-      border-top-right-radius: 4px;
-    }
-    
-    /* Audio visualizer */
-    .audio-visualizer {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      height: 16px;
-      padding-left: 0.5rem;
-    }
-    .audio-bar {
-      width: 3px;
-      background: var(--secondary);
-      border-radius: 3px;
-      height: 100%;
-    }
-    .bar-1 { animation: bounce 0.8s ease-in-out infinite; animation-delay: 0.1s; }
-    .bar-2 { animation: bounce 0.8s ease-in-out infinite; animation-delay: 0.3s; }
-    .bar-3 { animation: bounce 0.8s ease-in-out infinite; animation-delay: 0.2s; }
-    .bar-4 { animation: bounce 0.8s ease-in-out infinite; animation-delay: 0.4s; }
-    @keyframes bounce {
-      0%, 100% { transform: scaleY(0.3); }
-      50% { transform: scaleY(1); }
-    }
-    
-    .typing-indicator {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-left: 2.25rem;
-    }
-    .small-visualizer {
-      display: flex;
-      gap: 2px;
-      height: 10px;
-      width: 14px;
-      align-items: center;
-    }
-    
-    /* CRM mockup */
-    .crm-panel {
-      padding: 1.5rem;
-    }
-    .crm-table-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.02em;
-    }
-    .crm-table {
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 2rem;
-      background: rgba(0, 0, 0, 0.1);
-    }
-    .crm-row {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      padding: 0.6rem 1rem;
-      font-size: 0.85rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      color: var(--text-muted);
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-    .crm-header-row {
-      background: rgba(255, 255, 255, 0.02);
-      font-weight: 700;
-      color: white;
-    }
-    .crm-row:last-child {
-      border-bottom: none;
-    }
-    .crm-field-label {
-      font-weight: 600;
-      color: white;
-    }
-    .text-highlight {
-      color: var(--secondary);
-      font-weight: 600;
-    }
-    
-    /* CRM green glow flash */
-    .flash-row {
-      animation: greenGlowFlash 1.6s ease-out;
-    }
-    @keyframes greenGlowFlash {
-      0% {
-        background: rgba(16, 185, 129, 0.15);
-        box-shadow: inset 0 0 10px rgba(16, 185, 129, 0.3);
-        color: white;
-      }
-      100% {
-        background: transparent;
-        box-shadow: none;
-      }
-    }
-    
-    .status-badge-crm {
-      font-size: 0.75rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 600;
-    }
-    .status-badge-crm.pending {
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text-dim);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .status-badge-crm.success {
-      background: rgba(16, 185, 129, 0.1);
-      color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.2);
-    }
-    
-    /* Integration events log */
-    .event-log-container {
-      margin-bottom: 1.5rem;
-    }
-    .event-logs {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      background: rgba(255, 255, 255, 0.01);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: monospace;
-      font-size: 0.8rem;
-    }
-    .log-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--text-dim);
-      transition: color 0.3s ease;
-    }
-    .log-item.active {
-      color: var(--foreground);
-    }
-    .success-icon {
-      color: #10b981;
-    }
-    .demo-cta-finished {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    .btn-finished {
-      flex-grow: 1;
-    }
-    .btn-restart {
-      white-space: nowrap;
-    }
-
-    @media (max-width: 900px) {
-      .demo-title {
-        font-size: 2.25rem;
-      }
-      .workflow-diagram {
-        display: none;
-      }
-      .demo-layout {
-        grid-template-columns: 1fr;
-      }
-      .profile-selector {
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .demo-title {
-        font-size: 1.9rem;
-      }
-      .demo-subtitle {
-        font-size: 1rem;
-      }
-      .profile-selector {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.5rem;
-      }
-      .profile-tab {
-        text-align: center;
-        padding: 0.65rem 1rem;
-      }
-      .simulator-panel,
-      .crm-panel {
-        min-height: auto;
-      }
-      .panel-header {
-        flex-wrap: wrap;
-        row-gap: 0.4rem;
-      }
-      .demo-cta-finished {
-        flex-direction: column;
-        gap: 0.75rem;
-      }
-      .demo-cta-finished .btn {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-      }
-      .crm-row {
-        font-size: 0.8rem;
-        padding: 0.5rem 0.75rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .demo-title {
-        font-size: 1.65rem;
-      }
-      .simulator-panel {
-        padding: 1.25rem;
-      }
-      .crm-panel {
-        padding: 1.25rem;
-      }
-      .chat-bubble {
-        max-width: 90%;
-        font-size: 0.82rem;
-      }
-    }
-  `}</style>
-);

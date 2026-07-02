@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { ArrowRight, Bot, Shield, Zap, TrendingUp, CheckCircle, Clock, ChevronLeft, ChevronRight, MessageSquare, Quote } from "lucide-react";
 import TiltCard from "@/components/TiltCard";
 import CountUp from "@/components/CountUp";
 import Magnetic from "@/components/Magnetic";
 import ParallaxItem from "@/components/ParallaxItem";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 export default function HomeClient() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const hasMounted = useHasMounted();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -94,28 +96,28 @@ export default function HomeClient() {
   return (
     <div className="page-wrapper container">
       {/* Hero Section */}
-      <motion.section
+      <m.section
         variants={containerVariants}
-        initial="hidden"
+        initial={hasMounted ? "hidden" : false}
         animate="visible"
         className="hero"
       >
-        <motion.div variants={itemVariants} className="hero-badge">
+        <m.div variants={itemVariants} className="hero-badge">
           <Bot size={14} className="badge-icon" />
           <span>L'excellence opérationnelle par l'IA</span>
-        </motion.div>
+        </m.div>
         
-        <motion.h1 variants={itemVariants} className="hero-title font-primary">
+        <m.h1 variants={itemVariants} className="hero-title font-primary">
           Nous automatisons vos <br />
           <span className="text-gradient-animate">opérations immobilières</span> grâce à l'IA
-        </motion.h1>
+        </m.h1>
         
-        <motion.p variants={itemVariants} className="hero-subtitle">
+        <m.p variants={itemVariants} className="hero-subtitle">
           Captez, qualifiez et synchronisez vos leads immobiliers instantanément dans votre CRM.
           Fini les prospects perdus — votre agence répond en moins de 5 minutes, 24h/24.
-        </motion.p>
+        </m.p>
 
-        <motion.div variants={itemVariants} className="hero-actions">
+        <m.div variants={itemVariants} className="hero-actions">
           <Magnetic>
             <Link href="/contact" className="btn btn-primary shine-hover">
               <span>Réserver l'audit gratuit</span>
@@ -128,9 +130,9 @@ export default function HomeClient() {
               <span>Voir la démo live</span>
             </Link>
           </Magnetic>
-        </motion.div>
+        </m.div>
 
-        <motion.div variants={itemVariants} className="hero-trust">
+        <m.div variants={itemVariants} className="hero-trust">
           {[
             "Sans engagement",
             "Réponse sous 24h",
@@ -142,8 +144,8 @@ export default function HomeClient() {
               {t}
             </span>
           ))}
-        </motion.div>
-      </motion.section>
+        </m.div>
+      </m.section>
 
       {/* Partners Marquee */}
       <div className="partners-marquee-section">
@@ -167,7 +169,7 @@ export default function HomeClient() {
       </div>
 
       {/* Stats Cards Section */}
-      <motion.section 
+      <m.section 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
@@ -188,10 +190,10 @@ export default function HomeClient() {
             </TiltCard>
           ))}
         </div>
-      </motion.section>
+      </m.section>
 
       {/* How it Works Section */}
-      <motion.section
+      <m.section
         className="how-section"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -232,7 +234,7 @@ export default function HomeClient() {
             <p className="how-step-desc">Formation de votre équipe incluse. Support 14 jours post-lancement. Résultats mesurables dès la première semaine.</p>
           </div>
         </div>
-      </motion.section>
+      </m.section>
 
       {/* Testimonials Carousel Section */}
       <section className="testimonials-section">
@@ -246,7 +248,7 @@ export default function HomeClient() {
 
           <div className="testimonial-slider-wrapper">
             <AnimatePresence mode="wait">
-              <motion.div
+              <m.div
                 key={activeTestimonial}
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -260,7 +262,7 @@ export default function HomeClient() {
                   <h3 className="testimonial-name">{testimonials[activeTestimonial].name}</h3>
                   <p className="testimonial-role">{testimonials[activeTestimonial].role}</p>
                 </div>
-              </motion.div>
+              </m.div>
             </AnimatePresence>
           </div>
 
@@ -283,7 +285,7 @@ export default function HomeClient() {
       </section>
 
       {/* Objections Section */}
-      <motion.section
+      <m.section
         className="obj-section"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -315,10 +317,10 @@ export default function HomeClient() {
             <p className="obj-answer">Nos systèmes sont construits sur-mesure, pas des SaaS génériques. On part de votre flux réel, pas d'un template. Résultat : une adoption immédiate par votre équipe.</p>
           </TiltCard>
         </div>
-      </motion.section>
+      </m.section>
 
       {/* CTA Banner Section */}
-      <motion.section
+      <m.section
         className="cta-banner-section"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -357,7 +359,7 @@ export default function HomeClient() {
             <span>100% Gratuit<br />Sans engagement</span>
           </div>
         </div>
-      </motion.section>
+      </m.section>
 
       {/* Pain vs Solution Section */}
       <section className="pain-solution-section">
@@ -426,756 +428,8 @@ export default function HomeClient() {
           </TiltCard>
         </div>
       </section>
-
-      {/* Global CSS rules */}
-      {styleHome}
     </div>
   );
 }
 
-const styleHome = (
-  <style jsx global>{`
-    .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 3.5rem 0 2.5rem 0;
-      max-width: 950px;
-      margin: 0 auto;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.25rem;
-      border-radius: 99px;
-      background: rgba(99, 102, 241, 0.08);
-      border: 1px solid rgba(99, 102, 241, 0.18);
-      color: var(--secondary);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1.75rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .badge-icon {
-      color: var(--secondary);
-    }
-    .hero-title {
-      font-size: 4rem;
-      line-height: 1.15;
-      margin-bottom: 1.25rem;
-      color: white;
-      letter-spacing: -0.03em;
-    }
-    .hero-subtitle {
-      font-size: 1.25rem;
-      line-height: 1.65;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      max-width: 760px;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 3.5rem;
-    }
-    
-    /* Trust pills */
-    .hero-trust {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-top: -1.5rem;
-    }
-    .trust-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-    .trust-check {
-      color: #10b981;
-      flex-shrink: 0;
-    }
 
-    /* Partners Marquee */
-    .partners-marquee-section {
-      width: 100%;
-      margin-bottom: 5rem;
-      text-align: center;
-    }
-    .marquee-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--text-dim);
-      letter-spacing: 0.15em;
-      margin-bottom: 1.75rem;
-    }
-    .marquee-container {
-      width: 100%;
-      overflow: hidden;
-      padding: 1.5rem 0;
-      border-radius: 16px;
-      display: flex;
-    }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      gap: 4rem;
-      animation: marqueeScroll 28s linear infinite;
-    }
-    .partner-logo {
-      display: flex;
-      align-items: center;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-    @keyframes marqueeScroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    
-    /* Stats */
-    .stats-section {
-      padding: 3.5rem 0;
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-    .stat-card {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .stat-icon-container {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .stat-value {
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: white;
-      margin-top: 0.5rem;
-    }
-    .stat-label {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--secondary);
-    }
-    .stat-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-    
-    /* How it works */
-    .how-section {
-      padding: 4rem 0;
-    }
-    .how-title {
-      font-size: 2.25rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 3rem;
-      letter-spacing: -0.02em;
-    }
-    .how-steps {
-      display: flex;
-      align-items: stretch;
-      gap: 0;
-    }
-    .how-step {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 2.5rem 2rem !important;
-      position: relative;
-    }
-    .how-step-num {
-      position: absolute;
-      top: -12px;
-      left: 1.5rem;
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--secondary);
-      background: var(--background);
-      padding: 0.15rem 0.55rem;
-      letter-spacing: 0.1em;
-      border: 1px solid rgba(14, 165, 233, 0.25);
-      border-radius: 4px;
-    }
-    .how-step-icon-wrap {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-    }
-    .how-step-title {
-      font-size: 1.1rem;
-      color: white;
-      margin-bottom: 0.75rem;
-      font-weight: 700;
-    }
-    .how-step-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .how-connector {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 1rem;
-      flex-shrink: 0;
-    }
-    .how-arrow {
-      color: var(--secondary);
-      opacity: 0.4;
-    }
-
-    /* Testimonials section */
-    .testimonials-section {
-      padding: 4.5rem 0;
-    }
-    .testimonials-title {
-      font-size: 2.25rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 3.5rem;
-    }
-    .testimonials-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .testimonial-slider-wrapper {
-      flex-grow: 1;
-      min-height: 250px;
-    }
-    .testimonial-card {
-      padding: 3rem 2.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1.25rem;
-      position: relative;
-    }
-    .quote-icon {
-      color: var(--primary);
-      opacity: 0.15;
-      position: absolute;
-      top: 1.5rem;
-      left: 2rem;
-    }
-    .testimonial-text {
-      font-size: 1.15rem;
-      color: white;
-      line-height: 1.6;
-      font-style: italic;
-    }
-    .testimonial-name {
-      font-size: 1.05rem;
-      color: white;
-      font-weight: 700;
-      margin-bottom: 0.2rem;
-    }
-    .testimonial-role {
-      font-size: 0.85rem;
-      color: var(--secondary);
-      font-weight: 600;
-    }
-    .nav-btn {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: var(--text-muted);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      flex-shrink: 0;
-    }
-    .nav-btn:hover {
-      color: white;
-      border-color: var(--secondary);
-      background: rgba(14, 165, 233, 0.08);
-    }
-    .dots-row {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: all 0.3s ease;
-    }
-    .dot.active {
-      background: var(--secondary);
-      width: 20px;
-      border-radius: 4px;
-    }
-    
-    .pain-solution-section {
-      padding: 4.5rem 0;
-    }
-    .ps-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-    .ps-main-title {
-      font-size: 2.25rem;
-      color: white;
-      margin-top: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-    .ps-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 2rem;
-      align-items: stretch;
-    }
-    .ps-card {
-      padding: 2.75rem !important;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .ps-pain-card {
-      border: 1px solid rgba(239, 68, 68, 0.12) !important;
-      background: linear-gradient(160deg, rgba(239, 68, 68, 0.04) 0%, rgba(5, 8, 22, 0.4) 40%) !important;
-    }
-    .ps-solution-card {
-      border: 1px solid rgba(16, 185, 129, 0.15) !important;
-      background: linear-gradient(160deg, rgba(16, 185, 129, 0.04) 0%, rgba(5, 8, 22, 0.4) 40%) !important;
-    }
-    .ps-card-badge {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .ps-badge-pain {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-    }
-    .ps-badge-solution {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      color: #10b981;
-    }
-    .ps-card-label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-    .ps-label-pain {
-      color: #ef4444;
-    }
-    .ps-label-solution {
-      color: #10b981;
-    }
-    .ps-card-title {
-      font-size: 1.5rem;
-      color: white;
-      line-height: 1.3;
-    }
-    .ps-card-desc {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-    .ps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      margin-top: 0.75rem;
-    }
-    .ps-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--foreground);
-      padding: 0.6rem 0.85rem;
-      border-radius: 8px;
-      transition: background 0.2s ease;
-    }
-    .ps-item-pain {
-      background: rgba(239, 68, 68, 0.04);
-      border: 1px solid rgba(239, 68, 68, 0.06);
-    }
-    .ps-item-pain:hover {
-      background: rgba(239, 68, 68, 0.07);
-    }
-    .ps-item-solution {
-      background: rgba(16, 185, 129, 0.04);
-      border: 1px solid rgba(16, 185, 129, 0.06);
-    }
-    .ps-item-solution:hover {
-      background: rgba(16, 185, 129, 0.07);
-    }
-    .ps-item-icon {
-      flex-shrink: 0;
-      width: 20px;
-      text-align: center;
-    }
-    .ps-icon-pain {
-      color: #ef4444;
-      font-weight: 700;
-    }
-    .ps-icon-solution {
-      color: #10b981;
-      flex-shrink: 0;
-    }
-    /* VS Divider */
-    .ps-vs-divider {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-    }
-    .ps-vs-line {
-      width: 1px;
-      flex: 1;
-      background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
-    }
-    .ps-vs-circle {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--secondary);
-      letter-spacing: 0.05em;
-    }
-    /* Objections */
-    .obj-section {
-      padding: 4.5rem 0;
-    }
-    .obj-title {
-      font-size: 2.25rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 3rem;
-      letter-spacing: -0.02em;
-    }
-    .obj-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-    .obj-card {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding: 2rem !important;
-    }
-    .obj-icon-wrap {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .obj-objection {
-      font-size: 1rem;
-      font-weight: 700;
-      color: white;
-      font-style: italic;
-      line-height: 1.4;
-    }
-    .obj-answer {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    /* CTA Banner */
-    /* Slots urgency */
-    .cta-slots-row {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.25rem;
-    }
-    .cta-slot-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px #10b981;
-      animation: slot-pulse 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    @keyframes slot-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    .cta-slots-text {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #10b981;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .cta-banner-section {
-      padding: 1.5rem 0 4.5rem 0;
-    }
-    .cta-banner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 3.5rem 4rem !important;
-      border: 1px solid rgba(14, 165, 233, 0.15) !important;
-      background: linear-gradient(135deg, rgba(15, 20, 50, 0.5) 0%, rgba(5, 8, 22, 0.5) 100%) !important;
-    }
-    .cta-banner-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 600px;
-    }
-    .cta-banner-title {
-      font-size: 2rem;
-      color: white;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-    .cta-banner-desc {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-    .cta-banner-actions {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.75rem;
-    }
-    .cta-banner-badge {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      text-align: center;
-      padding: 1.5rem 2rem;
-      border-radius: 16px;
-      background: rgba(99, 102, 241, 0.06);
-      border: 1px solid rgba(99, 102, 241, 0.12);
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: white;
-      line-height: 1.35;
-    }
-
-    .section-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    @media (max-width: 900px) {
-      .hero-title {
-        font-size: 2.75rem;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .how-steps {
-        flex-direction: column;
-        gap: 1.5rem;
-      }
-      .how-connector {
-        display: none;
-      }
-      .obj-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero-trust {
-        gap: 0.5rem;
-      }
-      .ps-grid {
-        grid-template-columns: 1fr;
-      }
-      .ps-vs-divider {
-        flex-direction: row;
-        gap: 0;
-      }
-      .ps-vs-line {
-        width: auto;
-        height: 1px;
-        flex: 1;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
-      }
-      .testimonials-container {
-        gap: 0.5rem;
-      }
-      .nav-btn {
-        display: none;
-      }
-      .cta-banner {
-        padding: 2.5rem 2rem !important;
-        flex-wrap: wrap;
-        gap: 2rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero {
-        padding: 2rem 0 1.5rem;
-      }
-      .hero-badge {
-        font-size: 0.72rem;
-        padding: 0.45rem 0.9rem;
-        margin-bottom: 1.25rem;
-      }
-      .hero-title {
-        font-size: 2.1rem;
-        margin-bottom: 1rem;
-      }
-      .hero-subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-      }
-      .hero-actions {
-        flex-direction: column;
-        width: 100%;
-        gap: 0.75rem;
-        margin-bottom: 2.5rem;
-      }
-      .hero-actions .btn {
-        width: 100%;
-        justify-content: center;
-      }
-      .hero-trust {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .trust-pill {
-        font-size: 0.78rem;
-      }
-      .how-title,
-      .testimonials-title,
-      .ps-main-title,
-      .obj-title {
-        font-size: 1.75rem;
-      }
-      .stat-value {
-        font-size: 1.85rem;
-      }
-      .cta-banner {
-        flex-direction: column !important;
-        padding: 2rem 1.5rem !important;
-        align-items: flex-start !important;
-        gap: 1.5rem !important;
-      }
-      .cta-banner-content {
-        max-width: 100%;
-      }
-      .cta-banner-title {
-        font-size: 1.5rem;
-      }
-      .cta-banner-actions {
-        flex-direction: column;
-        width: 100%;
-      }
-      .cta-banner-actions .btn {
-        width: 100%;
-        justify-content: center;
-      }
-      .cta-banner-badge {
-        flex-direction: row;
-        width: 100%;
-        justify-content: center;
-        padding: 0.9rem 1.25rem;
-      }
-      .ps-card {
-        padding: 1.75rem !important;
-      }
-      .how-step {
-        padding: 2rem 1.5rem !important;
-      }
-      .obj-card {
-        padding: 1.5rem !important;
-      }
-      .testimonial-card {
-        padding: 2rem 1.5rem;
-      }
-      .quote-icon {
-        top: 1rem;
-        left: 1.25rem;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .hero-title {
-        font-size: 1.85rem;
-      }
-      .hero-subtitle {
-        font-size: 0.92rem;
-      }
-      .hero-badge {
-        font-size: 0.65rem;
-        padding: 0.4rem 0.75rem;
-        gap: 0.35rem;
-        letter-spacing: 0.02em;
-        max-width: 100%;
-      }
-    }
-  `}</style>
-);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 export default function BackToTop() {
@@ -23,7 +23,7 @@ export default function BackToTop() {
     <>
       <AnimatePresence>
         {visible && (
-          <motion.button
+          <m.button
             className="back-to-top"
             onClick={scrollToTop}
             initial={{ opacity: 0, y: 20 }}
@@ -34,41 +34,10 @@ export default function BackToTop() {
             aria-label="Retourner en haut"
           >
             <ArrowUp size={18} />
-          </motion.button>
+          </m.button>
         )}
       </AnimatePresence>
-      <style jsx global>{`
-        .back-to-top {
-          position: fixed;
-          bottom: 2rem;
-          left: 2rem;
-          width: 44px;
-          height: 44px;
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(12px);
-          color: white;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 8000;
-          transition: background 0.2s, border-color 0.2s;
-        }
-        .back-to-top:hover {
-          background: rgba(14, 165, 233, 0.1);
-          border-color: rgba(14, 165, 233, 0.3);
-        }
-        @media (max-width: 600px) {
-          .back-to-top {
-            bottom: max(1rem, env(safe-area-inset-bottom));
-            left: 1rem;
-            width: 40px;
-            height: 40px;
-          }
-        }
-      `}</style>
+
     </>
   );
 }

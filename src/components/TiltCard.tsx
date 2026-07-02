@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -49,7 +49,7 @@ export default function TiltCard({ children, className = "" }: TiltCardProps) {
   };
 
   return (
-    <motion.div
+    <m.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
@@ -62,28 +62,7 @@ export default function TiltCard({ children, className = "" }: TiltCardProps) {
       <div className="tc-spotlight" />
       <div className="tc-content">{children}</div>
 
-      <style jsx global>{`
-        .tc-spotlight {
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          pointer-events: none;
-          opacity: var(--tc-opacity, 0);
-          background: radial-gradient(
-            circle 220px at var(--tc-gx, 50%) var(--tc-gy, 50%),
-            rgba(14, 165, 233, 0.16) 0%,
-            rgba(99, 102, 241, 0.07) 50%,
-            transparent 100%
-          );
-          transition: opacity 0.3s ease;
-          z-index: 1;
-        }
-        .tc-content {
-          transform: translateZ(20px);
-          z-index: 2;
-          position: relative;
-        }
-      `}</style>
-    </motion.div>
+
+    </m.div>
   );
 }

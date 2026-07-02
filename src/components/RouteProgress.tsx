@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { motion, useAnimation } from "framer-motion";
+import { m, useAnimation } from "framer-motion";
 
 export default function RouteProgress() {
   const pathname = usePathname();
@@ -35,7 +35,7 @@ export default function RouteProgress() {
   }, [pathname, controls]);
 
   return (
-    <motion.div
+    <m.div
       animate={controls}
       initial={{ scaleX: 0, opacity: 0 }}
       style={{

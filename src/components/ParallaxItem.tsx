@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 
 interface ParallaxItemProps {
   children: React.ReactNode;
@@ -18,8 +18,8 @@ export default function ParallaxItem({ children, offset = 24, className }: Paral
   const y = useTransform(scrollYProgress, [0, 1], [offset, -offset]);
 
   return (
-    <motion.div ref={ref} style={{ y }} className={className}>
+    <m.div ref={ref} style={{ y }} className={className}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }

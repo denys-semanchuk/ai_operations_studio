@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Zap } from "lucide-react";
 import Link from "next/link";
 
@@ -45,7 +45,7 @@ export default function ExitIntent() {
       {visible && (
         <>
           {/* Backdrop */}
-          <motion.div
+          <m.div
             className="exit-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -54,7 +54,7 @@ export default function ExitIntent() {
           />
 
           {/* Modal */}
-          <motion.div
+          <m.div
             className="exit-modal"
             initial={{ opacity: 0, scale: 0.92, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -109,153 +109,11 @@ export default function ExitIntent() {
                 Non merci, je préfère continuer à perdre des leads
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </>
       )}
 
-      <style jsx global>{`
-        .exit-backdrop {
-          position: fixed;
-          inset: 0;
-          background: rgba(0, 0, 0, 0.7);
-          backdrop-filter: blur(4px);
-          z-index: 10000;
-        }
-        .exit-modal {
-          position: fixed;
-          inset: 0;
-          margin: auto;
-          width: min(560px, calc(100vw - 2rem));
-          height: fit-content;
-          max-height: calc(100dvh - 2rem);
-          overflow-y: auto;
-          box-sizing: border-box;
-          background: rgba(8, 12, 28, 0.98);
-          border: 1px solid rgba(14, 165, 233, 0.2);
-          border-radius: 24px;
-          padding: 3rem 2.5rem 2.5rem;
-          z-index: 10001;
-          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(14, 165, 233, 0.06);
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-        .exit-close {
-          position: absolute;
-          top: 1.25rem;
-          right: 1.25rem;
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.04);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          color: var(--text-muted);
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.2s;
-        }
-        .exit-close:hover {
-          background: rgba(255, 255, 255, 0.1);
-          color: white;
-        }
-        .exit-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          padding: 0.4rem 0.9rem;
-          border-radius: 99px;
-          background: rgba(239, 68, 68, 0.08);
-          border: 1px solid rgba(239, 68, 68, 0.2);
-          color: #ef4444;
-          font-size: 0.78rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          width: fit-content;
-        }
-        .exit-title {
-          font-size: 1.85rem;
-          color: white;
-          line-height: 1.2;
-          letter-spacing: -0.02em;
-        }
-        .exit-desc {
-          font-size: 0.95rem;
-          color: var(--text-muted);
-          line-height: 1.65;
-        }
-        .exit-stats {
-          display: flex;
-          gap: 1.5rem;
-        }
-        .exit-stat {
-          display: flex;
-          flex-direction: column;
-          gap: 0.2rem;
-          padding: 1rem 1.5rem;
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.06);
-          flex: 1;
-          align-items: center;
-        }
-        .exit-stat-value {
-          font-size: 1.5rem;
-          font-weight: 800;
-          color: white;
-        }
-        .exit-stat-label {
-          font-size: 0.78rem;
-          color: var(--text-dim);
-          text-align: center;
-        }
-        .exit-actions {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-          margin-top: 0.25rem;
-        }
-        .exit-cta {
-          width: 100%;
-          justify-content: center;
-          padding: 0.9rem 1.5rem;
-          font-size: 0.95rem;
-        }
-        .exit-skip {
-          background: none;
-          border: none;
-          color: var(--text-dim);
-          font-size: 0.78rem;
-          cursor: pointer;
-          text-align: center;
-          font-family: inherit;
-          transition: color 0.2s;
-          padding: 0.25rem;
-        }
-        .exit-skip:hover {
-          color: var(--text-muted);
-        }
 
-        @media (max-width: 480px) {
-          .exit-modal {
-            padding: 2.5rem 1.25rem 1.75rem;
-          }
-          .exit-title {
-            font-size: 1.5rem;
-          }
-          .exit-stats {
-            gap: 0.75rem;
-          }
-          .exit-stat {
-            padding: 0.85rem 0.75rem;
-          }
-          .exit-stat-value {
-            font-size: 1.25rem;
-          }
-        }
-      `}</style>
     </AnimatePresence>
   );
 }

@@ -3,14 +3,10 @@ import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ThreeBackground from "@/components/ThreeBackground";
-import CursorGlow from "@/components/CursorGlow";
-import ChatWidget from "@/components/ChatWidget";
+import MotionProvider from "@/components/MotionProvider";
+import DecorativeEffects from "@/components/DecorativeEffects";
+import DeferredWidgets from "@/components/DeferredWidgets";
 import ScrollProgress from "@/components/ScrollProgress";
-import BackToTop from "@/components/BackToTop";
-import CookieBanner from "@/components/CookieBanner";
-import StickyConversionBar from "@/components/StickyConversionBar";
-import ExitIntent from "@/components/ExitIntent";
 import PageTransition from "@/components/PageTransition";
 import RouteProgress from "@/components/RouteProgress";
 import Analytics from "@/components/Analytics";
@@ -162,27 +158,24 @@ export default function RootLayout({
         <div className="glow-orb glow-orb-primary" aria-hidden="true" />
         <div className="glow-orb glow-orb-secondary" aria-hidden="true" />
         
-        <RouteProgress />
-        <ThreeBackground />
-        <CursorGlow />
-        <Analytics />
+        <MotionProvider>
+          <RouteProgress />
+          <DecorativeEffects />
+          <Analytics />
 
-        {/* Shared Layout Structure */}
-        <Header />
-        <main className="main-content">
-          <PageTransition>
-            {children}
-          </PageTransition>
-        </main>
-        <Footer />
+          {/* Shared Layout Structure */}
+          <Header />
+          <main className="main-content">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </main>
+          <Footer />
 
-        {/* Interactive overlays */}
-        <ScrollProgress />
-        <ChatWidget />
-        <StickyConversionBar />
-        <BackToTop />
-        <CookieBanner />
-        <ExitIntent />
+          {/* Interactive overlays */}
+          <ScrollProgress />
+          <DeferredWidgets />
+        </MotionProvider>
         <VercelAnalytics />
       </body>
     </html>

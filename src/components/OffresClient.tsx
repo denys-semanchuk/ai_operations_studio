@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Check, Calendar, ArrowRight, MessageSquare, Database, Globe, HelpCircle } from "lucide-react";
 import Link from "next/link";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 export default function OffresClient() {
+  const hasMounted = useHasMounted();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const coreOffers = [
@@ -112,9 +114,9 @@ export default function OffresClient() {
       {/* Grid of Core Offers */}
       <div className="offers-grid">
         {coreOffers.map((offer, idx) => (
-          <motion.div
+          <m.div
             key={offer.id}
-            initial={{ opacity: 0, y: 40 }}
+            initial={hasMounted ? { opacity: 0, y: 40 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
             className="glass-card offer-card"
@@ -149,12 +151,12 @@ export default function OffresClient() {
               <span>Choisir cette offre</span>
               <ArrowRight size={16} />
             </Link>
-          </motion.div>
+          </m.div>
         ))}
       </div>
 
       {/* Monthly Retainer / Maintenance Offer */}
-      <motion.div 
+      <m.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -176,7 +178,7 @@ export default function OffresClient() {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* FAQ Accordion Section */}
       <div className="faq-section">
@@ -187,6 +189,7 @@ export default function OffresClient() {
           {faqs.map((faq, idx) => (
             <div key={idx} className="faq-accordion-item glass">
               <button 
+                type="button"
                 onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                 className="faq-question-btn"
                 aria-expanded={openFaq === idx}
@@ -198,7 +201,7 @@ export default function OffresClient() {
               
               <AnimatePresence initial={false}>
                 {openFaq === idx && (
-                  <motion.div
+                  <m.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
@@ -208,345 +211,15 @@ export default function OffresClient() {
                     <div className="faq-answer-content">
                       <p>{faq.a}</p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
           ))}
         </div>
       </div>
-
-      {styleOffers}
     </div>
   );
 }
 
-const styleOffers = (
-  <style jsx global>{`
-    .offres-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .offres-title {
-      font-size: 2.75rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
-    .offres-subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-    .offers-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin-bottom: 3.5rem;
-    }
-    .offer-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .offer-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-    .offer-icon-wrapper {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .offer-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.35rem 0.75rem;
-      border-radius: 99px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .offer-title {
-      font-size: 1.5rem;
-      color: white;
-      margin-bottom: 0.75rem;
-    }
-    .offer-desc {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      flex-grow: 1;
-    }
-    .offer-pricing {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-    .offer-price-val {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--secondary);
-    }
-    .offer-time-val {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      font-weight: 500;
-    }
-    .offer-divider {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.06);
-      margin-bottom: 1.5rem;
-    }
-    .offer-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-    }
-    .offer-feature-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      color: var(--foreground);
-    }
-    .feature-check {
-      color: #10b981;
-      flex-shrink: 0;
-    }
-    .offer-btn {
-      width: 100%;
-      margin-top: auto;
-    }
-    
-    /* Retainer section */
-    .retainer-card {
-      background: linear-gradient(135deg, rgba(15, 20, 45, 0.7) 0%, rgba(5, 8, 22, 0.7) 100%);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      padding: 2.5rem;
-      margin-bottom: 3.5rem;
-    }
-    .retainer-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--accent);
-      background: rgba(217, 70, 239, 0.1);
-      border: 1px solid rgba(217, 70, 239, 0.25);
-      padding: 0.35rem 0.75rem;
-      border-radius: 99px;
-      margin-bottom: 1.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .retainer-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 3rem;
-      align-items: center;
-    }
-    .retainer-title {
-      font-size: 1.75rem;
-      color: white;
-      margin-bottom: 1rem;
-    }
-    .retainer-desc {
-      color: var(--text-muted);
-      line-height: 1.7;
-      font-size: 1rem;
-    }
-    .retainer-price-area {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.75rem;
-      border-left: 1px solid rgba(255, 255, 255, 0.08);
-      padding-left: 3rem;
-    }
-    .retainer-price {
-      font-size: 2rem;
-      font-weight: 800;
-      color: white;
-    }
-    .retainer-period {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-    .retainer-conditions {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-    }
-    .retainer-btn {
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-    
-    /* FAQ Accordion */
-    .faq-section {
-      padding: 2rem 0;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .faq-title {
-      font-size: 2.25rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 2rem;
-    }
-    .faq-accordion-container {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-    .faq-accordion-item {
-      overflow: hidden;
-      border-radius: 12px;
-      background: rgba(10, 16, 35, 0.3);
-      border-color: rgba(255, 255, 255, 0.04);
-      transition: all 0.3s ease;
-    }
-    .faq-accordion-item:hover {
-      border-color: rgba(14, 165, 233, 0.2);
-    }
-    .faq-question-btn {
-      display: flex;
-      width: 100%;
-      align-items: center;
-      gap: 1rem;
-      background: none;
-      border: none;
-      padding: 1.25rem 1.5rem;
-      cursor: pointer;
-      color: white;
-      text-align: left;
-    }
-    .faq-question-text {
-      font-size: 1.05rem;
-      font-weight: 600;
-      flex-grow: 1;
-    }
-    .faq-chevron {
-      color: var(--text-dim);
-      font-size: 0.9rem;
-      transition: transform 0.3s ease;
-    }
-    .faq-chevron.open {
-      transform: rotate(180deg);
-      color: var(--secondary);
-    }
-    .faq-answer-container {
-      overflow: hidden;
-    }
-    .faq-answer-content {
-      padding: 0 1.5rem 1.5rem 2.75rem;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .block {
-      display: block;
-    }
 
-    @media (max-width: 900px) {
-      .offres-title {
-        font-size: 2.25rem;
-      }
-      .offres-subtitle {
-        font-size: 1.05rem;
-      }
-      .offers-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      .retainer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .retainer-price-area {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        padding-top: 2rem;
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .offres-header {
-        margin-bottom: 2rem;
-      }
-      .offres-title {
-        font-size: 1.9rem;
-      }
-      .offres-subtitle {
-        font-size: 1rem;
-      }
-      .offer-card-header {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-      }
-      .offer-title {
-        font-size: 1.25rem;
-      }
-      .offer-price-val {
-        font-size: 1.3rem;
-      }
-      .offer-pricing {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      .retainer-card {
-        padding: 1.75rem !important;
-      }
-      .retainer-title {
-        font-size: 1.35rem;
-      }
-      .retainer-price {
-        font-size: 1.6rem;
-      }
-      .retainer-btn {
-        width: 100%;
-      }
-      .faq-title {
-        font-size: 1.75rem;
-        margin-bottom: 1.5rem;
-      }
-      .faq-question-text {
-        font-size: 0.95rem;
-      }
-      .faq-question-btn {
-        padding: 1rem;
-        gap: 0.75rem;
-      }
-      .faq-answer-content {
-        padding: 0 1rem 1rem 2.5rem;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .offer-icon-wrapper {
-        width: 44px;
-        height: 44px;
-      }
-      .offer-price-val {
-        font-size: 1.15rem;
-      }
-      .faq-answer-content {
-        padding: 0 0.75rem 1rem 1.75rem;
-      }
-    }
-  `}</style>
-);

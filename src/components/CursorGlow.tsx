@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { m, useMotionValue, useSpring } from "framer-motion";
 
 export default function CursorGlow() {
   const [isVisible, setIsVisible] = useState(false);
@@ -63,13 +63,13 @@ export default function CursorGlow() {
   return (
     <>
       {/* Large soft ambient orb */}
-      <motion.div
+      <m.div
         className="cursor-orb"
         style={{ left: orbX, top: orbY }}
       />
 
       {/* Small crisp dot — scales up on interactive elements */}
-      <motion.div
+      <m.div
         className="cursor-dot"
         style={{ left: dotX, top: dotY }}
         animate={{
@@ -79,45 +79,7 @@ export default function CursorGlow() {
         transition={{ type: "spring", stiffness: 400, damping: 28 }}
       />
 
-      <style jsx global>{`
-        * { cursor: none !important; }
 
-        @media (pointer: coarse) {
-          * { cursor: auto !important; }
-          .cursor-orb,
-          .cursor-dot { display: none !important; }
-        }
-
-        .cursor-orb {
-          position: fixed;
-          width: 320px;
-          height: 320px;
-          border-radius: 50%;
-          background: radial-gradient(
-            circle,
-            rgba(14, 165, 233, 0.11) 0%,
-            rgba(99, 102, 241, 0.05) 50%,
-            transparent 70%
-          );
-          pointer-events: none;
-          z-index: 9998;
-          filter: blur(28px);
-          mix-blend-mode: screen;
-        }
-
-        .cursor-dot {
-          position: fixed;
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background: rgba(14, 165, 233, 0.9);
-          box-shadow:
-            0 0 6px rgba(14, 165, 233, 0.8),
-            0 0 14px rgba(14, 165, 233, 0.4);
-          pointer-events: none;
-          z-index: 9999;
-        }
-      `}</style>
     </>
   );
 }

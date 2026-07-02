@@ -1,10 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Clock, ArrowRight, Tag } from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
 import { blogPosts as articles } from "@/lib/blog-posts";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 const tagColors: Record<string, string> = {
   Tutoriel: "rgba(14, 165, 233, 0.1)",
@@ -23,11 +24,12 @@ const tagText: Record<string, string> = {
 };
 
 export default function BlogClient() {
+  const hasMounted = useHasMounted();
   return (
     <div className="page-wrapper container">
-      <motion.div
+      <m.div
         className="blog-header"
-        initial={{ opacity: 0, y: 20 }}
+        initial={hasMounted ? { opacity: 0, y: 20 } : false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
@@ -39,13 +41,13 @@ export default function BlogClient() {
           Guides pratiques, études de cas et stratégies concrètes pour automatiser
           vos opérations et récupérer 10 à 20 heures par semaine.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="blog-grid">
         {articles.map((article, idx) => (
-          <motion.div
+          <m.div
             key={article.slug}
-            initial={{ opacity: 0, y: 30 }}
+            initial={hasMounted ? { opacity: 0, y: 30 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
           >
@@ -87,11 +89,11 @@ export default function BlogClient() {
                 )}
               </div>
             </TiltCard>
-          </motion.div>
+          </m.div>
         ))}
       </div>
 
-      <motion.div
+      <m.div
         className="blog-cta"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -105,186 +107,9 @@ export default function BlogClient() {
           <span>Réserver l'audit gratuit · 30 min</span>
           <ArrowRight size={16} />
         </Link>
-      </motion.div>
+      </m.div>
 
-      <style jsx global>{`
-        .blog-header {
-          text-align: center;
-          margin-bottom: 4rem;
-        }
-        .blog-title {
-          font-size: 2.75rem;
-          color: white;
-          margin-top: 0.5rem;
-          margin-bottom: 1.25rem;
-          letter-spacing: -0.025em;
-          line-height: 1.15;
-        }
-        .blog-subtitle {
-          font-size: 1.1rem;
-          color: var(--text-muted);
-          max-width: 580px;
-          margin: 0 auto;
-          line-height: 1.65;
-        }
 
-        .blog-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 2rem;
-          margin-bottom: 4rem;
-        }
-
-        .blog-card {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-          padding: 2rem !important;
-          height: 100%;
-        }
-        .blog-card-soon {
-          opacity: 0.55;
-        }
-
-        .blog-card-meta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .blog-tag {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-          padding: 0.3rem 0.75rem;
-          border-radius: 99px;
-          font-size: 0.75rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-        }
-        .blog-read-time {
-          display: flex;
-          align-items: center;
-          gap: 0.35rem;
-          font-size: 0.78rem;
-          color: var(--text-dim);
-        }
-
-        .blog-card-title {
-          font-size: 1.2rem;
-          color: white;
-          line-height: 1.35;
-          letter-spacing: -0.01em;
-          flex-grow: 1;
-        }
-        .blog-card-excerpt {
-          font-size: 0.9rem;
-          color: var(--text-muted);
-          line-height: 1.65;
-        }
-
-        .blog-card-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-top: auto;
-          padding-top: 1.25rem;
-          border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .blog-date {
-          font-size: 0.8rem;
-          color: var(--text-dim);
-        }
-        .blog-read-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          font-size: 0.85rem;
-          font-weight: 700;
-          color: var(--secondary);
-          transition: gap 0.2s ease;
-        }
-        .blog-read-link:hover {
-          gap: 0.7rem;
-        }
-        .blog-soon-badge {
-          font-size: 0.78rem;
-          color: var(--text-dim);
-          background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.06);
-          border-radius: 6px;
-          padding: 0.2rem 0.6rem;
-        }
-
-        .blog-cta {
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1.5rem;
-          padding: 3rem;
-          border-radius: 20px;
-          border: 1px solid rgba(14, 165, 233, 0.12);
-          background: linear-gradient(135deg, rgba(15, 20, 50, 0.4) 0%, rgba(5, 8, 22, 0.4) 100%);
-        }
-        .blog-cta-text {
-          font-size: 1.1rem;
-          color: var(--text-muted);
-        }
-
-        @media (max-width: 768px) {
-          .blog-header {
-            margin-bottom: 2.5rem;
-          }
-          .blog-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-          }
-          .blog-title {
-            font-size: 2rem;
-          }
-          .blog-subtitle {
-            font-size: 1rem;
-          }
-          .blog-cta {
-            padding: 2rem;
-            gap: 1.25rem;
-          }
-          .blog-cta-text {
-            font-size: 1rem;
-          }
-        }
-        @media (max-width: 600px) {
-          .blog-card-meta {
-            flex-wrap: wrap;
-            gap: 0.5rem;
-          }
-          .blog-card-footer {
-            flex-wrap: wrap;
-            gap: 0.75rem;
-          }
-        }
-        @media (max-width: 480px) {
-          .blog-header {
-            margin-bottom: 2rem;
-          }
-          .blog-title {
-            font-size: 1.65rem;
-          }
-          .blog-subtitle {
-            font-size: 0.95rem;
-          }
-          .blog-card {
-            padding: 1.5rem !important;
-          }
-          .blog-card-title {
-            font-size: 1.1rem;
-          }
-          .blog-cta {
-            padding: 1.5rem;
-          }
-        }
-      `}</style>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Mail, MapPin, Send, Zap, Plus, CheckCircle2, Calendar as CalendarIcon, Clock, Phone, Building2 } from "lucide-react";
 import TiltCard from "@/components/TiltCard";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 export default function ContactClient() {
+  const hasMounted = useHasMounted();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formError, setFormError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -129,9 +131,9 @@ export default function ContactClient() {
   return (
     <div className="page-wrapper container">
       {/* Intro */}
-      <motion.div
+      <m.div
         className="contact-header"
-        initial={{ opacity: 0, y: 20 }}
+        initial={hasMounted ? { opacity: 0, y: 20 } : false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
@@ -140,12 +142,12 @@ export default function ContactClient() {
         <p className="contact-subtitle">
           Planifiez un audit opérationnel gratuit ou utilisez notre assistant de réservation pour pré-remplir votre demande instantanément.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="contact-layout">
         {/* Left Column: Form */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
+        <m.div
+          initial={hasMounted ? { opacity: 0, x: -30 } : false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
@@ -161,13 +163,13 @@ export default function ContactClient() {
             </div>
 
             {formSubmitted ? (
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="ct-success-msg">
+              <m.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="ct-success-msg">
                 <div className="ct-success-icon-wrap">
                   <CheckCircle2 size={36} />
                 </div>
                 <h4>Demande reçue !</h4>
                 <p>Denys vous contactera sous 24h pour valider votre créneau d&apos;audit.</p>
-              </motion.div>
+              </m.div>
             ) : (
               <form onSubmit={handleFormSubmit} className="ct-form">
                 <div className="ct-form-row">
@@ -235,12 +237,12 @@ export default function ContactClient() {
               </form>
             )}
           </TiltCard>
-        </motion.div>
+        </m.div>
 
         {/* Right Column: Unified Console */}
-        <motion.div
+        <m.div
           className="ct-sidebar"
-          initial={{ opacity: 0, x: 30 }}
+          initial={hasMounted ? { opacity: 0, x: 30 } : false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
         >
@@ -269,7 +271,7 @@ export default function ContactClient() {
             <div className="ct-console-body">
               <AnimatePresence mode="wait">
                 {sidebarTab === "calendar" ? (
-                  <motion.div
+                  <m.div
                     key="cal"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -314,18 +316,18 @@ export default function ContactClient() {
                     </div>
 
                     {bookedDay && bookedTime && (
-                      <motion.div 
+                      <m.div 
                         initial={{ opacity: 0, scale: 0.95 }} 
                         animate={{ opacity: 1, scale: 1 }} 
                         className="ct-booking-confirm"
                       >
                         <CheckCircle2 size={14} />
                         <span>Pré-sélectionné : {bookedDay} à {bookedTime}</span>
-                      </motion.div>
+                      </m.div>
                     )}
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.div
+                  <m.div
                     key="crm"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -337,10 +339,10 @@ export default function ContactClient() {
                     </p>
 
                     {quickLeadSubmitted ? (
-                      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="ct-quick-success">
+                      <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="ct-quick-success">
                         <CheckCircle2 size={24} />
                         <p>Lead inséré avec succès dans le CRM !</p>
-                      </motion.div>
+                      </m.div>
                     ) : (
                       <form onSubmit={handleQuickLeadSubmit} className="ct-quick-form">
                         <div className="ct-input-wrap">
@@ -381,7 +383,7 @@ export default function ContactClient() {
                         </button>
                       </form>
                     )}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
@@ -401,531 +403,10 @@ export default function ContactClient() {
               </div>
             </div>
           </TiltCard>
-        </motion.div>
+        </m.div>
       </div>
-
-      {styleContact}
     </div>
   );
 }
 
-const styleContact = (
-  <style jsx global>{`
-    /* ──────────────────── HEADER ──────────────────── */
-    .contact-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .contact-title {
-      font-size: 2.75rem;
-      color: white;
-      margin-top: 0.5rem;
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.02em;
-    }
-    .contact-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 620px;
-      margin: 0 auto;
-      line-height: 1.65;
-    }
 
-    /* ──────────────────── LAYOUT ──────────────────── */
-    .contact-layout {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 2.5rem;
-      align-items: start;
-    }
-
-    /* ──────────────────── FORM PANEL ──────────────────── */
-    .ct-form-panel {
-      padding: 2.75rem !important;
-      border: 1px solid rgba(99, 102, 241, 0.12) !important;
-      background: linear-gradient(145deg, rgba(15, 20, 50, 0.5) 0%, rgba(5, 8, 22, 0.5) 100%) !important;
-    }
-    .ct-panel-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2.25rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .ct-panel-icon-wrap {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: var(--gradient-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      flex-shrink: 0;
-    }
-    .ct-panel-title {
-      font-size: 1.35rem;
-      color: white;
-      margin-bottom: 0.15rem;
-    }
-    .ct-panel-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    /* ──────────────────── FORM ELEMENTS ──────────────────── */
-    .ct-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .ct-form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
-    .ct-form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .ct-form-group label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-    }
-    .ct-required {
-      color: var(--secondary);
-    }
-    .ct-input-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .ct-input-icon {
-      position: absolute;
-      left: 1rem;
-      color: var(--text-dim);
-      pointer-events: none;
-      z-index: 1;
-    }
-    .ct-input {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 0.8rem 1rem 0.8rem 2.75rem;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.3s ease;
-      font-family: inherit;
-    }
-    .ct-input::placeholder {
-      color: var(--text-dim);
-    }
-    .ct-input:focus {
-      border-color: rgba(14, 165, 233, 0.5);
-      background: rgba(0, 0, 0, 0.35);
-      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08), 0 0 20px rgba(14, 165, 233, 0.1);
-    }
-    .ct-textarea {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 0.8rem 1rem;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.3s ease;
-      font-family: inherit;
-      resize: vertical;
-    }
-    .ct-textarea::placeholder {
-      color: var(--text-dim);
-    }
-    .ct-textarea:focus {
-      border-color: rgba(14, 165, 233, 0.5);
-      background: rgba(0, 0, 0, 0.35);
-      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08), 0 0 20px rgba(14, 165, 233, 0.1);
-    }
-
-    /* ─── Custom Select ─── */
-    .ct-select-wrap {
-      position: relative;
-    }
-    .ct-select-wrap::after {
-      content: '▾';
-      font-size: 1rem;
-      color: var(--text-dim);
-      position: absolute;
-      right: 1.15rem;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-    .ct-select {
-      width: 100%;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 0.8rem 2.5rem 0.8rem 1rem;
-      color: white;
-      font-size: 0.9rem;
-      outline: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: inherit;
-    }
-    .ct-select:focus {
-      border-color: rgba(14, 165, 233, 0.5);
-      background: rgba(0, 0, 0, 0.35);
-      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08), 0 0 20px rgba(14, 165, 233, 0.1);
-    }
-    .ct-select option {
-      background: #0a0f1e;
-      color: white;
-    }
-
-    /* ─── Submit Button ─── */
-    .ct-submit {
-      width: 100%;
-      margin-top: 0.5rem;
-      padding: 0.9rem 1.5rem;
-      font-size: 0.95rem;
-      justify-content: center;
-      gap: 0.6rem;
-    }
-    .ct-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .ct-form-error {
-      font-size: 0.85rem;
-      color: #ef4444;
-      background: rgba(239, 68, 68, 0.08);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      border-radius: 8px;
-      padding: 0.7rem 1rem;
-    }
-    .ct-form-error a {
-      color: #ef4444;
-      text-decoration: underline;
-    }
-
-    /* ──────────────────── SUCCESS ──────────────────── */
-    .ct-success-msg {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 1rem;
-      padding: 4rem 2rem;
-    }
-    .ct-success-icon-wrap {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #10b981;
-    }
-    .ct-success-msg h4 {
-      font-size: 1.3rem;
-      color: white;
-    }
-    .ct-success-msg p {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      max-width: 320px;
-    }
-
-    /* ──────────────────── CONSOLE CARD ──────────────────── */
-    .ct-sidebar {
-      position: sticky;
-      top: 6rem;
-    }
-    .ct-console {
-      padding: 0 !important;
-      border: 1px solid rgba(14, 165, 233, 0.15) !important;
-      background: linear-gradient(160deg, rgba(10, 16, 40, 0.6) 0%, rgba(5, 8, 22, 0.6) 100%) !important;
-      overflow: hidden;
-    }
-
-    /* ─── Tabs ─── */
-    .ct-tabs {
-      display: flex;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .ct-tab {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 1rem 0.75rem;
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: all 0.25s ease;
-      position: relative;
-      font-family: inherit;
-    }
-    .ct-tab:hover {
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.02);
-    }
-    .ct-tab.active {
-      color: white;
-      background: rgba(14, 165, 233, 0.05);
-    }
-    .ct-tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 15%;
-      right: 15%;
-      height: 2px;
-      background: var(--gradient-primary);
-      border-radius: 2px 2px 0 0;
-    }
-
-    /* ─── Tab Body ─── */
-    .ct-console-body {
-      padding: 1.75rem;
-      min-height: 280px;
-    }
-    .ct-tab-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ─── Calendar ─── */
-    .ct-cal-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .ct-cal-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .ct-days-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.4rem;
-    }
-    .ct-day-btn {
-      padding: 0.55rem 0.2rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      font-size: 0.78rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-    .ct-day-btn:hover:not(.busy) {
-      border-color: rgba(14, 165, 233, 0.4);
-      background: rgba(14, 165, 233, 0.06);
-    }
-    .ct-day-btn.active {
-      border-color: var(--secondary);
-      background: rgba(14, 165, 233, 0.1);
-      box-shadow: 0 0 12px rgba(14, 165, 233, 0.12);
-    }
-    .ct-day-btn.busy {
-      opacity: 0.25;
-      cursor: not-allowed;
-      text-decoration: line-through;
-    }
-
-    .ct-times-row {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.4rem;
-    }
-    .ct-time-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.55rem;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }
-    .ct-time-btn:hover:not(.busy) {
-      border-color: rgba(14, 165, 233, 0.4);
-      color: white;
-    }
-    .ct-time-btn.active {
-      border-color: var(--secondary);
-      background: rgba(14, 165, 233, 0.1);
-      color: white;
-    }
-    .ct-time-btn.busy {
-      opacity: 0.25;
-      cursor: not-allowed;
-      text-decoration: line-through;
-    }
-
-    .ct-booking-confirm {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(16, 185, 129, 0.06);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      border-radius: 8px;
-      padding: 0.65rem 1rem;
-      font-size: 0.82rem;
-      color: #10b981;
-      margin-top: 1rem;
-      font-weight: 600;
-    }
-
-    /* ─── Quick Lead CRM ─── */
-    .ct-quick-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-    .ct-quick-submit {
-      width: 100%;
-      font-size: 0.88rem;
-      padding: 0.75rem;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 0.25rem;
-    }
-    .ct-quick-success {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 0.75rem;
-      padding: 3rem 1rem;
-      color: #10b981;
-    }
-    .ct-quick-success p {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-    }
-
-    /* ─── Console Footer ─── */
-    .ct-console-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 1.25rem 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .ct-footer-brand {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: white;
-    }
-    .ct-footer-items {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .ct-footer-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      color: var(--text-dim);
-    }
-    .ct-footer-item a {
-      color: var(--text-dim);
-      transition: color 0.2s;
-    }
-    .ct-footer-item a:hover {
-      color: white;
-    }
-
-    /* ──────────────────── RESPONSIVE ──────────────────── */
-    @media (max-width: 990px) {
-      .contact-title {
-        font-size: 2.25rem;
-      }
-      .contact-layout {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-      .ct-sidebar {
-        position: static;
-      }
-    }
-    @media (max-width: 600px) {
-      .contact-title {
-        font-size: 1.9rem;
-      }
-      .contact-subtitle {
-        font-size: 1rem;
-      }
-      .ct-form-row {
-        grid-template-columns: 1fr;
-      }
-      .ct-days-row {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      .ct-form-panel {
-        padding: 1.5rem !important;
-      }
-      .ct-panel-title {
-        font-size: 1.15rem;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .ct-days-row {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 0.25rem;
-      }
-      .ct-day-btn {
-        font-size: 0.7rem;
-        padding: 0.45rem 0.1rem;
-      }
-      .ct-times-row {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .ct-console-body {
-        padding: 1.25rem;
-      }
-      .ct-console-footer {
-        padding: 1rem 1.25rem;
-      }
-      .ct-footer-item {
-        font-size: 0.72rem;
-      }
-    }
-  `}</style>
-);

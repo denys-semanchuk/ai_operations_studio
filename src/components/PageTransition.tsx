@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useHasMounted } from "@/lib/useHasMounted";
 
 // Per-state transitions: slow enter (expo out), fast exit (ease in)
 const variants = {
@@ -33,19 +34,23 @@ export default function PageTransition({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  // Skip the entrance animation on the very first paint so SSR'd content
+  // is visible immediately instead of sitting at opacity:0 until hydration.
+  // Subsequent client-side route changes still get the full transition.
+  const hasMounted = useHasMounted();
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div
+      <m.div
         key={pathname}
         variants={variants}
-        initial="initial"
+        initial={hasMounted ? "initial" : false}
         animate="animate"
         exit="exit"
         style={{ width: "100%", willChange: "opacity, transform" }}
       >
         {children}
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   );
 }
