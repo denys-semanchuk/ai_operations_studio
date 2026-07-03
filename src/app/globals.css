@@ -215,17 +215,6 @@ button, input, textarea, select {
   left: -15%;
 }
 
-/* Micro-animations */
-@keyframes float {
-  0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(1deg); }
-  100% { transform: translateY(0px) rotate(0deg); }
-}
-
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
 /* Hover shine effect */
 .shine-hover {
   position: relative;
@@ -4582,6 +4571,7 @@ button, input, textarea, select {
           color: var(--secondary);
         }
         .desktop-nav {
+          position: relative;
           display: flex;
           align-items: center;
           gap: 1.5rem;
@@ -4600,11 +4590,11 @@ button, input, textarea, select {
         .active-indicator {
           position: absolute;
           bottom: -4px;
-          left: 0.75rem;
-          right: 0.75rem;
+          left: 0;
           height: 2px;
           background: var(--gradient-primary);
           border-radius: 4px;
+          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .cta-container {
           display: block;
@@ -4815,6 +4805,16 @@ button, input, textarea, select {
           z-index: 10000;
           will-change: transform;
         }
+
+/* ===== Magnetic (touch fallback) ===== */
+.magnetic-static {
+  display: inline-block;
+}
+
+/* ===== PageTransition (touch fallback) ===== */
+.page-transition-static {
+  width: 100%;
+}
 
 /* ===== TiltCard ===== */
 .tc-spotlight {

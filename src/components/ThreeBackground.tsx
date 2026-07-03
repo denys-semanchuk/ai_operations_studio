@@ -2,17 +2,19 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type Mode = "off" | "simple" | "full";
+type Mode = "off" | "on";
 
 export default function ThreeBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // Reduced-motion → off entirely (accessibility). Touch/mobile → a much
-  // cheaper "simple" mode: no mouse tracking, no connection lines, no data
-  // packets, fewer particles, lower FPS. Desktop with a mouse → full effect.
+  // Reduced-motion or touch/mobile → off entirely. This is a purely
+  // decorative background canvas running a continuous requestAnimationFrame
+  // loop — on a phone that's ongoing CPU/battery cost for an effect driven
+  // by mouse movement the device doesn't have. Desktop with a mouse → full
+  // effect.
   const [mode] = useState<Mode>(() => {
     if (typeof window === "undefined") return "off";
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "off";
-    return window.matchMedia("(pointer: coarse)").matches ? "simple" : "full";
+    return window.matchMedia("(pointer: coarse)").matches ? "off" : "on";
   });
 
   useEffect(() => {
@@ -23,22 +25,17 @@ export default function ThreeBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const isSimple = mode === "simple";
-
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // FPS throttling — simple mode runs even lighter on mobile CPUs.
-    const targetFPS = isSimple ? 18 : 30;
+    const targetFPS = 30;
     const frameInterval = 1000 / targetFPS;
     let lastFrameTime = 0;
 
     const particles: Particle[] = [];
     const packets: Packet[] = [];
-    const particleCount = isSimple
-      ? Math.min(14, Math.floor((width * height) / 60000))
-      : Math.min(50, Math.floor((width * height) / 30000));
+    const particleCount = Math.min(50, Math.floor((width * height) / 30000));
     const connectionDistance = 120;
     const mouse = { x: -1000, y: -1000, radius: 180 };
 
@@ -143,12 +140,8 @@ export default function ThreeBackground() {
     };
 
     window.addEventListener("resize", handleResize);
-    // Simple mode has nothing to attract — mouse stays parked off-screen,
-    // so skip the listener rather than track a pointer that isn't there.
-    if (!isSimple) {
-      window.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseleave", handleMouseLeave);
-    }
+    window.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseleave", handleMouseLeave);
 
     const animate = (timestamp: number) => {
       // FPS throttling
@@ -161,54 +154,49 @@ export default function ThreeBackground() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Simple mode: just drifting dots, no O(n²) connection scan and no
-      // packet flow — that's most of the CPU cost, and mobile can't see
-      // the mouse-follow bit anyway.
-      if (!isSimple) {
-        // Track active connections to spawn packet data streams
-        const connections: Array<[Particle, Particle]> = [];
+      // Track active connections to spawn packet data streams
+      const connections: Array<[Particle, Particle]> = [];
 
-        // Draw connections — use squared distance to avoid sqrt
-        const connDistSq = connectionDistance * connectionDistance;
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distSq = dx * dx + dy * dy;
+      // Draw connections — use squared distance to avoid sqrt
+      const connDistSq = connectionDistance * connectionDistance;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distSq = dx * dx + dy * dy;
 
-            if (distSq < connDistSq) {
-              const dist = Math.sqrt(distSq);
-              connections.push([particles[i], particles[j]]);
-              const alpha = (1 - dist / connectionDistance) * 0.12;
-              ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
-              ctx.lineWidth = 0.8;
-              ctx.stroke();
-            }
+          if (distSq < connDistSq) {
+            const dist = Math.sqrt(distSq);
+            connections.push([particles[i], particles[j]]);
+            const alpha = (1 - dist / connectionDistance) * 0.12;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(99, 102, 241, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
           }
         }
+      }
 
-        // Spawning a glowing packet data flow occasionally along active connections
-        if (connections.length > 0 && Math.random() < 0.04 && packets.length < 12) {
-          const randomConn = connections[Math.floor(Math.random() * connections.length)];
-          if (Math.random() > 0.5) {
-            packets.push(new Packet(randomConn[0], randomConn[1]));
-          } else {
-            packets.push(new Packet(randomConn[1], randomConn[0]));
-          }
+      // Spawning a glowing packet data flow occasionally along active connections
+      if (connections.length > 0 && Math.random() < 0.04 && packets.length < 12) {
+        const randomConn = connections[Math.floor(Math.random() * connections.length)];
+        if (Math.random() > 0.5) {
+          packets.push(new Packet(randomConn[0], randomConn[1]));
+        } else {
+          packets.push(new Packet(randomConn[1], randomConn[0]));
         }
+      }
 
-        // Update & Draw packets
-        for (let i = packets.length - 1; i >= 0; i--) {
-          const p = packets[i];
-          p.update();
-          if (p.progress >= 1) {
-            packets.splice(i, 1);
-          } else {
-            p.draw(ctx);
-          }
+      // Update & Draw packets
+      for (let i = packets.length - 1; i >= 0; i--) {
+        const p = packets[i];
+        p.update();
+        if (p.progress >= 1) {
+          packets.splice(i, 1);
+        } else {
+          p.draw(ctx);
         }
       }
 

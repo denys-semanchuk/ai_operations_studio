@@ -3,6 +3,7 @@
 import { m, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useHasMounted } from "@/lib/useHasMounted";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
 
 // Per-state transitions: slow enter (expo out), fast exit (ease in)
 const variants = {
@@ -38,6 +39,13 @@ export default function PageTransition({
   // is visible immediately instead of sitting at opacity:0 until hydration.
   // Subsequent client-side route changes still get the full transition.
   const hasMounted = useHasMounted();
+  const isTouch = useIsTouchDevice();
+
+  // Phones get an instant swap instead of the fade/slide — no outgoing page
+  // kept mounted for an exit animation, no motion values on the route path.
+  if (isTouch) {
+    return <div className="page-transition-static">{children}</div>;
+  }
 
   return (
     <AnimatePresence mode="wait">

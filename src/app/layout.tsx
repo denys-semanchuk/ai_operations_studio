@@ -11,17 +11,22 @@ import RouteProgress from "@/components/RouteProgress";
 import Analytics from "@/components/Analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
-// Next.js optimized font loading — eliminates render-blocking @import
+// Next.js optimized font loading — eliminates render-blocking @import.
+// Weight lists are pared down to what globals.css actually declares for
+// each family (verified via `document.fonts` across every route + a full
+// grep of every `font-weight` rule in globals.css) — Outfit is only ever
+// used at 600/700/800 (buttons, headings, one stat number), Plus Jakarta
+// Sans only at 400/500/600/700 (body text). Neither uses 300.
 const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["600", "700", "800"],
   display: "swap",
   variable: "--font-primary",
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-secondary",
 });
@@ -139,8 +144,6 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${outfit.variable} ${plusJakarta.variable}`}>
       <head>
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdLocalBusiness) }}

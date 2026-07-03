@@ -6,7 +6,8 @@
     "dev": "node node_modules/next/dist/bin/next dev",
     "build": "node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "analyze": "node node_modules/next/dist/bin/next experimental-analyze"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

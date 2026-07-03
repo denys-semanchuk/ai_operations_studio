@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { m, useMotionValue, useSpring } from "framer-motion";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
 
 interface MagneticProps {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ interface MagneticProps {
 }
 
 export default function Magnetic({ children, strength = 0.35 }: MagneticProps) {
+  const isTouch = useIsTouchDevice();
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -26,6 +28,12 @@ export default function Magnetic({ children, strength = 0.35 }: MagneticProps) {
     x.set(0);
     y.set(0);
   };
+
+  // No mousemove on touch — skip the framer-motion spring wrapper entirely,
+  // the magnetic-pull effect never showed here anyway.
+  if (isTouch) {
+    return <div className="magnetic-static">{children}</div>;
+  }
 
   return (
     <m.div

@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, Cpu, ArrowRight } from "lucide-react";
 import { m, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const [indicator, setIndicator] = useState<{ x: number; width: number } | null>(null);
 
   const navLinks = [
     { name: "Accueil", href: "/" },
@@ -18,6 +20,38 @@ export default function Header() {
     { name: "Blog", href: "/blog" },
     { name: "À propos", href: "/a-propos" },
   ];
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    const measure = () => {
+      const activeLink = nav.querySelector<HTMLElement>(".nav-link.active");
+      if (!activeLink) {
+        setIndicator(null);
+        return;
+      }
+      const navRect = nav.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      // Matches the link's own horizontal padding, so the indicator spans
+      // the same inset text-content width it always has (previously done
+      // via CSS `left/right: 0.75rem` on the link itself).
+      const linkStyle = window.getComputedStyle(activeLink);
+      const padLeft = parseFloat(linkStyle.paddingLeft) || 0;
+      const padRight = parseFloat(linkStyle.paddingRight) || 0;
+      setIndicator({
+        x: linkRect.left - navRect.left + padLeft,
+        width: linkRect.width - padLeft - padRight,
+      });
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    // Re-measure once web fonts finish loading — text width (and therefore
+    // the indicator's position/width) can shift slightly after font swap.
+    document.fonts?.ready.then(measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [pathname]);
 
   return (
     <header className="header-container">
@@ -32,22 +66,22 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="desktop-nav">
+        <nav className="desktop-nav" ref={navRef}>
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link key={link.name} href={link.href} className={`nav-link ${isActive ? "active" : ""}`}>
                 {link.name}
-                {isActive && (
-                  <m.div
-                    layoutId="activeIndicator"
-                    className="active-indicator"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </Link>
             );
           })}
+          {indicator && (
+            <span
+              className="active-indicator"
+              aria-hidden="true"
+              style={{ transform: `translateX(${indicator.x}px)`, width: `${indicator.width}px` }}
+            />
+          )}
         </nav>
 
         <div className="cta-container">

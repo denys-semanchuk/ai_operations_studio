@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { m } from "framer-motion";
+import { useIsTouchDevice } from "@/lib/useIsTouchDevice";
 
 interface TiltCardProps {
   children: React.ReactNode;
@@ -9,6 +10,7 @@ interface TiltCardProps {
 }
 
 export default function TiltCard({ children, className = "" }: TiltCardProps) {
+  const isTouch = useIsTouchDevice();
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
@@ -47,6 +49,17 @@ export default function TiltCard({ children, className = "" }: TiltCardProps) {
     setScale(1);
     setGlowVars((prev) => ({ ...prev, "--tc-opacity": "0" } as React.CSSProperties));
   };
+
+  // No mousemove/mouseenter on touch — skip the framer-motion wrapper and
+  // spring machinery entirely, the tilt/glow effect never showed here anyway.
+  if (isTouch) {
+    return (
+      <div className={`glass-card ${className}`}>
+        <div className="tc-spotlight" />
+        <div className="tc-content">{children}</div>
+      </div>
+    );
+  }
 
   return (
     <m.div
