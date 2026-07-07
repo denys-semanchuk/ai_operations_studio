@@ -12,10 +12,16 @@ interface CountUpProps {
 export default function CountUp({ value, duration = 1.4, className }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [progress, setProgress] = useState(0);
+  // Starts at the final value (not 0) so SSR/first paint always shows the
+  // real number — on a slow mobile connection, hydration + the inView
+  // check can take seconds, during which a 0-initialized counter would
+  // render wrong values ("0 à 0h") the whole time instead of just skipping
+  // the count-up animation.
+  const [progress, setProgress] = useState(1);
 
   useEffect(() => {
     if (!isInView) return;
+    setProgress(0);
     let frame: number;
     const start = performance.now();
 

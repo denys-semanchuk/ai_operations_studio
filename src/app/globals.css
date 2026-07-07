@@ -4606,10 +4606,22 @@ button, input, textarea, select {
         }
         .mobile-toggle {
           display: none;
+          align-items: center;
+          justify-content: center;
           background: none;
           border: none;
           color: white;
           cursor: pointer;
+          /* Icon itself is 24px — pad it out to a proper ~44px tap target
+             (Apple/Google's minimum) without shifting its visual position,
+             via a matching negative margin. */
+          padding: 10px;
+          margin: -10px;
+          border-radius: 10px;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-toggle:active {
+          background: rgba(255, 255, 255, 0.08);
         }
         .mobile-menu {
           position: absolute;
@@ -4646,7 +4658,7 @@ button, input, textarea, select {
             display: none;
           }
           .mobile-toggle {
-            display: block;
+            display: flex;
           }
           .mobile-menu {
             display: block;
