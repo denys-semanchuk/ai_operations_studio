@@ -101,6 +101,31 @@ button, input, textarea, select {
   }
 }
 
+/* Same iOS compositing bug applies to every other fixed, blurred overlay
+   (cookie banner, back-to-top, sticky conversion bar, chat window, modals,
+   exit-intent) — these can all be on screen at once, which is exactly what
+   triggers the black-screen glitch. Drop the blur on all of them on touch. */
+@media (pointer: coarse) {
+  .cookie-banner,
+  .back-to-top,
+  .chat-window,
+  .modal-overlay,
+  .scb-wrap,
+  .exit-backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .back-to-top {
+    background: rgba(15, 20, 40, 0.85);
+  }
+  .modal-overlay {
+    background: rgba(3, 5, 12, 0.92);
+  }
+  .exit-backdrop {
+    background: rgba(0, 0, 0, 0.85);
+  }
+}
+
 .glass-card {
   position: relative;
   background: rgba(8, 12, 28, 0.9);
@@ -738,6 +763,7 @@ button, input, textarea, select {
           position: fixed;
           inset: 0;
           background: rgba(0, 0, 0, 0.7);
+          -webkit-backdrop-filter: blur(4px);
           backdrop-filter: blur(4px);
           z-index: 10000;
         }
@@ -2099,6 +2125,7 @@ button, input, textarea, select {
           border-radius: 12px;
           background: rgba(255, 255, 255, 0.05);
           border: 1px solid rgba(255, 255, 255, 0.1);
+          -webkit-backdrop-filter: blur(12px);
           backdrop-filter: blur(12px);
           color: white;
           cursor: pointer;
@@ -2164,6 +2191,7 @@ button, input, textarea, select {
           border-radius: 20px;
           background: rgba(8, 12, 28, 0.97);
           border: 1px solid rgba(14, 165, 233, 0.15);
+          -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
           display: flex;
           flex-direction: column;
@@ -2826,6 +2854,7 @@ button, input, textarea, select {
       width: 100vw;
       height: 100vh;
       background: rgba(3, 5, 12, 0.8);
+      -webkit-backdrop-filter: blur(12px);
       backdrop-filter: blur(12px);
       z-index: 10000;
       display: flex;
@@ -4696,6 +4725,7 @@ button, input, textarea, select {
           width: 100%;
           z-index: 8500;
           background: rgba(5, 8, 22, 0.92);
+          -webkit-backdrop-filter: blur(16px);
           backdrop-filter: blur(16px);
           border-top: 1px solid rgba(14, 165, 233, 0.2);
           padding: 0.75rem 2rem;
