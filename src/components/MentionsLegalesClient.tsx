@@ -7,13 +7,13 @@ export default function MentionsLegalesClient() {
 
         <section className="ml-section">
           <h2>1. Éditeur du site</h2>
-          <p>Le site <strong>aioperations.studio</strong> est édité par :</p>
+          <p>Le site <strong>ai-operations.studio</strong> est édité par :</p>
           <ul>
             <li><strong>Dénomination :</strong> AI Operations Studio</li>
             <li><strong>Forme juridique :</strong> Micro-entreprise — Franchise en base de TVA (article 293 B du CGI)</li>
             <li><strong>N° SIRET :</strong> 102 722 956 00012</li>
             <li><strong>Siège social :</strong> Bezons, 95870 Val-d'Oise, France</li>
-            <li><strong>Email :</strong> <a href="mailto:denys@aioperations.studio">denys@aioperations.studio</a></li>
+            <li><strong>Email :</strong> <a href="mailto:denys@ai-operations.studio">denys@ai-operations.studio</a></li>
           </ul>
         </section>
 
@@ -52,7 +52,7 @@ export default function MentionsLegalesClient() {
           <p>
             Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés,
             vous disposez d'un droit d'accès, de rectification et de suppression de vos données en contactant :
-            <a href="mailto:denys@aioperations.studio"> denys@aioperations.studio</a>.
+            <a href="mailto:denys@ai-operations.studio"> denys@ai-operations.studio</a>.
           </p>
           <p>
             Le site utilise des cookies techniques strictement nécessaires à son fonctionnement.

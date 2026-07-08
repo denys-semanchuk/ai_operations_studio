@@ -111,7 +111,7 @@ export default function ContactClient() {
         body: JSON.stringify({
           name: agencyName,
           phone: agencyPhone,
-          email: "crm-demo@aioperations.studio",
+          email: "crm-demo@ai-operations.studio",
           service: "audit",
           message: agencyNote || `Lead Terminal CRM — ${agencyName} / ${agencyPhone}`,
         }),
@@ -228,7 +228,7 @@ export default function ContactClient() {
                 </div>
 
                 {formError && (
-                  <p className="ct-form-error">Erreur d'envoi. Écrivez directement à <a href="mailto:denys@aioperations.studio">denys@aioperations.studio</a></p>
+                  <p className="ct-form-error">Erreur d'envoi. Écrivez directement à <a href="mailto:denys@ai-operations.studio">denys@ai-operations.studio</a></p>
                 )}
                 <button type="submit" className="btn btn-primary ct-submit shine-hover" disabled={isSubmitting}>
                   <Send size={16} />
@@ -398,7 +398,7 @@ export default function ContactClient() {
                 </div>
                 <div className="ct-footer-item">
                   <Mail size={12} />
-                  <a href="mailto:denys@aioperations.studio">denys@aioperations.studio</a>
+                  <a href="mailto:denys@ai-operations.studio">denys@ai-operations.studio</a>
                 </div>
               </div>
             </div>

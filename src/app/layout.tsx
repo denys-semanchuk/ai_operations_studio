@@ -44,9 +44,9 @@ export const metadata: Metadata = {
   },
   description: "Conception, intégration et optimisation de systèmes d'Intelligence Artificielle. Automatisez la qualification de vos leads et la prise de rendez-vous pour votre agence immobilière. Bezons, Île-de-France.",
   keywords: ["AI Operations Studio", "Denys Semanchuk", "automatisation immobilier", "n8n", "Airtable CRM", "Claude AI", "Bezons", "integration IA", "agent immobilier IA"],
-  authors: [{ name: "Denys Semanchuk", url: "https://aioperations.studio" }],
+  authors: [{ name: "Denys Semanchuk", url: "https://www.ai-operations.studio" }],
   creator: "AI Operations Studio",
-  metadataBase: new URL("https://aioperations.studio"),
+  metadataBase: new URL("https://www.ai-operations.studio"),
   openGraph: {
     type: "website",
     locale: "fr_FR",
@@ -78,11 +78,14 @@ export const metadata: Metadata = {
 const jsonLdLocalBusiness = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": "https://www.ai-operations.studio/#organization",
   name: "AI Operations Studio",
   description:
     "Conception, intégration et optimisation de systèmes d'Intelligence Artificielle pour les agences immobilières en Île-de-France.",
-  url: "https://aioperations.studio",
-  email: "denys@aioperations.studio",
+  url: "https://www.ai-operations.studio",
+  email: "denys@ai-operations.studio",
+  logo: "https://www.ai-operations.studio/brand/icon-gradient.png",
+  image: "https://www.ai-operations.studio/brand/icon-gradient.png",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Bezons",

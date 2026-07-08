@@ -156,7 +156,7 @@ export default function OGImage() {
             fontWeight: 600,
           }}
         >
-          aioperations.studio
+          ai-operations.studio
         </div>
       </div>
     ),

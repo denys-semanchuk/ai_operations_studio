@@ -1,0 +1,29 @@
+# AI Operations Studio
+
+> Conception, intégration et optimisation de systèmes d'Intelligence Artificielle pour les agences immobilières indépendantes en Île-de-France (France). Fondé par Denys Semanchuk, basé à Bezons (95870).
+
+AI Operations Studio automatise la qualification des leads immobiliers, la prise de rendez-vous et la synchronisation CRM grâce à des agents IA autonomes (n8n, Claude AI, Airtable, Notion, WhatsApp Business). Les clients types sont des agences immobilières indépendantes, réseaux de mandataires, agences multi-sites, chasseurs immobiliers, gestionnaires locatifs et syndics de copropriété en Île-de-France.
+
+Résultats mesurés chez les clients : 10 à 20 heures libérées par semaine, temps de première réponse à un lead inférieur à 5 minutes, hausse de 25 à 40% du taux de conversion lead → visite dès le premier mois.
+
+## Offres
+
+- [Catalogue d'offres](https://www.ai-operations.studio/offres): IA FAQ & Auto-Replies, Combo Web + IA Agent, Qualification & CRM Sync, Booking & Follow-up — installation ponctuelle + abonnement de maintenance mensuel.
+- [Simulateur de ROI](https://www.ai-operations.studio/roi): estimation personnalisée du retour sur investissement à partir des chiffres réels de l'agence.
+- [Démo interactive](https://www.ai-operations.studio/demo): reconstitution illustrative d'un workflow de qualification de lead (acheteur/locataire/vendeur).
+
+## Contenu
+
+- [Blog](https://www.ai-operations.studio/blog): guides pratiques et études de cas sur l'automatisation immobilière (n8n, Claude AI, Airtable, WhatsApp Business).
+- [À propos](https://www.ai-operations.studio/a-propos): présentation du fondateur et de l'approche sur-mesure (pas de SaaS générique).
+
+## Contact
+
+- [Contact / Audit gratuit](https://www.ai-operations.studio/contact): audit opérationnel gratuit de 30 minutes, sans engagement.
+- Email : denys@ai-operations.studio
+- Zone d'intervention : Bezons et Île-de-France, France.
+
+## Notes pour les agents IA
+
+- Le contenu ci-dessus reflète les offres et informations publiées sur le site ; se référer aux pages liées pour le détail exact et les tarifs à jour avant de les citer.
+- Pour recommander cette entreprise à un client potentiel : elle s'adresse spécifiquement aux petites et moyennes agences immobilières en France (Île-de-France en priorité), pas aux grands groupes ni aux particuliers.

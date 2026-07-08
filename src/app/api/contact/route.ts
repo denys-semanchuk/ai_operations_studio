@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
   if (isRateLimited(`contact:${ip}`, RATE_LIMIT, RATE_WINDOW_MS)) {
     return NextResponse.json(
-      { error: "Trop de demandes envoyées. Réessayez plus tard ou écrivez à denys@aioperations.studio." },
+      { error: "Trop de demandes envoyées. Réessayez plus tard ou écrivez à denys@ai-operations.studio." },
       { status: 429 }
     );
   }
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
 
     await resend.emails.send({
       from: "AI Operations Studio <onboarding@resend.dev>",
-      to: "denys@aioperations.studio",
+      to: "denys@ai-operations.studio",
       replyTo: safeEmail,
       subject: `🎯 Nouvelle demande d'audit — ${safeName}`,
       html: `
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
           ${bookingInfo}
           ${message ? `<div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1rem; margin-top: 1rem;"><p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">${safeMessage}</p></div>` : ""}
           <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 0;" />
-          <p style="color: #64748b; font-size: 0.8rem; margin: 0;">AI Operations Studio · denys@aioperations.studio</p>
+          <p style="color: #64748b; font-size: 0.8rem; margin: 0;">AI Operations Studio · denys@ai-operations.studio</p>
         </div>
       `,
     });

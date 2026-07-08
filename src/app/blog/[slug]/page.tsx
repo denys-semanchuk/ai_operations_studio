@@ -43,7 +43,7 @@ export default async function BlogPostPage({
     datePublished: post.date,
     author: { "@type": "Person", name: "Denys Semanchuk" },
     publisher: { "@type": "Organization", name: "AI Operations Studio" },
-    mainEntityOfPage: `https://aioperations.studio/blog/${post.slug}`,
+    mainEntityOfPage: `https://www.ai-operations.studio/blog/${post.slug}`,
   };
 
   return (

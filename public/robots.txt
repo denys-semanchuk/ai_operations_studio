@@ -1,4 +1,33 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aioperations.studio/sitemap.xml
+# Explicit allow for AI assistants / answer engines that may recommend
+# this site to prospects — same policy as the wildcard rule above.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.ai-operations.studio/sitemap.xml

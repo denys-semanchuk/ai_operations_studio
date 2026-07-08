@@ -25,7 +25,7 @@ async function fetchBotReply(
     const data = await res.json();
     return data.reply ?? "Désolé, une erreur s'est produite.";
   } catch {
-    return "Problème de connexion. Contactez-nous à denys@aioperations.studio !";
+    return "Problème de connexion. Contactez-nous à denys@ai-operations.studio !";
   }
 }
 

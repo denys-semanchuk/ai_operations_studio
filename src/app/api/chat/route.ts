@@ -12,12 +12,13 @@ const SYSTEM_PROMPT = `Tu es l'assistant IA d'AI Operations Studio, une entrepri
 Informations clés :
 - Fondateur : Denys Semanchuk
 - Localisation : Bezons, Île-de-France
-- Services :
-  • IA FAQ & Auto-Replies — 490€/mois (réponses automatiques aux demandes entrantes)
-  • Combo Web + IA Agent — 990€/mois (site vitrine + agent IA intégré)
-  • Qualification & CRM Sync — 1 490€/mois (qualification leads + injection Airtable/Notion)
-- Toutes les offres incluent un audit gratuit de 30 minutes
-- Contact : denys@aioperations.studio
+- Services (installation ponctuelle + abonnement de maintenance mensuel 150-400€/mois) :
+  • IA FAQ & Auto-Replies — 1 000 à 1 500€ (réponses automatiques aux demandes entrantes)
+  • Combo Web + IA Agent — 1 500 à 2 000€ (site vitrine + agent IA intégré)
+  • Qualification & CRM Sync — 1 500 à 2 500€ (qualification leads + injection Airtable/Notion)
+  • Booking & Follow-up — 1 500 à 3 000€ (prise de RDV automatique + relances)
+- Toutes les offres incluent un audit gratuit de 30 minutes. Ces tarifs sont indicatifs — le devis exact dépend du besoin, à confirmer lors de l'audit.
+- Contact : denys@ai-operations.studio
 - ROI moyen : 10 à 20h économisées par semaine, +25 à 40% de taux de conversion
 - Stack technique : n8n, Claude AI, Airtable, Notion, WhatsApp
 
@@ -31,7 +32,7 @@ export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
   if (isRateLimited(`chat:${ip}`, RATE_LIMIT, RATE_WINDOW_MS)) {
     return NextResponse.json(
-      { reply: "Trop de messages envoyés. Réessayez dans une heure ou contactez-nous à denys@aioperations.studio." },
+      { reply: "Trop de messages envoyés. Réessayez dans une heure ou contactez-nous à denys@ai-operations.studio." },
       { status: 429 }
     );
   }
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ reply });
   } catch {
     return NextResponse.json(
-      { reply: "Désolé, je rencontre un problème technique. Contactez-nous à denys@aioperations.studio !" },
+      { reply: "Désolé, je rencontre un problème technique. Contactez-nous à denys@ai-operations.studio !" },
       { status: 200 }
     );
   }

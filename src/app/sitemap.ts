@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { blogPosts } from "@/lib/blog-posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://aioperations.studio";
+  const base = "https://www.ai-operations.studio";
   const now = new Date();
 
   const blogRoutes: MetadataRoute.Sitemap = blogPosts

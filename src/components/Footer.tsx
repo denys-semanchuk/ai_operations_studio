@@ -60,7 +60,7 @@ export default function Footer() {
               </li>
               <li>
                 <Mail size={16} className="contact-icon text-gradient" />
-                <a href="mailto:denys@aioperations.studio">denys@aioperations.studio</a>
+                <a href="mailto:denys@ai-operations.studio">denys@ai-operations.studio</a>
               </li>
             </ul>
           </div>

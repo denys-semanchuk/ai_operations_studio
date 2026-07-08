@@ -33,7 +33,7 @@ Le projet est un Next.js standard, déployable sans configuration (`vercel.json`
 
 - **Local** : `vercel link` puis `vercel env pull` pour récupérer `.env.local` depuis le projet Vercel.
 - **Preview** : chaque push sur une branche non-production (ou chaque PR) déclenche un déploiement Preview avec une URL dédiée.
-- **Production** : un push/merge sur `main` déploie en production (domaine `aioperations.studio`).
+- **Production** : un push/merge sur `main` déploie en production (domaine `ai-operations.studio`).
 
 Les variables `GROQ_API_KEY` et `RESEND_API_KEY` doivent être renseignées séparément dans le dashboard Vercel (Project Settings → Environment Variables) pour les environnements **Preview** et **Production** — elles ne sont pas partagées automatiquement depuis `.env.local`.
 
