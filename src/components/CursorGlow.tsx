@@ -14,9 +14,11 @@ export default function CursorGlow() {
   const orbX = useSpring(mouseX, { damping: 32, stiffness: 180, mass: 0.7 });
   const orbY = useSpring(mouseY, { damping: 32, stiffness: 180, mass: 0.7 });
 
-  // Small crisp dot — very tight, almost instant follow
-  const dotX = useSpring(mouseX, { damping: 28, stiffness: 700, mass: 0.3 });
-  const dotY = useSpring(mouseY, { damping: 28, stiffness: 700, mass: 0.3 });
+  // Small crisp dot — this is the only visible pointer (the real OS cursor
+  // is hidden via `cursor: none`), so it tracks the mouse 1:1 with no
+  // spring lag. Any smoothing here reads as a laggy/sluggish cursor.
+  const dotX = useMotionValue(-500);
+  const dotY = useMotionValue(-500);
 
   useEffect(() => {
     const isTouch = window.matchMedia("(pointer: coarse)").matches;

@@ -3547,8 +3547,11 @@ button, input, textarea, select {
       position: relative;
     }
     .how-step-num {
+      /* Sits inside the card bounds — `.glass-card` (its parent) has
+         `overflow: hidden` for its gradient overlay, so a negative offset
+         here would get clipped instead of poking above the card. */
       position: absolute;
-      top: -12px;
+      top: 1rem;
       left: 1.5rem;
       font-size: 0.72rem;
       font-weight: 800;
@@ -4543,8 +4546,15 @@ button, input, textarea, select {
         padding: 1.5rem;
       }
       .gauge-svg {
-        width: 96px;
-        height: 96px;
+        width: 108px;
+        height: 108px;
+      }
+      .gauge-number {
+        font-size: 1.3rem;
+      }
+      .gauge-label {
+        font-size: 0.62rem;
+        max-width: 74px;
       }
       .annual-total-value {
         font-size: 1.85rem;
