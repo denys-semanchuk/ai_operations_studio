@@ -67,13 +67,13 @@ export default function CursorGlow() {
       {/* Large soft ambient orb */}
       <m.div
         className="cursor-orb"
-        style={{ left: orbX, top: orbY }}
+        style={{ x: orbX, y: orbY }}
       />
 
       {/* Small crisp dot — scales up on interactive elements */}
       <m.div
         className="cursor-dot"
-        style={{ left: dotX, top: dotY }}
+        style={{ x: dotX, y: dotY }}
         animate={{
           scale: isHoveringInteractive ? 2.2 : 1,
           opacity: isHoveringInteractive ? 0.5 : 0.75,

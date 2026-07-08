@@ -1430,7 +1430,13 @@ button, input, textarea, select {
         }
 
         .cursor-orb {
+          /* Positioned via `transform` (see CursorGlow.tsx's x/y motion
+             values), not left/top — this element is large + blurred +
+             blend-mode, so left/top would force layout+paint on every
+             mousemove instead of a cheap GPU-composited translate. */
           position: fixed;
+          top: 0;
+          left: 0;
           width: 320px;
           height: 320px;
           border-radius: 50%;
@@ -1444,10 +1450,14 @@ button, input, textarea, select {
           z-index: 10100;
           filter: blur(28px);
           mix-blend-mode: screen;
+          will-change: transform;
         }
 
         .cursor-dot {
+          /* Positioned via `transform` — see note on .cursor-orb above. */
           position: fixed;
+          top: 0;
+          left: 0;
           width: 10px;
           height: 10px;
           border-radius: 50%;
@@ -1457,6 +1467,7 @@ button, input, textarea, select {
             0 0 14px rgba(14, 165, 233, 0.4);
           pointer-events: none;
           z-index: 10101;
+          will-change: transform;
         }
 
 /* ===== CookieBanner ===== */
