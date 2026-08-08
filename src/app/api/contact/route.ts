@@ -56,9 +56,9 @@ export async function POST(req: NextRequest) {
       ? `<p><strong>Créneau choisi :</strong> ${safeBookedDay} à ${safeBookedTime}</p>`
       : "";
 
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "AI Operations Studio <onboarding@resend.dev>",
-      to: "denys@ai-operations.studio",
+      to: "semanchukdenys@gmail.com",
       replyTo: safeEmail,
       subject: `🎯 Nouvelle demande d'audit — ${safeName}`,
       html: `
@@ -77,6 +77,11 @@ export async function POST(req: NextRequest) {
         </div>
       `,
     });
+
+    if (error) {
+      console.error("[contact route]", error);
+      return NextResponse.json({ error: "Erreur d'envoi" }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
