@@ -14,6 +14,7 @@ export default function Header() {
 
   const navLinks = [
     { name: "Accueil", href: "/" },
+    { name: "Système", href: "/systeme" },
     { name: "Offres", href: "/offres" },
     { name: "Simulateur ROI", href: "/roi" },
     { name: "Démo Live", href: "/demo" },

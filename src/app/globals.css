@@ -4703,7 +4703,22 @@ button, input, textarea, select {
           width: 100%;
         }
 
-        @media (max-width: 900px) {
+        /* 7 links + CTA: tighten the desktop nav between the mobile breakpoint and full width */
+        @media (min-width: 1041px) and (max-width: 1180px) {
+          .desktop-nav {
+            gap: 0.15rem;
+          }
+          .nav-link {
+            padding: 0.5rem 0.5rem;
+            font-size: 0.88rem;
+            white-space: nowrap;
+          }
+          .btn-cta {
+            padding: 0.55rem 0.95rem;
+          }
+        }
+
+        @media (max-width: 1040px) {
           .desktop-nav, .cta-container {
             display: none;
           }
