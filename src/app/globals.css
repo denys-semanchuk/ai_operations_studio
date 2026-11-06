@@ -4632,6 +4632,7 @@ button, input, textarea, select {
           font-size: 0.95rem;
           font-weight: 500;
           padding: 0.5rem 0.75rem;
+          white-space: nowrap;
           transition: color 0.3s ease;
         }
         .nav-link:hover, .nav-link.active {
@@ -4703,8 +4704,10 @@ button, input, textarea, select {
           width: 100%;
         }
 
-        /* 7 links + CTA: tighten the desktop nav between the mobile breakpoint and full width */
-        @media (min-width: 1041px) and (max-width: 1180px) {
+        /* 8 links + CTA: compact desktop nav at every desktop width. The header is capped
+           at ~1200px, so the roomy spacing (1.5rem gap) never fits 8 links — measured when
+           « Réalisations » was added: labels wrapped and the logo broke onto two lines. */
+        @media (min-width: 1041px) {
           .desktop-nav {
             gap: 0.15rem;
           }

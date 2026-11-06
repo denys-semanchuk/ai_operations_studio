@@ -34,6 +34,7 @@ export default function Footer() {
             <ul className="footer-links">
               <li><Link href="/">Accueil</Link></li>
               <li><Link href="/systeme">Système Lead → Mandat</Link></li>
+              <li><Link href="/realisations">Réalisations</Link></li>
               <li><Link href="/offres">Nos Offres</Link></li>
               <li><Link href="/roi">Calculateur ROI</Link></li>
               <li><Link href="/demo">Démo Live</Link></li>
