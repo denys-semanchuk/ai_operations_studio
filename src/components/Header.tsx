@@ -15,6 +15,7 @@ export default function Header() {
   const navLinks = [
     { name: "Accueil", href: "/" },
     { name: "Système", href: "/systeme" },
+    { name: "Réalisations", href: "/realisations" },
     { name: "Offres", href: "/offres" },
     { name: "Simulateur ROI", href: "/roi" },
     { name: "Démo Live", href: "/demo" },
@@ -69,7 +70,7 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="desktop-nav" ref={navRef}>
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive = link.href === "/" ? pathname === "/" : pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
               <Link key={link.name} href={link.href} className={`nav-link ${isActive ? "active" : ""}`}>
                 {link.name}
@@ -120,7 +121,7 @@ export default function Header() {
           >
             <div className="mobile-menu-links">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive = link.href === "/" ? pathname === "/" : pathname === link.href || pathname.startsWith(`${link.href}/`);
                 return (
                   <Link
                     key={link.name}

@@ -8,6 +8,7 @@ import TiltCard from "@/components/TiltCard";
 import CountUp from "@/components/CountUp";
 import Magnetic from "@/components/Magnetic";
 import ParallaxItem from "@/components/ParallaxItem";
+import CaseTeaser from "@/components/CaseTeaser";
 import { useHasMounted } from "@/lib/useHasMounted";
 
 export default function HomeClient() {
@@ -235,6 +236,9 @@ export default function HomeClient() {
           </div>
         </div>
       </m.section>
+
+      {/* Real client case (Loger 9) */}
+      <CaseTeaser />
 
       {/* Testimonials Carousel Section */}
       <section className="testimonials-section">

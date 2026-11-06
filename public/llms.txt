@@ -14,6 +14,7 @@ Résultats mesurés chez les clients : 10 à 20 heures libérées par semaine, t
 
 ## Contenu
 
+- [Réalisation : Loger 9](https://www.ai-operations.studio/realisations/loger-9): nouveau site pour une agence immobilière de Bagnolet (93), en ligne en deux semaines — annonces importées sans ressaisie, prise de rendez-vous sur chaque page, note PageSpeed mobile 99/100 (octobre 2026).
 - [Blog](https://www.ai-operations.studio/blog): guides pratiques et études de cas sur l'automatisation immobilière (n8n, Claude AI, Airtable, WhatsApp Business).
 - [À propos](https://www.ai-operations.studio/a-propos): présentation du fondateur et de l'approche sur-mesure (pas de SaaS générique).
 

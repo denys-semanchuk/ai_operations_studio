@@ -678,7 +678,7 @@ export default function SystemeClient() {
           <div className={s.case}>
             <div className={s.caseBig}>
               <b>48</b>
-              <span>annonces importées automatiquement</span>
+              <span>annonces importées sans ressaisie</span>
             </div>
             <ul className={s.facts}>
               <li>
@@ -687,14 +687,17 @@ export default function SystemeClient() {
               </li>
               <li>
                 <Check />
-                Les demandes des visiteurs sont envoyées directement sur WhatsApp
+                Prise de rendez-vous sur chaque page, demande envoyée par e-mail au conseiller, bouton WhatsApp en plus
               </li>
               <li>
                 <Check />
-                Site livré en quelques semaines
+                Site en ligne en deux semaines, note PageSpeed mobile de 99/100
               </li>
             </ul>
           </div>
+          <p className={s.caseMore}>
+            <Link href="/realisations/loger-9">Voir le cas complet →</Link>
+          </p>
         </div>
       </section>
 

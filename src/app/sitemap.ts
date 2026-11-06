@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { blogPosts } from "@/lib/blog-posts";
+import { realisations } from "@/lib/realisations";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://www.ai-operations.studio";
@@ -14,10 +15,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     }));
 
+  const caseRoutes: MetadataRoute.Sitemap = realisations.map((r) => ({
+    url: `${base}/realisations/${r.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
   return [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${base}/offres`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/systeme`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${base}/realisations`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    ...caseRoutes,
     { url: `${base}/roi`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/demo`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${base}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
