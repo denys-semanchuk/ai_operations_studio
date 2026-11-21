@@ -206,7 +206,7 @@ export default function ContactClient() {
                       onChange={(e) => setSelectedService(e.target.value)}
                       className="ct-select"
                     >
-                      <option value="systeme">Système Lead → Mandat (mise en place)</option>
+                      <option value="systeme">Système Lead → Mandat</option>
                       <option value="accompagnement">Accompagnement mensuel</option>
                       <option value="audit">Audit gratuit</option>
                     </select>
