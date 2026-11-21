@@ -24,7 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: `${base}/offres`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/systeme`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${base}/realisations`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     ...caseRoutes,

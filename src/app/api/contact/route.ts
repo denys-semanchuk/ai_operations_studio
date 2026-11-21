@@ -8,11 +8,9 @@ const RATE_LIMIT = 10;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 const SERVICE_LABELS: Record<string, string> = {
-  faq: "IA FAQ & Auto-Replies",
-  combo: "Combo Web + IA Agent",
-  crm: "Qualification & CRM Sync",
-  booking: "Booking & Automations Relance",
-  audit: "Audit opérationnel gratuit",
+  systeme: "Système Lead → Mandat (mise en place)",
+  accompagnement: "Accompagnement mensuel",
+  audit: "Audit gratuit",
 };
 
 function escapeHtml(value: unknown): string {

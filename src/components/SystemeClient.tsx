@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useMatchMedia } from "@/lib/useMatchMedia";
 import s from "./SystemeClient.module.css";
 
 const EMAIL = "denys@ai-operations.studio";
@@ -435,7 +434,6 @@ function Mock({ step }: { step: number }) {
 
 function SystemSteps() {
   const [step, setStep] = useState(0);
-  const isMobile = useMatchMedia("(max-width: 860px)");
   const btns = useRef<(HTMLButtonElement | null)[]>([]);
 
   const onKey = (e: React.KeyboardEvent, i: number) => {
@@ -473,7 +471,7 @@ function SystemSteps() {
                   role="tab"
                   id={`sys-tab-${i}`}
                   aria-selected={step === i}
-                  aria-controls="sys-screen"
+                  aria-controls="sys-screen sys-screen-m"
                   tabIndex={step === i ? 0 : -1}
                   onClick={() => setStep(i)}
                   onKeyDown={(e) => onKey(e, i)}
@@ -484,8 +482,10 @@ function SystemSteps() {
                     <span className={s.d}>{st.desc}</span>
                   </span>
                 </button>
-                {isMobile && step === i && (
-                  <div className={s.screenInline} id="sys-screen" role="tabpanel" aria-labelledby={`sys-tab-${i}`}>
+                {/* Rendu dès le serveur et masqué en CSS sur ordinateur : la page ne se
+                    décale plus après le chargement (ancre #offres-systeme, CLS). */}
+                {step === i && (
+                  <div className={s.screenInline} id="sys-screen-m" role="tabpanel" aria-labelledby={`sys-tab-${i}`}>
                     <Mock step={i} />
                   </div>
                 )}
@@ -493,11 +493,9 @@ function SystemSteps() {
             ))}
           </ol>
 
-          {!isMobile && (
-            <div className={s.screen} id="sys-screen" role="tabpanel" aria-labelledby={`sys-tab-${step}`}>
-              <Mock step={step} />
-            </div>
-          )}
+          <div className={s.screen} id="sys-screen" role="tabpanel" aria-labelledby={`sys-tab-${step}`}>
+            <Mock step={step} />
+          </div>
         </div>
       </div>
     </section>

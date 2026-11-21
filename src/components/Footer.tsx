@@ -35,7 +35,7 @@ export default function Footer() {
               <li><Link href="/">Accueil</Link></li>
               <li><Link href="/systeme">Système Lead → Mandat</Link></li>
               <li><Link href="/realisations">Réalisations</Link></li>
-              <li><Link href="/offres">Nos Offres</Link></li>
+              <li><Link href="/systeme#offres-systeme">Offres et tarifs</Link></li>
               <li><Link href="/roi">Calculateur ROI</Link></li>
               <li><Link href="/demo">Démo Live</Link></li>
               <li><Link href="/a-propos">À propos</Link></li>
@@ -46,10 +46,10 @@ export default function Footer() {
           <div className="footer-links-col">
             <h4 className="footer-title">Services Clés</h4>
             <ul className="footer-links-info">
-              <li>IA FAQ & Auto-replies</li>
-              <li>Combo Web + IA Agent</li>
-              <li>Qualification de Leads Automatique</li>
-              <li>Automation Calendrier & Booking</li>
+              <li>Site agence pensé pour Google</li>
+              <li>Réponse automatique aux demandes</li>
+              <li>Rendez-vous d&apos;estimation</li>
+              <li>Relances jusqu&apos;au mandat</li>
             </ul>
           </div>
 

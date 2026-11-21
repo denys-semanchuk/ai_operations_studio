@@ -216,6 +216,7 @@
 .d { display: block; color: var(--muted); font-size: 15.5px; line-height: 1.45; margin-top: 3px; }
 .screen { position: sticky; top: 104px; }
 .screenInline { margin: 6px 0 10px; }
+@media (min-width: 861px) { .screenInline { display: none; } }
 @media (max-width: 860px) { .sys { grid-template-columns: 1fr; } .screen { display: none; } }
 
 .mock { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 24px 50px -30px rgba(0, 0, 0, 0.8); }
