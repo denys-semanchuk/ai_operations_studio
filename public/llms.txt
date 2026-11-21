@@ -8,7 +8,7 @@ Résultats mesurés chez les clients : 10 à 20 heures libérées par semaine, t
 
 ## Offres
 
-- [Catalogue d'offres](https://www.ai-operations.studio/offres): IA FAQ & Auto-Replies, Combo Web + IA Agent, Qualification & CRM Sync, Booking & Follow-up — installation ponctuelle + abonnement de maintenance mensuel.
+- [Système Lead → Mandat](https://www.ai-operations.studio/systeme): offre unique pour les agences immobilières indépendantes — mise en place à partir de 2 000 € (site, réponse automatique aux demandes, tri, rendez-vous d'estimation, relances jusqu'au mandat), puis accompagnement mensuel de 800 à 1 500 €/mois. TVA non applicable, art. 293 B du CGI.
 - [Simulateur de ROI](https://www.ai-operations.studio/roi): estimation personnalisée du retour sur investissement à partir des chiffres réels de l'agence.
 - [Démo interactive](https://www.ai-operations.studio/demo): reconstitution illustrative d'un workflow de qualification de lead (acheteur/locataire/vendeur).
 

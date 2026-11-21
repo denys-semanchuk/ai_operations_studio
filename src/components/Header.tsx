@@ -16,7 +16,7 @@ export default function Header() {
     { name: "Accueil", href: "/" },
     { name: "Système", href: "/systeme" },
     { name: "Réalisations", href: "/realisations" },
-    { name: "Offres", href: "/offres" },
+    { name: "Offres", href: "/systeme#offres-systeme" },
     { name: "Simulateur ROI", href: "/roi" },
     { name: "Démo Live", href: "/demo" },
     { name: "Blog", href: "/blog" },

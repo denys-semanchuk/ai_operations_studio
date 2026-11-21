@@ -15,7 +15,7 @@ export default function ContactClient() {
 
   // Form bound states
   const [messageText, setMessageText] = useState("");
-  const [selectedService, setSelectedService] = useState("faq");
+  const [selectedService, setSelectedService] = useState("systeme");
 
   // Quick Lead simulation states
   const [agencyName, setAgencyName] = useState("");
@@ -198,7 +198,7 @@ export default function ContactClient() {
                 </div>
 
                 <div className="ct-form-group">
-                  <label htmlFor="ct-service">Type d&apos;intégration souhaitée</label>
+                  <label htmlFor="ct-service">Ce qui vous intéresse</label>
                   <div className="ct-select-wrap">
                     <select 
                       id="ct-service" 
@@ -206,11 +206,9 @@ export default function ContactClient() {
                       onChange={(e) => setSelectedService(e.target.value)}
                       className="ct-select"
                     >
-                      <option value="faq">IA FAQ & Auto-Replies</option>
-                      <option value="combo">Combo Web + IA Agent</option>
-                      <option value="crm">Qualification & CRM Sync</option>
-                      <option value="booking">Booking & Automations Relance</option>
-                      <option value="audit">Audit opérationnel gratuit</option>
+                      <option value="systeme">Système Lead → Mandat</option>
+                      <option value="accompagnement">Accompagnement mensuel</option>
+                      <option value="audit">Audit gratuit</option>
                     </select>
                   </div>
                 </div>
@@ -373,7 +371,7 @@ export default function ContactClient() {
                           rows={2}
                           value={agencyNote}
                           onChange={(e) => setAgencyNote(e.target.value)}
-                          placeholder="Note rapide (ex: souhaite le Combo Web+IA)"
+                          placeholder="Note rapide (ex: veut le système complet)"
                           aria-label="Note rapide"
                           className="ct-textarea"
                         ></textarea>
