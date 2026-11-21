@@ -599,9 +599,8 @@ export default function SystemeClient() {
               </p>
               <h3 className={s.planTitle}>Accompagnement mensuel</h3>
               <p className={s.price}>
-                <span>à partir de</span>
-                <b>800&nbsp;€</b>
-                <span>par mois</span>
+                <b>800–1&nbsp;500&nbsp;€</b>
+                <span>par mois, selon les modules</span>
               </p>
               <ul className={s.incl}>
                 {[
