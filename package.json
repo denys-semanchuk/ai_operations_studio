@@ -7,7 +7,8 @@
     "build": "node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start",
     "lint": "eslint",
-    "analyze": "node node_modules/next/dist/bin/next experimental-analyze"
+    "analyze": "node node_modules/next/dist/bin/next experimental-analyze",
+    "offre:pdf": "npm --prefix scripts/offre-pdf ci --no-audit --no-fund && npm --prefix scripts/offre-pdf run build"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

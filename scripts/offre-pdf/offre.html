@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Système de développement d'agence – AI Operations Studio</title>
+<meta name="author" content="Denys Semanchuk, AI Operations Studio">
+<meta name="description" content="Offre pour les agences immobilières indépendantes d'Île-de-France, de 3 à 15 agents.">
+<!--
+  Source du texte (ne rien inventer) :
+  - étapes, offres, méthode : src/components/SystemeClient.tsx
+  - chiffres Loger 9       : src/lib/realisations.ts
+  - contacts               : src/components/Footer.tsx
+  Build : npm run offre:pdf  →  public/offre-systeme.pdf
+-->
+<style>
+  @font-face { font-family: "Outfit"; font-weight: 400; src: url("fonts/Outfit-400.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-weight: 700; src: url("fonts/Outfit-700.woff2") format("woff2"); }
+  @font-face { font-family: "Outfit"; font-weight: 800; src: url("fonts/Outfit-800.woff2") format("woff2"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 400; src: url("fonts/PlusJakartaSans-400.woff2") format("woff2"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 600; src: url("fonts/PlusJakartaSans-600.woff2") format("woff2"); }
+  @font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; src: url("fonts/PlusJakartaSans-700.woff2") format("woff2"); }
+
+  /* Palette claire du site (carte LeadCard de /systeme) + dégradé de marque. */
+  :root {
+    --ink: #131634;
+    --muted: #575c7b;
+    --line: #dfe1ea;
+    --accent: #4f46e5;
+    --cyan: #0ea5e9;
+    --soft: #e9e8fd;
+    --soft-2: #f5f5fe;
+    --gradient: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+    --display: "Outfit";
+    --body: "Plus Jakarta Sans";
+  }
+
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body {
+    font-family: var(--body);
+    font-size: 9.5pt;
+    line-height: 1.38;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
+  .nw { white-space: nowrap; }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 12mm 14mm 12mm;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5mm;
+    overflow: hidden;
+  }
+
+  /* ---------- En-tête ---------- */
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .logo { display: flex; align-items: center; gap: 2.4mm; }
+  .logo svg { width: 9mm; height: 9mm; display: block; }
+  .logo span { font-family: var(--display); font-weight: 700; font-size: 12.5pt; letter-spacing: -0.01em; }
+  .logo span i { font-style: normal; font-weight: 400; color: var(--cyan); }
+  .site { font-weight: 600; color: var(--accent); }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 24pt;
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    margin-top: 1.2mm;
+  }
+  .lede { font-size: 10pt; line-height: 1.42; color: var(--muted); margin-top: 2mm; }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Problème ---------- */
+  .problem {
+    display: flex; gap: 3mm; align-items: center;
+    background: var(--soft-2);
+    border: 1px solid var(--soft);
+    border-left: 1.2mm solid var(--accent);
+    border-radius: 2.5mm;
+    padding: 2.2mm 4mm;
+    font-size: 9.5pt;
+  }
+  .problem b { font-family: var(--display); font-weight: 700; font-size: 10.5pt; color: var(--accent); white-space: nowrap; }
+
+  /* ---------- Titres de section ---------- */
+  h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 13.5pt;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .head { display: flex; align-items: baseline; gap: 3mm; margin-bottom: 2.4mm; }
+  .head p { color: var(--muted); }
+
+  /* ---------- Six étapes ---------- */
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4mm; }
+  .steps { row-gap: 3mm; column-gap: 5mm; }
+  .steps li {
+    border-top: 1px solid var(--line);
+    padding-top: 2mm;
+    display: grid;
+    grid-template-columns: 5.6mm 1fr;
+    column-gap: 2mm;
+    row-gap: 0.8mm;
+    align-items: center;
+    align-content: start;
+  }
+  .n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 5.6mm; height: 5.6mm; border-radius: 1.5mm;
+    background: var(--gradient); color: #fff;
+    font-family: var(--display); font-weight: 800; font-size: 9.5pt;
+  }
+  .steps b { font-family: var(--display); font-weight: 700; font-size: 10pt; line-height: 1.15; }
+  .steps span.d { grid-column: 1 / -1; color: var(--muted); font-size: 9pt; line-height: 1.33; }
+
+  /* ---------- Offres ---------- */
+  .plans { display: grid; grid-template-columns: 1fr 1.7fr; gap: 3mm; }
+  .plan { border: 1px solid var(--line); border-radius: 3mm; padding: 3mm 4mm 3.2mm; }
+  .plan.first { border-color: #c9c6fa; background: var(--soft-2); }
+  .planTop { display: flex; justify-content: space-between; align-items: flex-end; gap: 3mm; margin-bottom: 2mm; padding-bottom: 2mm; border-bottom: 1px solid var(--line); }
+  .plan.first .planTop { border-bottom-color: #d9d7fb; }
+  .when { font-family: var(--display); font-weight: 700; font-size: 9pt; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+  .plan h3 { font-family: var(--display); font-weight: 700; font-size: 12.5pt; line-height: 1.15; margin-top: 0.4mm; white-space: nowrap; }
+  .price { display: flex; flex-direction: column; align-items: flex-end; text-align: right; color: var(--muted); font-size: 9pt; line-height: 1.25; }
+  .price strong { font-family: var(--display); font-weight: 800; font-size: 19pt; line-height: 1; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; }
+  .plan p.txt { color: var(--muted); }
+  .incl { list-style: none; display: grid; gap: 1mm; }
+  .incl li { display: flex; gap: 1.8mm; align-items: flex-start; }
+  .incl svg { flex: none; width: 3.6mm; height: 3.6mm; margin-top: 0.4mm; }
+
+  /* ---------- Exemple Loger 9 ---------- */
+  .case { border: 1px solid var(--line); border-radius: 3mm; padding: 2.8mm 4mm 3mm; }
+  .case .head { margin-bottom: 2mm; }
+  .case .head a { margin-left: auto; color: var(--accent); font-weight: 600; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+  .stat { border-left: 0.5mm solid var(--soft); padding-left: 2.6mm; }
+  .stat:first-child { border-left: 0; padding-left: 0; }
+  .stat strong {
+    display: block;
+    font-family: var(--display); font-weight: 800; font-size: 20pt; line-height: 1; letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+  .stat span { display: block; color: var(--muted); font-size: 9pt; margin-top: 1mm; line-height: 1.3; }
+
+  /* ---------- Méthode ---------- */
+  .method { list-style: none; display: grid; grid-template-columns: 2.5fr 1fr 1fr; gap: 5mm; }
+  .method li { display: grid; grid-template-columns: 5.6mm 1fr; column-gap: 2mm; row-gap: 0.8mm; align-items: center; align-content: start; }
+  .method b { font-family: var(--display); font-weight: 700; font-size: 10.5pt; line-height: 1.15; }
+  .method p { grid-column: 1 / -1; color: var(--muted); }
+  .arrow { color: var(--cyan); }
+
+  /* ---------- Contact ---------- */
+  .cta {
+    border-radius: 3mm;
+    border: 1px solid #c9c6fa;
+    background: var(--soft-2);
+    padding: 3.4mm 4mm;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    gap: 6mm;
+    align-items: center;
+  }
+  .cta .who { margin-bottom: 2.4mm; }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--display); font-weight: 700; font-size: 11.5pt;
+    padding: 2.6mm 5mm;
+    border-radius: 2mm;
+    white-space: nowrap;
+  }
+  .who { font-weight: 700; }
+  .who span { display: block; font-weight: 400; color: var(--muted); }
+  .links { list-style: none; margin-top: 1.4mm; display: grid; gap: 0.4mm; }
+  .links a { color: var(--accent); font-weight: 600; }
+  .qr { display: flex; align-items: center; gap: 2.4mm; }
+  .qr a { display: block; }
+  .qr svg { width: 24mm; height: 24mm; display: block; }
+  .qr small { display: block; width: 20mm; font-size: 9pt; color: var(--muted); line-height: 1.3; }
+
+  /* ---------- Pied ---------- */
+  .foot {
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    padding-top: 2.4mm;
+    display: flex; justify-content: space-between;
+    font-size: 9pt; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header>
+    <div class="top">
+      <div class="logo">
+        <!-- Icône de public/brand/logo-full-light.svg (le texte du SVG est en Arial : il est remplacé par du texte en Outfit, comme dans l'en-tête du site). -->
+        <svg viewBox="16 16 104 104" aria-hidden="true">
+          <defs>
+            <linearGradient id="g" x1="16" y1="16" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#0ea5e9"/>
+            </linearGradient>
+          </defs>
+          <rect x="17" y="17" width="102" height="102" rx="24" fill="rgba(15,23,42,0.04)" stroke="rgba(15,23,42,0.14)" stroke-width="2"/>
+          <g transform="translate(38,38) scale(2.4)" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/>
+            <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
+            <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
+          </g>
+        </svg>
+        <span>AI Operations <i>Studio</i></span>
+      </div>
+      <a class="site" href="https://ai-operations.studio">ai-operations.studio</a>
+    </div>
+    <h1>Système de développement d’agence</h1>
+    <p class="lede">Pour les <b>agences immobilières indépendantes d’Île-de-France, de 3 à 15 agents</b>&nbsp;: chaque prospect reçoit une réponse en quelques minutes, il est relancé automatiquement, et vous voyez tout au même endroit.</p>
+  </header>
+
+  <p class="problem"><b>Le risque</b><span>Une demande d’estimation arrive un dimanche soir. Si personne ne répond avant lundi midi, le vendeur a peut-être déjà appelé une autre agence.</span></p>
+
+  <section>
+    <div class="head">
+      <h2>Le système Lead <span class="arrow">→</span> Mandat</h2>
+      <p>Six étapes, de la première demande au mandat signé.</p>
+    </div>
+    <ol class="steps">
+      <li><span class="n">1</span><b>Un site qui attire les vendeurs</b><span class="d">Rapide, pensé pour Google. Vos annonces s’importent toutes seules.</span></li>
+      <li><span class="n">2</span><b>Toutes les demandes au même endroit</b><span class="d">Site, portails, formulaires&nbsp;: plus rien ne se perd dans une boîte mail.</span></li>
+      <li><span class="n">3</span><b>Réponse en quelques minutes</b><span class="d">Par SMS, WhatsApp ou e-mail, même le soir et le week-end.</span></li>
+      <li><span class="n">4</span><b>Tri automatique</b><span class="d">Vendeur, acheteur ou simple curieux&nbsp;: vos agents savent qui rappeler en premier.</span></li>
+      <li><span class="n">5</span><b>Rendez-vous d’estimation pris</b><span class="d">Le vendeur choisit un créneau, il s’inscrit dans l’agenda de l’agent.</span></li>
+      <li><span class="n">6</span><b>Relances jusqu’au mandat</b><span class="d">Les relances partent toutes seules. Aucun vendeur n’est oublié.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="head">
+      <h2>Les offres</h2>
+      <p>Je mets le système en place une fois. Ensuite, il tourne et je l’améliore chaque mois.</p>
+    </div>
+    <div class="plans">
+      <article class="plan first">
+        <div class="planTop">
+          <div><p class="when">Une fois</p><h3>Mise en place</h3></div>
+          <p class="price"><span>à partir de</span><strong>2&nbsp;000&nbsp;€</strong></p>
+        </div>
+        <p class="txt">Je mets en place les six étapes <span class="nw">ci-dessus</span> pour votre agence.</p>
+      </article>
+      <article class="plan">
+        <div class="planTop">
+          <div><p class="when">Chaque mois</p><h3>Accompagnement</h3></div>
+          <p class="price"><span>par mois, selon les modules</span><strong>800–1&nbsp;500&nbsp;€</strong></p>
+        </div>
+        <ul class="incl">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Le système tourne et je l’améliore chaque mois</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Nouvelles automatisations selon vos besoins</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Référencement local&nbsp;: Google Business Profile, pages par ville</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>Un rapport chaque mois</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="case">
+    <div class="head">
+      <h2>Exemple&nbsp;: Loger&nbsp;9, Bagnolet (93)</h2>
+      <p>Le nouveau site de l’agence</p>
+      <a href="https://loger9.fr">loger9.fr</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>2&nbsp;sem.</strong><span>de l’accord à la mise en ligne</span></div>
+      <div class="stat"><strong>48</strong><span>annonces importées au lancement, sans ressaisie</span></div>
+      <div class="stat"><strong>99</strong><span>sur 100&nbsp;: note PageSpeed sur mobile</span></div>
+      <div class="stat"><strong>100</strong><span>sur 100&nbsp;: accessibilité</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Comment on travaille</h2></div>
+    <ol class="method">
+      <li><span class="n">1</span><b>Audit gratuit</b><p>Un appel pour comprendre d’où viennent vos demandes, puis des chiffres concrets&nbsp;: temps de réponse, demandes restées sans suite, mandats manqués.</p></li>
+      <li><span class="n">2</span><b>Mise en place</b><p>Si le chiffre vous parle, je mets le système en place.</p></li>
+      <li><span class="n">3</span><b>Accompagnement</b><p>Le système tourne et je l’améliore chaque mois, avec un rapport.</p></li>
+    </ol>
+  </section>
+
+  <section class="cta" aria-label="Contact">
+    <div>
+      <p class="who">Denys Semanchuk<span>fondateur d’AI Operations Studio</span></p>
+      <a class="btn" href="https://ai-operations.studio/contact">Demander l’audit gratuit</a>
+    </div>
+    <div>
+      <ul class="links">
+        <li><a href="mailto:denys@ai-operations.studio">denys@ai-operations.studio</a></li>
+        <li><a href="https://ai-operations.studio">ai-operations.studio</a></li>
+        <li><a href="https://www.linkedin.com/in/denys-semanchuk/">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="qr">
+      <a href="https://ai-operations.studio/contact" id="qr" aria-label="ai-operations.studio/contact"><!-- QR inséré par build.mjs --></a>
+      <small>Scannez pour réserver l’audit</small>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>TVA non applicable, art. 293 B du CGI</span>
+    <span>SIRET 102 722 956 00012</span>
+  </footer>
+
+</main>
+</body>
+</html>

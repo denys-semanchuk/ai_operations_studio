@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# offre PDF (scripts/offre-pdf : dépendances séparées du site)
+/scripts/offre-pdf/node_modules

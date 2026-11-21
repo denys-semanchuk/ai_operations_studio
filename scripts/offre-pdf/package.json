@@ -1,0 +1,13 @@
+{
+  "name": "offre-pdf",
+  "private": true,
+  "description": "Génère public/offre-systeme.pdf. Dépendances isolées du site : la build Vercel ne les installe pas.",
+  "type": "module",
+  "scripts": {
+    "build": "playwright install chromium && node build.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.65.1",
+    "qrcode": "1.5.4"
+  }
+}

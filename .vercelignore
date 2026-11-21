@@ -1,0 +1,3 @@
+# Générateur du PDF d'offre : inutile pour la build du site.
+# Le PDF lui-même est servi depuis public/offre-systeme.pdf.
+/scripts/offre-pdf
